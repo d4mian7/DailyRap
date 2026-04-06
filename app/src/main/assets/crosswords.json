@@ -1,0 +1,189 @@
+{
+  "crosswords": [
+    {
+      "id": 1,
+      "date": "2026-04-01",
+      "secretWord": "SZPAKU",
+      "clues": [
+        {
+          "question": "Autor Fiołkowe Pole",
+          "answer": "SOBEL",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper z chillwagonu",
+          "answer": "KIZO",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Album Taco Hemingwaya",
+          "answer": "EUROPA",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Raperka z duetu PG$",
+          "answer": "BAMBI",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Autor albumów z serii ,,Ogrody Mixtape\"",
+          "answer": "KUKON",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Członek SBM, odkryty przez Matę",
+          "answer": "FUKAJ",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2026-04-02",
+      "secretWord": "BEDOES",
+      "clues": [
+        {
+          "question": "Były członek SBM, uczestnik Hotel Maffija",
+          "answer": "BETEO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Zwrotka/linijka w rapie",
+          "answer": "WERS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Skrót albumu Bedoesa z 2019 roku",
+          "answer": "OZDS",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Duet Filipa i Kuby",
+          "answer": "TACONAFIDE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Ogromne zainteresowanie, szum medialny",
+          "answer": "HYPE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Współzałożyciel SBM",
+          "answer": "BIAŁAS",
+          "highlightIndex": 5
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "date": "2026-04-03",
+      "secretWord": "GUZIOR",
+      "clues": [
+        {
+          "question": "Viralowy, chwytliwy i udany utwór",
+          "answer": "BANGER",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Raper z Poznania, lider BOR-u",
+          "answer": "PALUCH",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Autor takich hitów jak Kierownik oraz Taxi" ,
+          "answer": "KIZO",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Popularna grupa rapowa z 2021 roku",
+          "answer": "OIO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Album Białasa, nazwa pierwiastka",
+          "answer": "POLON",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Album Taco Hemingwaya",
+          "answer": "JARMARK",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "date": "2026-04-04",
+      "secretWord": "FUTURA",
+      "clues": [
+        {
+          "question": "Współpraca artystów na utworze",
+          "answer": "FEAT",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Wytwórnia Szpaka",
+          "answer": "GUGU",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Jeden z najpopularniejszych polskich raperów",
+          "answer": "MATA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Autor albumu Atypowy",
+          "answer": "SZPAKU",
+          "highlightIndex": 5
+        },
+        {
+          "question": "Współzałożyciel SBM",
+          "answer": "SOLAR",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Łączy rap z elementami rocka/metalu",
+          "answer": "CHIVAS",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "date": "2026-04-05",
+      "secretWord": "EUROPA",
+      "clues": [
+        {
+          "question": "Były członek SBM, Hotel Maffija",
+          "answer": "BETEO",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Wydawnictwo muzyczne",
+          "answer": "ALBUM",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Linijka w utworze rapowym",
+          "answer": "WERS",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Premiera singla lub albumu",
+          "answer": "DROP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Teledysk muzyczny",
+          "answer": "KLIP",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Autor utworów z przedrostkiem pato-",
+          "answer": "MATA",
+          "highlightIndex": 3
+        }
+      ]
+    }
+  ]
+}
