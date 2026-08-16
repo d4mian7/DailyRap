@@ -18,9 +18,20 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Abc
+import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.Extension
+import androidx.compose.material.icons.automirrored.filled.HelpOutline
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -115,7 +126,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     GameTile(
-                        icon = "\uD83C\uDFA4",
+                        icon = Icons.Default.Headphones,
                         title = "RAPCONNECT",
                         subtitle = if (uiState.connectionsPlayed) "Zagrane!" else "Połącz 16 słów w 4 ukryte grupy",
                         streak = uiState.connectionsStreak,
@@ -128,7 +139,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     GameTile(
-                        icon = "\uD83D\uDD24",
+                        icon = Icons.Default.Abc,
                         title = "RAPWORD",
                         subtitle = if (uiState.literalniePlayed) "Zagrane!" else "Odgadnij słowo w 6 próbach",
                         streak = uiState.literalnieStreak,
@@ -141,7 +152,7 @@ fun HomeScreen(
                     Spacer(modifier = Modifier.height(8.dp))
 
                     GameTile(
-                        icon = "\uD83E\uDDE9",
+                        icon = Icons.Default.Extension,
                         title = "RAPCROSSWORD",
                         subtitle = if (uiState.crosswordPlayed) "Zagrane!" else "Rozwiąż krzyżówkę i odkryj hasło",
                         streak = uiState.crosswordStreak,
@@ -192,7 +203,12 @@ fun HomeScreen(
                                 .weight(1f)
                                 .clickable { onNavigateToHelp() }
                         ) {
-                            Text(text = "\u2753", fontSize = 24.sp)
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.HelpOutline,
+                                contentDescription = null,
+                                tint = TileText,
+                                modifier = Modifier.size(24.dp)
+                            )
                             Text(text = "Pomoc", color = Color(0xFF9CA3AF), fontSize = 10.sp)
                         }
 
@@ -202,7 +218,12 @@ fun HomeScreen(
                                 .weight(1f)
                                 .clickable { onNavigateToStats() }
                         ) {
-                            Text(text = "\uD83D\uDCCA", fontSize = 24.sp)
+                            Icon(
+                                imageVector = Icons.Default.BarChart,
+                                contentDescription = null,
+                                tint = TileText,
+                                modifier = Modifier.size(24.dp)
+                            )
                             Text(text = "Statystyki", color = Color(0xFF9CA3AF), fontSize = 10.sp)
                         }
 
@@ -212,7 +233,12 @@ fun HomeScreen(
                                 .weight(1f)
                                 .clickable { onNavigateToSettings() }
                         ) {
-                            Text(text = "\u2699\uFE0F", fontSize = 24.sp)
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = null,
+                                tint = TileText,
+                                modifier = Modifier.size(24.dp)
+                            )
                             Text(text = "Ustawienia", color = Color(0xFF9CA3AF), fontSize = 10.sp)
                         }
                     }
@@ -224,7 +250,7 @@ fun HomeScreen(
 
 @Composable
 private fun GameTile(
-    icon: String,
+    icon: ImageVector,
     title: String,
     subtitle: String,
     streak: Int,
@@ -255,7 +281,12 @@ private fun GameTile(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = icon, fontSize = 22.sp)
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        tint = accentColor,
+                        modifier = Modifier.size(26.dp)
+                    )
                     Spacer(modifier = Modifier.width(10.dp))
                     Text(
                         text = title,
@@ -280,12 +311,21 @@ private fun GameTile(
 
             if (streak > 0) {
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "\uD83D\uDD25 Streak: $streak",
-                    color = accentColor.copy(alpha = 0.8f),
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Icon(
+                        imageVector = Icons.Default.LocalFireDepartment,
+                        contentDescription = null,
+                        tint = accentColor.copy(alpha = 0.8f),
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = "Streak: $streak",
+                        color = accentColor.copy(alpha = 0.8f),
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
             }
         }
     }

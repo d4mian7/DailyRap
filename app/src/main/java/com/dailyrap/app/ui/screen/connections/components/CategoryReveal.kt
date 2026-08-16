@@ -72,3 +72,34 @@ fun CategoryReveal(
         }
     }
 }
+
+@Composable
+fun CategoryHintReveal(
+    category: Category,
+    modifier: Modifier = Modifier
+) {
+    val color = categoryColor(category.difficulty)
+
+    AnimatedVisibility(
+        visible = true,
+        enter = expandVertically() + fadeIn()
+    ) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+                .shadow(4.dp, RoundedCornerShape(12.dp))
+                .clip(RoundedCornerShape(12.dp))
+                .background(color.copy(alpha = 0.6f))
+                .padding(vertical = 8.dp, horizontal = 16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = category.name.uppercase(),
+                color = Color.Black,
+                fontWeight = FontWeight.Bold,
+                fontSize = 14.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+    }
+}

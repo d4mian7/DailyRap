@@ -1,0 +1,11 @@
+{
+  "name": "dailyrap-puzzle-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Walidator + kalendarz do planowania zestawow RapWord / RapConnect / RapCrossword",
+  "scripts": {
+    "validate": "node validate.js",
+    "serve": "node server.js"
+  }
+}

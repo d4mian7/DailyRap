@@ -23,8 +23,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -201,6 +200,7 @@ fun CrosswordScreen(
                     CrosswordGrid(
                         gameState = gameState,
                         selectedClueIndex = selectedClue,
+                        secretWordMode = secretWordMode,
                         onClueClick = { idx ->
                             selectedClue = idx
                             secretWordMode = false
@@ -362,19 +362,16 @@ private fun BottomInputBar(
                         .size(40.dp)
                         .clip(RoundedCornerShape(10.dp))
                         .background(
-                            if (secretWordMode) Color(0xFFF9DF6D)
+                            if (secretWordMode) Color(0xFF8B5CF6)
                             else TileDefault
                         )
                         .clickable { onSecretWordModeChange(!secretWordMode) },
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = if (secretWordMode)
-                            Icons.Default.KeyboardArrowDown
-                        else
-                            Icons.AutoMirrored.Filled.ArrowForward,
+                        imageVector = Icons.Default.Star,
                         contentDescription = if (secretWordMode) "Przełącz na pionowe" else "Przełącz na hasło główne",
-                        tint = if (secretWordMode) Color(0xFF1A1A2E) else TileText,
+                        tint = if (secretWordMode) Color.White else TileText.copy(alpha = 0.35f),
                         modifier = Modifier.size(22.dp)
                     )
                 }

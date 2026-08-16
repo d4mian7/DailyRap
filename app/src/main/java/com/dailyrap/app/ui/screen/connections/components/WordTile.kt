@@ -59,7 +59,8 @@ fun WordTile(
 
     Box(
         modifier = modifier
-            .height(48.dp)
+            .fillMaxWidth()
+            .height(72.dp)
             .scale(scale)
             .shadow(2.dp, RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))
@@ -70,8 +71,8 @@ fun WordTile(
         contentAlignment = Alignment.Center
     ) {
         if (hasSpace) {
-            // Multi-word: autosize to fit 2 lines
-            var fontSize by remember(displayText) { mutableFloatStateOf(11f) }
+            // Multi-word: autosize to fit 2 lines — start large so text wraps naturally
+            var fontSize by remember(displayText) { mutableFloatStateOf(14f) }
             var readyToDraw by remember(displayText) { mutableStateOf(false) }
 
             Text(

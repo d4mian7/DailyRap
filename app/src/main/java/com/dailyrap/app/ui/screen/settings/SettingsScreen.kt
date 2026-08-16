@@ -23,6 +23,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -46,6 +51,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -111,7 +117,8 @@ fun SettingsScreen(
 
             // 1. Wibracje
             SettingsRow(
-                icon = "\uD83D\uDCF3",
+                icon = Icons.Default.Vibration,
+                iconTint = TileSelected,
                 title = "Wibracje",
                 description = "Wibracja przy klikaniu klawiszy w RapWord"
             ) {
@@ -131,7 +138,8 @@ fun SettingsScreen(
 
             // 2. Powiadomienia
             SettingsRow(
-                icon = "\uD83D\uDD14",
+                icon = Icons.Default.Notifications,
+                iconTint = Color(0xFFEAB308),
                 title = "Powiadomienia",
                 description = "Przypomnienie o dzisiejszym wyzwaniu"
             ) {
@@ -178,7 +186,8 @@ fun SettingsScreen(
 
             // 3. Resetuj statystyki
             SettingsRow(
-                icon = "\uD83D\uDDD1\uFE0F",
+                icon = Icons.Default.DeleteOutline,
+                iconTint = ErrorRed,
                 title = "Resetuj statystyki",
                 description = "Wyczyść wszystkie wyniki gier"
             ) {
@@ -195,7 +204,8 @@ fun SettingsScreen(
 
             // 4. Udostępnij aplikację
             SettingsRow(
-                icon = "\uD83D\uDCE4",
+                icon = Icons.Default.Share,
+                iconTint = TileSelected,
                 title = "Udostępnij aplikację",
                 description = "Poleć DailyRap znajomym"
             ) {
@@ -248,16 +258,27 @@ fun SettingsScreen(
                     }
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = "Oceń aplikację \u2B50",
-                    color = TileSelected,
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.SemiBold,
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier.clickable {
                         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=com.dailyrap.app"))
                         context.startActivity(intent)
                     }
-                )
+                ) {
+                    Text(
+                        text = "Oceń aplikację",
+                        color = TileSelected,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Icon(
+                        imageVector = Icons.Default.Star,
+                        contentDescription = null,
+                        tint = Color(0xFFEAB308),
+                        modifier = Modifier.size(14.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -328,9 +349,10 @@ fun SettingsScreen(
 
 @Composable
 private fun SettingsRow(
-    icon: String,
+    icon: ImageVector,
     title: String,
     description: String,
+    iconTint: Color = TileSelected,
     trailing: @Composable () -> Unit
 ) {
     Row(
@@ -339,7 +361,12 @@ private fun SettingsRow(
             .padding(vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Text(text = icon, fontSize = 22.sp)
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = iconTint,
+            modifier = Modifier.size(24.dp)
+        )
         Spacer(modifier = Modifier.width(14.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, color = TileText, fontWeight = FontWeight.SemiBold, fontSize = 15.sp)

@@ -68,30 +68,13 @@ fun LiteralnieScreen(
             lastRevealedRow = uiState.gameState!!.guesses.size - 1
         }
     }
-    var toastMessage by remember { mutableStateOf<String?>(null) }
-
     val shakeOffset = remember { Animatable(0f) }
-
-    LaunchedEffect(toastMessage) {
-        if (toastMessage != null) {
-            kotlinx.coroutines.delay(2000L)
-            toastMessage = null
-        }
-    }
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
-                is LiteralnieEvent.TooShort -> {
-                    toastMessage = "Za krótkie!"
-                    shakeOffset.animateTo(12f, tween(50))
-                    shakeOffset.animateTo(-12f, tween(50))
-                    shakeOffset.animateTo(8f, tween(50))
-                    shakeOffset.animateTo(-8f, tween(50))
-                    shakeOffset.animateTo(0f, tween(50))
-                }
+                is LiteralnieEvent.TooShort,
                 is LiteralnieEvent.NotInDictionary -> {
-                    toastMessage = "Nie znam tego słowa"
                     shakeOffset.animateTo(12f, tween(50))
                     shakeOffset.animateTo(-12f, tween(50))
                     shakeOffset.animateTo(8f, tween(50))
@@ -99,7 +82,6 @@ fun LiteralnieScreen(
                     shakeOffset.animateTo(0f, tween(50))
                 }
                 is LiteralnieEvent.GuessAccepted -> {
-                    toastMessage = null
                     lastRevealedRow = event.row
                 }
                 is LiteralnieEvent.GameWon, is LiteralnieEvent.GameLost -> {
@@ -140,52 +122,48 @@ fun LiteralnieScreen(
                     .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
-                // Back button
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Start
-                ) {
-                    IconButton(onClick = onNavigateBack) {
+                // Back button + title in one row
+                Box(modifier = Modifier.fillMaxWidth()) {
+                    IconButton(
+                        onClick = onNavigateBack,
+                        modifier = Modifier.align(Alignment.CenterStart)
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Wróć",
                             tint = TileText
                         )
                     }
+                    Text(
+                        text = "RapWord",
+                        color = LetterCorrect,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 22.sp,
+                        letterSpacing = 1.sp,
+                        modifier = Modifier.align(Alignment.Center)
+                    )
                 }
 
-                // Title
-                Text(
-                    text = "RapWord",
-                    color = LetterCorrect,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 24.sp,
-                    letterSpacing = 1.sp
-                )
-
-                Spacer(modifier = Modifier.height(4.dp))
-
-                // Info
+                // Info + Hint in one row
                 val totalGuesses = gameState.maxGuesses + gameState.extraAttemptsUsed
                 Text(
                     text = "${gameState.dailyWord.variant} liter | $totalGuesses prób",
                     color = TextSecondary,
-                    fontSize = 14.sp
+                    fontSize = 13.sp
                 )
 
-                Spacer(modifier = Modifier.height(4.dp))
+                Spacer(modifier = Modifier.height(2.dp))
 
-                // Hint
                 Text(
                     text = "Kategoria: ${gameState.dailyWord.hint}",
                     color = AccentPurple,
-                    fontSize = 14.sp,
+                    fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
                 )
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(8.dp))
 
                 // Letter grid with shake
                 Box(
@@ -203,19 +181,6 @@ fun LiteralnieScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
-
-                // Toast message
-                if (toastMessage != null) {
-                    Text(
-                        text = toastMessage!!,
-                        color = AccentPurple,
-                        fontWeight = FontWeight.SemiBold,
-                        fontSize = 14.sp
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                }
-
                 Spacer(modifier = Modifier.weight(1f))
 
                 // Remaining tries — above keyboard
@@ -224,10 +189,10 @@ fun LiteralnieScreen(
                     Text(
                         text = "Pozostało prób: $remaining",
                         color = if (remaining <= 2) LetterPresent else TextSecondary,
-                        fontSize = 13.sp,
+                        fontSize = 12.sp,
                         fontWeight = FontWeight.SemiBold
                     )
-                    Spacer(modifier = Modifier.height(6.dp))
+                    Spacer(modifier = Modifier.height(4.dp))
                 }
 
                 // Keyboard
@@ -236,7 +201,7 @@ fun LiteralnieScreen(
                     onKey = { viewModel.onKeyPress(it) },
                     onEnter = { viewModel.onEnter() },
                     onDelete = { viewModel.onDelete() },
-                    modifier = Modifier.padding(bottom = 24.dp)
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
         }

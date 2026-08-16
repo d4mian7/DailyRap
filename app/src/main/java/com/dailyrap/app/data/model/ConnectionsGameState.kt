@@ -10,7 +10,9 @@ data class ConnectionsGameState(
     val selectedWords: List<String> = emptyList(),
     val mistakesLeft: Int = 4,
     val guessHistory: List<List<String>> = emptyList(),
-    val status: GameStatus = GameStatus.IN_PROGRESS
+    val status: GameStatus = GameStatus.IN_PROGRESS,
+    val hintsUsed: Int = 0,
+    val hintedCategories: Set<Int> = emptySet()
 )
 
 @Serializable

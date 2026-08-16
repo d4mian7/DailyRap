@@ -14,11 +14,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.LockOpen
+import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -53,9 +60,9 @@ fun buildCrosswordShareText(state: CrosswordGameState): String {
     sb.appendLine(emojiRow)
     sb.appendLine("Wynik: ${state.correctRows.size}/${state.puzzle.clues.size}")
     if (state.secretWordRevealed) {
-        sb.append("Hasło główne: ${state.puzzle.secretWord} \uD83D\uDD13")
+        sb.append("Hasło główne: ${state.puzzle.secretWord}")
     } else {
-        sb.append("Hasło nieodkryte \uD83D\uDD12")
+        sb.append("Hasło nieodkryte")
     }
     return sb.toString()
 }
@@ -81,12 +88,21 @@ fun CrosswordResultDialog(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Header — no game ID
-            Text(
-                text = if (won) "\uD83C\uDF89 Brawo!" else "\uD83D\uDE14 Przegrana",
-                color = if (won) LetterCorrect else Color(0xFFEF4444),
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = if (won) Icons.Default.Celebration else Icons.Default.SentimentDissatisfied,
+                    contentDescription = null,
+                    tint = if (won) LetterCorrect else Color(0xFFEF4444),
+                    modifier = Modifier.size(28.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = if (won) "Brawo!" else "Przegrana",
+                    color = if (won) LetterCorrect else Color(0xFFEF4444),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+            }
 
             Spacer(modifier = Modifier.height(12.dp))
 
@@ -112,18 +128,36 @@ fun CrosswordResultDialog(
 
             // Secret word status
             if (gameState.secretWordRevealed) {
-                Text(
-                    text = "Hasło: ${gameState.puzzle.secretWord} \uD83D\uDD13",
-                    color = LetterPresent,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 20.sp
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Hasło: ${gameState.puzzle.secretWord}",
+                        color = LetterPresent,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Icon(
+                        imageVector = Icons.Default.LockOpen,
+                        contentDescription = null,
+                        tint = LetterPresent,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             } else {
-                Text(
-                    text = "Hasło nieodkryte \uD83D\uDD12",
-                    color = TextSecondary,
-                    fontSize = 16.sp
-                )
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Text(
+                        text = "Hasło nieodkryte",
+                        color = TextSecondary,
+                        fontSize = 16.sp
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = null,
+                        tint = TextSecondary,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(16.dp))

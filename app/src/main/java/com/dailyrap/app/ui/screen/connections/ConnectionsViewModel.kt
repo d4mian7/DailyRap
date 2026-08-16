@@ -6,6 +6,7 @@ import com.dailyrap.app.data.model.Category
 import com.dailyrap.app.data.model.ConnectionsGameState
 import com.dailyrap.app.data.model.GameStatus
 import com.dailyrap.app.data.model.Puzzle
+import com.dailyrap.app.ads.RewardedAdManager
 import com.dailyrap.app.data.repository.GameProgressRepository
 import com.dailyrap.app.domain.ConnectionsEngine
 import com.dailyrap.app.domain.ConnectionsEngine.GuessResult
@@ -41,14 +42,16 @@ data class ConnectionsUiState(
     val noPuzzleToday: Boolean = false,
     val elapsedSeconds: Int = 0,
     val todayDate: String = "",
-    val alreadyFinished: Boolean = false
+    val alreadyFinished: Boolean = false,
+    val showHintDialog: Boolean = false
 )
 
 @HiltViewModel
 class ConnectionsViewModel @Inject constructor(
     private val getDailyPuzzle: GetDailyPuzzleUseCase,
     private val saveGameResult: SaveGameResultUseCase,
-    private val gameProgressRepository: GameProgressRepository
+    private val gameProgressRepository: GameProgressRepository,
+    val rewardedAdManager: RewardedAdManager
 ) : ViewModel() {
 
     private val engine = ConnectionsEngine()
@@ -62,6 +65,7 @@ class ConnectionsViewModel @Inject constructor(
     private var timerJob: Job? = null
 
     init {
+        rewardedAdManager.loadAd()
         loadPuzzle()
     }
 
@@ -192,6 +196,42 @@ class ConnectionsViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun requestHint() {
+        val state = _uiState.value.gameState ?: return
+        if (state.status != GameStatus.IN_PROGRESS) return
+        if (state.hintsUsed >= 2) return
+        // Count groups that are neither solved nor already hinted
+        val solvedDifficulties = state.solvedCategories.map { it.difficulty }.toSet()
+        val unhintedUnsolved = state.puzzle.categories.count {
+            it.difficulty !in solvedDifficulties && it.difficulty !in state.hintedCategories
+        }
+        if (unhintedUnsolved <= 1) return
+        _uiState.value = _uiState.value.copy(showHintDialog = true)
+    }
+
+    fun dismissHintDialog() {
+        _uiState.value = _uiState.value.copy(showHintDialog = false)
+    }
+
+    fun onHintRewarded() {
+        val state = _uiState.value.gameState ?: return
+        val solvedDifficulties = state.solvedCategories.map { it.difficulty }.toSet()
+        val easiest = state.puzzle.categories
+            .filter { it.difficulty !in solvedDifficulties && it.difficulty !in state.hintedCategories }
+            .minByOrNull { it.difficulty }
+            ?: return
+
+        val newState = state.copy(
+            hintsUsed = state.hintsUsed + 1,
+            hintedCategories = state.hintedCategories + easiest.difficulty
+        )
+        _uiState.value = _uiState.value.copy(
+            gameState = newState,
+            showHintDialog = false
+        )
+        saveProgress()
     }
 
     private fun saveResult(state: ConnectionsGameState) {

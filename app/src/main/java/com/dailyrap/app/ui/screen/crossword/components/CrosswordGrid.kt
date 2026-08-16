@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -77,6 +80,7 @@ fun calculateGridLayout(clues: List<CrosswordClue>): GridLayout {
 fun CrosswordGrid(
     gameState: CrosswordGameState,
     selectedClueIndex: Int?,
+    secretWordMode: Boolean = false,
     onClueClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -106,7 +110,7 @@ fun CrosswordGrid(
                 horizontalArrangement = Arrangement.spacedBy(CellSpacing)
             ) {
                 clues.forEachIndexed { colIndex, _ ->
-                    val isSelected = colIndex == selectedClueIndex
+                    val isSelected = !secretWordMode && colIndex == selectedClueIndex
                     Box(
                         modifier = Modifier
                             .size(width = cellSize, height = NumberRowHeight)
@@ -137,11 +141,14 @@ fun CrosswordGrid(
 
                         val isChecked = colIndex in gameState.checkedRows
                         val isCorrect = colIndex in gameState.correctRows
-                        val isSelected = colIndex == selectedClueIndex
                         val currentAnswer = gameState.answers[colIndex] ?: ""
 
                         if (isInWord) {
                             val isHighlight = letterIndex == clue.highlightIndex
+                            // In secret-word mode, highlight the horizontal secret row (all highlight cells).
+                            // In normal mode, highlight the selected vertical clue column.
+                            val isSelected = if (secretWordMode) isHighlight
+                            else colIndex == selectedClueIndex
                             val letter = when {
                                 // Secret word fully revealed → show actual secret letter
                                 isHighlight && gameState.secretWordRevealed ->
@@ -167,6 +174,7 @@ fun CrosswordGrid(
                                 isSelected = isSelected,
                                 isSecretRevealed = gameState.secretWordRevealed,
                                 isSecretWordWrong = isSecretWrong,
+                                showStarPlaceholder = isHighlight && letter == null,
                                 cellSize = cellSize,
                                 onClick = { onClueClick(colIndex) }
                             )
@@ -194,6 +202,7 @@ private fun GridCell(
     isSelected: Boolean,
     isSecretRevealed: Boolean,
     isSecretWordWrong: Boolean = false,
+    showStarPlaceholder: Boolean = false,
     cellSize: Dp,
     onClick: () -> Unit
 ) {
@@ -266,6 +275,14 @@ private fun GridCell(
                     style = TextStyle(
                         platformStyle = PlatformTextStyle(includeFontPadding = false)
                     )
+                )
+            } else if (showStarPlaceholder) {
+                val starSize = cellSize * 0.55f
+                Icon(
+                    imageVector = Icons.Default.Star,
+                    contentDescription = null,
+                    tint = Color.White.copy(alpha = 0.25f),
+                    modifier = Modifier.size(starSize)
                 )
             }
         }

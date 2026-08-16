@@ -10,5 +10,6 @@ data class ConnectionsResultEntity(
     val won: Boolean,
     val mistakes: Int,
     val timeSeconds: Int,
-    val guessHistory: String
+    val guessHistory: String,
+    val hintsUsed: Int = 0
 )

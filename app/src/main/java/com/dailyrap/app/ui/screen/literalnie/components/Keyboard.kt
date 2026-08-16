@@ -34,6 +34,10 @@ private val ROW2 = listOf('A','S','D','F','G','H','J','K','L')
 private val ROW3 = listOf('Z','X','C','V','B','N','M')
 private val POLISH = listOf('Ą','Ć','Ę','Ł','Ń','Ó','Ś','Ź','Ż')
 
+private val KEY_HEIGHT = 38.dp
+private val KEY_GAP = 4.dp
+private val ROW_GAP = 5.dp
+
 private fun keyColor(state: LetterResult?) = when (state) {
     LetterResult.CORRECT -> LetterCorrect
     LetterResult.PRESENT -> LetterPresent
@@ -53,25 +57,28 @@ fun Keyboard(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 4.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(ROW_GAP),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Row 1: Polish characters (9 keys)
+        // Wszystkie wiersze wypełniają pełną szerokość — klawisze w wierszach z mniejszą
+        // liczbą liter są nieco szersze, dzięki czemu klawiatura wygląda spójnie.
+
+        // Row 1: ĄĆĘŁŃÓŚŹŻ (9 liter)
         KeyRow(keys = POLISH, keyboardState = keyboardState, onKey = onKey)
 
-        // Row 2: QWERTYUIOP (10 keys)
+        // Row 2: QWERTYUIOP (10 liter)
         KeyRow(keys = ROW1, keyboardState = keyboardState, onKey = onKey)
 
-        // Row 3: ASDFGHJKL (9 keys)
+        // Row 3: ASDFGHJKL (9 liter)
         KeyRow(keys = ROW2, keyboardState = keyboardState, onKey = onKey)
 
-        // Row 4: BACKSPACE + ZXCVBNM + OK (9 elements, all weight(1f))
+        // Row 4: ⌫ + ZXCVBNM + OK — klawisze akcji szersze (1.5x)
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(3.dp),
+            horizontalArrangement = Arrangement.spacedBy(KEY_GAP),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ActionKey(text = "⌫", onClick = onDelete)
+            ActionKey(text = "⌫", onClick = onDelete, weight = 1.5f)
 
             ROW3.forEach { letter ->
                 LetterKey(
@@ -81,7 +88,7 @@ fun Keyboard(
                 )
             }
 
-            ActionKey(text = "OK", onClick = onEnter)
+            ActionKey(text = "OK", onClick = onEnter, weight = 1.5f)
         }
     }
 }
@@ -94,7 +101,7 @@ private fun KeyRow(
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.spacedBy(3.dp),
+        horizontalArrangement = Arrangement.spacedBy(KEY_GAP),
         verticalAlignment = Alignment.CenterVertically
     ) {
         keys.forEach { letter ->
@@ -122,7 +129,7 @@ private fun RowScope.LetterKey(
     Box(
         modifier = Modifier
             .weight(1f)
-            .height(44.dp)
+            .height(KEY_HEIGHT)
             .clip(RoundedCornerShape(8.dp))
             .background(bgColor)
             .clickable { onClick() },
@@ -132,7 +139,7 @@ private fun RowScope.LetterKey(
             text = letter.toString(),
             color = TileText,
             fontWeight = FontWeight.Bold,
-            fontSize = 15.sp
+            fontSize = 16.sp
         )
     }
 }
@@ -140,12 +147,13 @@ private fun RowScope.LetterKey(
 @Composable
 private fun RowScope.ActionKey(
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    weight: Float = 1f
 ) {
     Box(
         modifier = Modifier
-            .weight(1f)
-            .height(44.dp)
+            .weight(weight)
+            .height(KEY_HEIGHT)
             .clip(RoundedCornerShape(8.dp))
             .background(TileDefault)
             .clickable { onClick() },
@@ -155,7 +163,7 @@ private fun RowScope.ActionKey(
             text = text,
             color = TileText,
             fontWeight = FontWeight.Bold,
-            fontSize = if (text == "⌫") 18.sp else 12.sp
+            fontSize = if (text == "⌫") 20.sp else 14.sp
         )
     }
 }

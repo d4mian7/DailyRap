@@ -23,7 +23,8 @@ class SaveGameResultUseCase @Inject constructor(
             won = state.status == GameStatus.WON,
             mistakes = 4 - state.mistakesLeft,
             timeSeconds = timeSeconds,
-            guessHistory = state.guessHistory.joinToString(";") { it.joinToString(",") }
+            guessHistory = state.guessHistory.joinToString(";") { it.joinToString(",") },
+            hintsUsed = state.hintsUsed
         )
         statsRepository.saveConnectionsResult(entity)
     }

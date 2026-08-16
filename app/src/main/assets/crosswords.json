@@ -2,11 +2,11 @@
   "crosswords": [
     {
       "id": 1,
-      "date": "2026-04-01",
+      "date": "2026-07-20",
       "secretWord": "SZPAKU",
       "clues": [
         {
-          "question": "Autor Fiołkowe Pole",
+          "question": "Autor ,,Fiołkowe Pole\"",
           "answer": "SOBEL",
           "highlightIndex": 0
         },
@@ -16,7 +16,7 @@
           "highlightIndex": 2
         },
         {
-          "question": "Album Taco Hemingwaya",
+          "question": "Album Taco Hemingwaya z 2020 roku, o nazwie kontynentu",
           "answer": "EUROPA",
           "highlightIndex": 4
         },
@@ -38,49 +38,12 @@
       ]
     },
     {
-      "id": 2,
-      "date": "2026-04-02",
-      "secretWord": "BEDOES",
-      "clues": [
-        {
-          "question": "Były członek SBM, uczestnik Hotel Maffija",
-          "answer": "BETEO",
-          "highlightIndex": 0
-        },
-        {
-          "question": "Zwrotka/linijka w rapie",
-          "answer": "WERS",
-          "highlightIndex": 1
-        },
-        {
-          "question": "Skrót albumu Bedoesa z 2019 roku",
-          "answer": "OZDS",
-          "highlightIndex": 2
-        },
-        {
-          "question": "Duet Filipa i Kuby",
-          "answer": "TACONAFIDE",
-          "highlightIndex": 3
-        },
-        {
-          "question": "Ogromne zainteresowanie, szum medialny",
-          "answer": "HYPE",
-          "highlightIndex": 3
-        },
-        {
-          "question": "Współzałożyciel SBM",
-          "answer": "BIAŁAS",
-          "highlightIndex": 5
-        }
-      ]
-    },
-    {
       "id": 3,
-      "date": "2026-04-03",
+      "date": "2026-07-21",
       "secretWord": "GUZIOR",
       "clues": [
         {
-          "question": "Viralowy, chwytliwy i udany utwór",
+          "question": "Bujający głowę utwór",
           "answer": "BANGER",
           "highlightIndex": 3
         },
@@ -90,8 +53,8 @@
           "highlightIndex": 3
         },
         {
-          "question": "Autor takich hitów jak Kierownik oraz Taxi" ,
-          "answer": "KIZO",
+          "question": "Bałagane na polskiej scenie hip-hopowej",
+          "answer": "KAZ",
           "highlightIndex": 2
         },
         {
@@ -105,7 +68,7 @@
           "highlightIndex": 3
         },
         {
-          "question": "Album Taco Hemingwaya",
+          "question": "Album Taco Hemingwaya z 2020 roku",
           "answer": "JARMARK",
           "highlightIndex": 2
         }
@@ -113,11 +76,11 @@
     },
     {
       "id": 4,
-      "date": "2026-04-04",
+      "date": "2026-07-22",
       "secretWord": "FUTURA",
       "clues": [
         {
-          "question": "Współpraca artystów na utworze",
+          "question": "Gościnny występ artysty w cudzym utworze",
           "answer": "FEAT",
           "highlightIndex": 0
         },
@@ -142,7 +105,7 @@
           "highlightIndex": 4
         },
         {
-          "question": "Łączy rap z elementami rocka/metalu",
+          "question": "Łączy on rap z elementami rocka/metalu",
           "answer": "CHIVAS",
           "highlightIndex": 4
         }
@@ -150,13 +113,13 @@
     },
     {
       "id": 5,
-      "date": "2026-04-05",
+      "date": "2026-07-23",
       "secretWord": "EUROPA",
       "clues": [
         {
-          "question": "Były członek SBM, Hotel Maffija",
-          "answer": "BETEO",
-          "highlightIndex": 3
+          "question": "Autor hitu ,,Kosmita\"",
+          "answer": "GEDZ",
+          "highlightIndex": 1
         },
         {
           "question": "Wydawnictwo muzyczne",
@@ -164,9 +127,9 @@
           "highlightIndex": 3
         },
         {
-          "question": "Linijka w utworze rapowym",
-          "answer": "WERS",
-          "highlightIndex": 2
+          "question": "Powtarzający się fragment utworu",
+          "answer": "REFREN",
+          "highlightIndex": 0
         },
         {
           "question": "Premiera singla lub albumu",
@@ -179,8 +142,77 @@
           "highlightIndex": 3
         },
         {
-          "question": "Autor utworów z przedrostkiem pato-",
-          "answer": "MATA",
+          "question": "Legenda rapu z Poznania, lider Slums Attack",
+          "answer": "PEJA",
+          "highlightIndex": 3
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2026-07-24",
+      "secretWord": "BEDOES",
+      "clues": [
+        {
+          "question": "Były członek SBM, uczestnik Hotel Maffija",
+          "answer": "BETEO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Linijka tekstu w rapie",
+          "answer": "WERS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Skrót albumu Bedoesa z 2019 roku",
+          "answer": "OZDS",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Duet Filipa i Kuby",
+          "answer": "TACONAFIDE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Ogromne zainteresowanie, szum medialny",
+          "answer": "HYPE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Raper SBM, w duecie z Solarem",
+          "answer": "BIAŁAS",
+          "highlightIndex": 5
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "date": "2026-07-25",
+      "secretWord": "MALIK",
+      "clues": [
+        {
+          "question": "Nieoficjalny, często darmowy zbiór nagrań rapera",
+          "answer": "MIXTAPE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Podkład muzyczny, na którym rapuje wykonawca",
+          "answer": "BEAT",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Sposób, w jaki raper układa słowa do rytmu",
+          "answer": "FLOW",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Utwór nagrany, by zaatakować innego artystę",
+          "answer": "DISS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Częsty motyw w tekstach oldschoolowych raperów",
+          "answer": "BLOK",
           "highlightIndex": 3
         }
       ]

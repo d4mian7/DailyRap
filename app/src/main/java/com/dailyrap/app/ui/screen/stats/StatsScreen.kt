@@ -19,8 +19,13 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.EmojiEvents
+import androidx.compose.material.icons.filled.LocalFireDepartment
+import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -39,6 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -241,12 +247,9 @@ private fun LiteralnieStatsContent(stats: PlayerStats) {
 
     Spacer(modifier = Modifier.height(16.dp))
 
-    // Combine guesses 7, 8, 9 into "6+" bucket
-    val sixPlusCount = (7..9).sumOf { stats.literalnieGuessHistogram[it] ?: 0 }
-    val allCounts = (1..6).map { stats.literalnieGuessHistogram[it] ?: 0 } + sixPlusCount
-    val maxCount = allCounts.maxOrNull() ?: 1
+    val maxCount = (1..9).maxOf { stats.literalnieGuessHistogram[it] ?: 0 }.coerceAtLeast(1)
 
-    for (guesses in 1..6) {
+    for (guesses in 1..9) {
         val count = stats.literalnieGuessHistogram[guesses] ?: 0
         HistogramBar(
             label = "$guesses",
@@ -256,13 +259,6 @@ private fun LiteralnieStatsContent(stats: PlayerStats) {
         )
         Spacer(modifier = Modifier.height(8.dp))
     }
-    HistogramBar(
-        label = "6+",
-        count = sixPlusCount,
-        maxCount = maxCount,
-        accentColor = LetterCorrect
-    )
-    Spacer(modifier = Modifier.height(8.dp))
 }
 
 @Composable
@@ -320,20 +316,21 @@ private fun StatCardsRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        StatCard(icon = "\uD83C\uDFAE", value = "$played", label = "Zagrane", modifier = Modifier.weight(1f))
-        StatCard(icon = "\uD83C\uDFC6", value = "$winPercent%", label = "Wygrane", modifier = Modifier.weight(1f))
-        StatCard(icon = "\uD83D\uDD25", value = "$streak", label = "Streak", color = accentColor, modifier = Modifier.weight(1f))
-        StatCard(icon = "\u2B50", value = "$bestStreak", label = "Max", color = LetterPresent, modifier = Modifier.weight(1f))
+        StatCard(icon = Icons.Default.SportsEsports, iconTint = TextSecondary, value = "$played", label = "Zagrane", modifier = Modifier.weight(1f))
+        StatCard(icon = Icons.Default.EmojiEvents, iconTint = LetterPresent, value = "$winPercent%", label = "Wygrane", modifier = Modifier.weight(1f))
+        StatCard(icon = Icons.Default.LocalFireDepartment, iconTint = Color(0xFFEF4444), value = "$streak", label = "Streak", color = accentColor, modifier = Modifier.weight(1f))
+        StatCard(icon = Icons.Default.Star, iconTint = LetterPresent, value = "$bestStreak", label = "Max", color = LetterPresent, modifier = Modifier.weight(1f))
     }
 }
 
 @Composable
 private fun StatCard(
-    icon: String,
+    icon: ImageVector,
     value: String,
     label: String,
     modifier: Modifier = Modifier,
-    color: Color = TileText
+    color: Color = TileText,
+    iconTint: Color = TextSecondary
 ) {
     Column(
         modifier = modifier
@@ -343,9 +340,11 @@ private fun StatCard(
             .padding(vertical = 12.dp, horizontal = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = icon,
-            fontSize = 16.sp
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = iconTint,
+            modifier = Modifier.size(20.dp)
         )
         Spacer(modifier = Modifier.height(4.dp))
         Text(

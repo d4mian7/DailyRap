@@ -5,16 +5,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.SentimentDissatisfied
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -92,13 +99,22 @@ fun ResultsDialog(
                 .verticalScroll(rememberScrollState()),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Header with emoji — no game ID
-            Text(
-                text = if (won) "\uD83C\uDF89 Brawo!" else "\uD83D\uDE14 Przegrana",
-                color = if (won) LetterCorrect else Color(0xFFEF4444),
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp
-            )
+            // Header with icon — no game ID
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Icon(
+                    imageVector = if (won) Icons.Default.Celebration else Icons.Default.SentimentDissatisfied,
+                    contentDescription = null,
+                    tint = if (won) LetterCorrect else Color(0xFFEF4444),
+                    modifier = Modifier.size(28.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = if (won) "Brawo!" else "Przegrana",
+                    color = if (won) LetterCorrect else Color(0xFFEF4444),
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 24.sp
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DailyRap — panel zestawow</title>
+<style>
+  :root{--bg:#0f0f14;--panel:#1a1a24;--panel2:#232333;--line:#2e2e40;--text:#e8e8f0;--muted:#9a9ab0;--purple:#8b5cf6;--green:#22c55e;--red:#ef4444;--gold:#eab308;--blue:#3b82f6;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Segoe UI",system-ui,sans-serif;background:var(--bg);color:var(--text);}
+  header{padding:12px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+  header h1{font-size:18px;margin:0;}header h1 span{color:var(--purple);}
+  .grow{flex:1;}
+  .tabs{display:flex;gap:6px;}
+  .tab{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;font-size:14px;color:var(--muted);}
+  .tab.active{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:600;}
+  button{background:var(--panel2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer;font-size:13px;}
+  button:hover{border-color:var(--purple);}
+  button.primary{background:var(--purple);border-color:var(--purple);color:#fff;font-weight:600;}
+  button.ai{background:linear-gradient(90deg,#8b5cf6,#3b82f6);border:none;color:#fff;font-weight:600;}
+  button:disabled{opacity:.4;cursor:not-allowed;}
+  button.danger{color:var(--red);}
+  input,select,textarea{background:#0c0c12;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:7px 9px;font-size:13px;font-family:inherit;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--purple);}
+  .banner{padding:8px 12px;border-radius:8px;font-size:13px;}
+  .banner.ok{background:rgba(34,197,94,.12);color:var(--green);}
+  .banner.bad{background:rgba(239,68,68,.12);color:var(--red);}
+  .page{display:none;padding:18px;}
+  .page.active{display:block;}
+  /* ---- Kalendarz ---- */
+  .layout{display:grid;grid-template-columns:1fr 380px;gap:18px;align-items:start;}
+  @media(max-width:900px){.layout{grid-template-columns:1fr;}}
+  .cal{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .calbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .calbar .month{font-size:16px;font-weight:600;min-width:170px;text-align:center;text-transform:capitalize;}
+  .grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;}
+  .dow{text-align:center;color:var(--muted);font-size:11px;padding:4px 0;text-transform:uppercase;}
+  .cell{aspect-ratio:1;background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:6px;cursor:pointer;display:flex;flex-direction:column;gap:4px;}
+  .cell:hover{border-color:var(--purple);}
+  .cell.empty{background:transparent;border:none;cursor:default;}
+  .cell.today{border-color:var(--gold);}
+  .cell.sel{outline:2px solid var(--purple);}
+  .cell.past{opacity:.55;}
+  .daynum{font-size:12px;color:var(--muted);}
+  .cell.today .daynum{color:var(--gold);font-weight:700;}
+  .dots{display:flex;gap:4px;margin-top:auto;}
+  .dot{width:100%;height:6px;border-radius:3px;background:#3a3a4a;}
+  .dot.ok{background:var(--green);}.dot.bad{background:var(--red);}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:12px;}
+  .pill{display:inline-block;width:18px;height:8px;border-radius:4px;vertical-align:middle;margin-right:4px;}
+  .side{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;position:sticky;top:18px;}
+  .side h2{margin:0 0 4px;font-size:16px;}
+  .mode{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px;}
+  .mhead{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+  .tag{font-size:11px;padding:2px 7px;border-radius:6px;font-weight:700;}
+  .tag.W{background:rgba(59,130,246,.2);color:var(--blue);}.tag.C{background:rgba(139,92,246,.2);color:var(--purple);}.tag.X{background:rgba(234,179,8,.2);color:var(--gold);}
+  .status{font-size:11px;margin-left:auto;padding:2px 8px;border-radius:6px;}
+  .status.ok{background:rgba(34,197,94,.15);color:var(--green);}.status.bad{background:rgba(239,68,68,.15);color:var(--red);}.status.none{background:#2a2a38;color:var(--muted);}
+  .body{font-size:13px;line-height:1.5;}.kv{color:var(--muted);}
+  .cat{margin:3px 0;}.cat .nm{color:var(--purple);}
+  .errs{color:var(--red);font-size:12px;margin-top:6px;white-space:pre-wrap;}
+  .row{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+  /* ---- Kreator ---- */
+  .creator{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start;}
+  @media(max-width:900px){.creator{grid-template-columns:1fr;}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:12px;color:var(--muted);margin-bottom:4px;}
+  .field input,.field select{width:100%;}
+  .toolbar{display:flex;gap:8px;align-items:end;flex-wrap:wrap;margin-bottom:16px;}
+  .catbox{border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:10px;}
+  .catbox .d0{border-left:3px solid #f4d03f;}
+  .wordsgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;}
+  .clrow{display:grid;grid-template-columns:24px 1fr 110px 90px;gap:6px;align-items:center;margin-bottom:6px;}
+  .clrow .idx{color:var(--gold);font-weight:700;text-align:center;}
+  .letterbadge{font-size:12px;padding:4px 0;text-align:center;border-radius:6px;background:#2a2a38;color:var(--muted);}
+  .letterbadge.ok{background:rgba(34,197,94,.2);color:var(--green);}
+  .letterbadge.bad{background:rgba(239,68,68,.2);color:var(--red);}
+  .live{position:sticky;top:18px;}
+  .live h3{margin:0 0 8px;font-size:14px;}
+  .checkitem{font-size:12px;padding:5px 8px;border-radius:6px;margin-bottom:5px;}
+  .checkitem.ok{background:rgba(34,197,94,.1);color:var(--green);}
+  .checkitem.bad{background:rgba(239,68,68,.1);color:var(--red);}
+  .muted{color:var(--muted);font-size:12px;}
+  /* ---- Walidacja ---- */
+  .vfile{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px;}
+  .vfile h3{margin:0 0 8px;font-size:15px;}
+  .verr{font-size:13px;color:var(--red);padding:4px 0;border-top:1px solid var(--line);}
+  .vok{color:var(--green);font-size:13px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>Daily<span>Rap</span></h1>
+  <div class="tabs">
+    <div class="tab active" data-tab="calendar" onclick="switchTab('calendar')">Kalendarz</div>
+    <div class="tab" data-tab="creator" onclick="switchTab('creator')">Kreator</div>
+    <div class="tab" data-tab="validate" onclick="switchTab('validate')">Walidacja</div>
+  </div>
+  <div class="grow"></div>
+  <div id="globalBanner" class="banner ok">...</div>
+  <button onclick="reload()">Odswiez</button>
+</header>
+
+<!-- ===== KALENDARZ ===== -->
+<div id="page-calendar" class="page active">
+  <div class="layout">
+    <div class="cal">
+      <div class="calbar">
+        <button onclick="changeMonth(-1)">‹</button>
+        <div class="month" id="monthLabel"></div>
+        <button onclick="changeMonth(1)">›</button>
+        <div class="grow"></div>
+        <button onclick="goToday()">Dzis</button>
+      </div>
+      <div class="grid" id="dow"></div>
+      <div class="grid" id="grid"></div>
+      <div class="legend">
+        <span><span class="pill" style="background:var(--blue)"></span><b>W</b> RapWord</span>
+        <span><span class="pill" style="background:var(--purple)"></span><b>C</b> RapConnect</span>
+        <span><span class="pill" style="background:var(--gold)"></span><b>X</b> RapCrossword</span>
+        <span><span class="pill" style="background:var(--green)"></span>OK</span>
+        <span><span class="pill" style="background:var(--red)"></span>blad</span>
+        <span><span class="pill" style="background:#3a3a4a"></span>dziura</span>
+      </div>
+    </div>
+    <div class="side" id="side"><div class="muted" style="text-align:center;padding:30px 10px;">Kliknij dzien, aby zobaczyc i zaplanowac zestawy.</div></div>
+  </div>
+</div>
+
+<!-- ===== KREATOR ===== -->
+<div id="page-creator" class="page">
+  <div class="toolbar">
+    <div class="field" style="margin:0;">
+      <label>Tryb</label>
+      <select id="cMode" onchange="onModeChange()">
+        <option value="word">RapWord (haslo)</option>
+        <option value="connect">RapConnect (4x4)</option>
+        <option value="crossword">RapCrossword (krzyzowka)</option>
+      </select>
+    </div>
+    <div class="field" style="margin:0;">
+      <label>Data</label>
+      <input type="date" id="cDate" onchange="renderLive()">
+    </div>
+    <div class="field" style="margin:0;flex:1;min-width:160px;">
+      <label>Temat dla AI (opcjonalnie)</label>
+      <input type="text" id="cTheme" placeholder="np. SBM Label, albumy 2024...">
+    </div>
+    <button class="ai" id="aiBtn" onclick="aiGenerate()">Wygeneruj przez AI</button>
+  </div>
+  <div class="creator">
+    <div class="card" id="form"></div>
+    <div class="card live">
+      <h3>Walidacja na zywo</h3>
+      <div id="liveChecks"></div>
+      <div class="row">
+        <button class="primary" id="saveBtn" onclick="saveCreator()">Zapisz zestaw</button>
+        <button onclick="clearForm()">Wyczysc</button>
+      </div>
+      <div id="saveMsg" class="muted" style="margin-top:8px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== WALIDACJA ===== -->
+<div id="page-validate" class="page">
+  <div id="validateBody"></div>
+</div>
+
+<script>
+const MODES={words:{tag:"W",name:"RapWord"},puzzles:{tag:"C",name:"RapConnect"},crosswords:{tag:"X",name:"RapCrossword"}};
+const KIND={word:"words",connect:"puzzles",crossword:"crosswords"};
+let DATA=null, CONFIG={hasApiKey:false};
+let view=new Date(); view.setDate(1);
+let selected=null;
+
+const up=s=>String(s==null?"":s).toUpperCase();
+const chars=s=>[...String(s==null?"":s)];
+const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const fmt=d=>d.toLocaleDateString("sv-SE");
+
+async function reload(){
+  const [d,c]=await Promise.all([fetch("/api/data").then(r=>r.json()),fetch("/api/config").then(r=>r.json())]);
+  DATA=d; CONFIG=c;
+  document.getElementById("aiBtn").disabled=!c.hasApiKey;
+  document.getElementById("aiBtn").title=c.hasApiKey?("Model: "+c.model):"Ustaw ANTHROPIC_API_KEY aby wlaczyc";
+  renderBanner(); renderCalendar(); if(selected) renderSide(selected);
+  renderLive(); renderValidate();
+}
+function byDate(kind,date){return DATA.modes[kind].items.find(i=>i.date===date);}
+
+function renderBanner(){
+  const el=document.getElementById("globalBanner");let errs=0;
+  for(const k in DATA.modes){errs+=DATA.modes[k].fileErrors.length;DATA.modes[k].items.forEach(i=>{if(!i._valid)errs++;});}
+  if(errs){el.className="banner bad";el.textContent=errs+" bledow w danych";}
+  else{el.className="banner ok";el.textContent="Wszystkie zestawy zgodne ✓";}
+}
+
+function switchTab(t){
+  document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("active",x.dataset.tab===t));
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  document.getElementById("page-"+t).classList.add("active");
+}
+
+/* ===== KALENDARZ ===== */
+function renderCalendar(){
+  const dowEl=document.getElementById("dow");
+  if(!dowEl.dataset.done){["Pn","Wt","Sr","Cz","Pt","So","Nd"].forEach(d=>{const e=document.createElement("div");e.className="dow";e.textContent=d;dowEl.appendChild(e);});dowEl.dataset.done=1;}
+  document.getElementById("monthLabel").textContent=view.toLocaleDateString("pl-PL",{month:"long",year:"numeric"});
+  const grid=document.getElementById("grid");grid.innerHTML="";
+  const y=view.getFullYear(),m=view.getMonth();
+  let start=new Date(y,m,1).getDay();start=(start+6)%7;
+  const days=new Date(y,m+1,0).getDate();const todayStr=DATA.today;
+  for(let i=0;i<start;i++){const e=document.createElement("div");e.className="cell empty";grid.appendChild(e);}
+  for(let d=1;d<=days;d++){
+    const date=fmt(new Date(y,m,d));
+    const cell=document.createElement("div");cell.className="cell";
+    if(date===todayStr)cell.classList.add("today");
+    if(date<todayStr)cell.classList.add("past");
+    if(date===selected)cell.classList.add("sel");
+    cell.onclick=()=>{selected=date;renderCalendar();renderSide(date);};
+    const num=document.createElement("div");num.className="daynum";num.textContent=d;cell.appendChild(num);
+    const dots=document.createElement("div");dots.className="dots";
+    for(const k in MODES){const it=byDate(k,date);const dot=document.createElement("div");dot.className="dot"+(it?(it._valid?" ok":" bad"):"");dots.appendChild(dot);}
+    cell.appendChild(dots);grid.appendChild(cell);
+  }
+}
+function summaryHtml(kind,it){
+  if(kind==="words")return `<div><b>${esc(it.word)}</b> <span class="kv">(${it.variant} liter · ${esc(it.hint||"")})</span></div>`;
+  if(kind==="crosswords"){
+    const cl=(it.clues||[]).map((c,i)=>`<div class="cat">${i+1}. ${esc(c.question)} — <b>${esc(c.answer)}</b> <span class="kv">[${c.highlightIndex}]</span></div>`).join("");
+    return `<div>Haslo: <b>${esc(it.secretWord)}</b></div>${cl}`;
+  }
+  return (it.categories||[]).map(c=>`<div class="cat"><span class="nm">${esc(c.name)}</span> <span class="kv">[${c.difficulty}]</span>: ${c.words.map(esc).join(", ")}</div>`).join("");
+}
+function renderSide(date){
+  const side=document.getElementById("side");
+  let html=`<h2>${date}</h2><div class="muted" style="margin-bottom:14px;">${date===DATA.today?"dzisiaj":""}</div>`;
+  for(const k in MODES){
+    const it=byDate(k,date);const M=MODES[k];
+    html+=`<div class="mode"><div class="mhead"><span class="tag ${M.tag}">${M.tag}</span><b>${M.name}</b>`;
+    html+=it?`<span class="status ${it._valid?"ok":"bad"}">${it._valid?"OK":"BLAD"}</span>`:`<span class="status none">brak</span>`;
+    html+=`</div>`;
+    if(it){
+      html+=`<div class="body">${summaryHtml(k,it)}</div>`;
+      if(!it._valid)html+=`<div class="errs">${it._errors.map(esc).join("\n")}</div>`;
+      html+=`<div class="row"><button onclick="openInCreator('${k}','${date}')">Edytuj w kreatorze</button><button onclick="move('${k}','${date}')">Przenies</button><button class="danger" onclick="del('${k}','${date}')">Usun</button></div>`;
+    } else {
+      html+=`<div class="row"><button class="primary" onclick="newInCreator('${k}','${date}')">Uloz w kreatorze</button></div>`;
+    }
+    html+=`</div>`;
+  }
+  side.innerHTML=html;
+}
+function changeMonth(d){view.setMonth(view.getMonth()+d);renderCalendar();}
+function goToday(){view=new Date(DATA.today);view.setDate(1);selected=DATA.today;renderCalendar();renderSide(DATA.today);}
+async function del(kind,date){
+  if(!confirm(`Usunac ${MODES[kind].name} z ${date}?`))return;
+  const r=await fetch("/api/delete",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,date})});
+  DATA=(await r.json()).data;renderBanner();renderCalendar();renderSide(date);renderValidate();
+}
+async function move(kind,date){
+  const to=prompt("Przenies na date (YYYY-MM-DD):",date);if(!to||to===date)return;
+  const r=await fetch("/api/move",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,fromDate:date,toDate:to})});
+  const res=await r.json();if(!res.ok){alert((res.errors||[res.error]).join("\n"));return;}
+  DATA=res.data;selected=to;view=new Date(to);view.setDate(1);renderBanner();renderCalendar();renderSide(to);renderValidate();
+}
+
+/* ===== KREATOR ===== */
+const ALIAS_BACK={word:"words",connect:"puzzles",crossword:"crosswords"};
+let CST={word:null,connect:null,crossword:null}; // stan formularzy
+
+function blank(mode){
+  if(mode==="word")return {word:"",hint:""};
+  if(mode==="connect")return {categories:[0,1,2,3].map(d=>({name:"",words:["","","",""],difficulty:d}))};
+  return {secretWord:"",clues:[]};
+}
+function curMode(){return document.getElementById("cMode").value;}
+function st(){const m=curMode();if(!CST[m])CST[m]=blank(m);return CST[m];}
+
+function onModeChange(){renderForm();renderLive();}
+function clearForm(){CST[curMode()]=blank(curMode());renderForm();renderLive();}
+
+function openInCreator(kind,date){
+  const it=byDate(kind,date);const mode=Object.keys(ALIAS_BACK).find(k=>ALIAS_BACK[k]===kind);
+  switchTab("creator");document.getElementById("cMode").value=mode;document.getElementById("cDate").value=date;
+  if(mode==="word")CST.word={word:it.word,hint:it.hint};
+  else if(mode==="connect")CST.connect={categories:it.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
+  else CST.crossword={secretWord:it.secretWord,clues:it.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex}))};
+  renderForm();renderLive();
+}
+function newInCreator(kind,date){
+  const mode=Object.keys(ALIAS_BACK).find(k=>ALIAS_BACK[k]===kind);
+  switchTab("creator");document.getElementById("cMode").value=mode;document.getElementById("cDate").value=date;
+  CST[mode]=blank(mode);renderForm();renderLive();
+}
+
+function renderForm(){
+  const m=curMode();const s=st();const f=document.getElementById("form");
+  if(m==="word"){
+    f.innerHTML=`
+      <div class="field"><label>Slowo (WIELKIMI literami)</label><input id="w_word" value="${esc(s.word)}" oninput="st().word=this.value.toUpperCase();this.value=st().word;renderLive();"></div>
+      <div class="field"><label>Podpowiedz (kategoria)</label><input id="w_hint" value="${esc(s.hint)}" oninput="st().hint=this.value;renderLive();" placeholder="Raper/ka, Album, Slang..."></div>
+      <div class="muted">variant (liczba liter) liczony automatycznie przy zapisie.</div>`;
+  } else if(m==="connect"){
+    const names=["zielony","zolty","niebieski","fioletowy"];
+    f.innerHTML=s.categories.map((c,ci)=>`
+      <div class="catbox">
+        <div class="field" style="margin-bottom:6px;"><label>Kategoria ${ci+1} — difficulty ${c.difficulty} (${names[c.difficulty]})</label>
+          <input value="${esc(c.name)}" oninput="st().categories[${ci}].name=this.value;renderLive();" placeholder="Nazwa kategorii"></div>
+        <div class="wordsgrid">${c.words.map((w,wi)=>`<input value="${esc(w)}" oninput="st().categories[${ci}].words[${wi}]=this.value;renderLive();" placeholder="slowo ${wi+1}">`).join("")}</div>
+      </div>`).join("");
+  } else {
+    f.innerHTML=`
+      <div class="field"><label>Haslo (secretWord, WIELKIMI literami)</label>
+        <input id="x_secret" value="${esc(s.secretWord)}" oninput="onSecretChange(this.value)"></div>
+      <div id="cluesBox"></div>`;
+    renderClues();
+  }
+}
+function onSecretChange(v){
+  const s=st();s.secretWord=up(v);document.getElementById("x_secret").value=s.secretWord;
+  const n=chars(s.secretWord).length;
+  while(s.clues.length<n)s.clues.push({question:"",answer:"",highlightIndex:0});
+  s.clues.length=n;
+  renderClues();renderLive();
+}
+function renderClues(){
+  const s=st();const secret=chars(s.secretWord);const box=document.getElementById("cluesBox");
+  if(!box)return;
+  box.innerHTML=s.clues.map((c,i)=>{
+    const ans=chars(up(c.answer));const need=secret[i]||"?";
+    const opts=ans.map((ch,j)=>`<option value="${j}" ${j===c.highlightIndex?"selected":""}>${j}: ${ch}</option>`).join("")||`<option>—</option>`;
+    const cur=ans[c.highlightIndex];const okLet=cur===need;
+    return `<div class="clrow">
+      <div class="idx">${i+1}</div>
+      <input value="${esc(c.answer)}" oninput="onAnswer(${i},this.value)" placeholder="odpowiedz (litera ${need})">
+      <select onchange="st().clues[${i}].highlightIndex=+this.value;renderClues();renderLive();">${opts}</select>
+      <div class="letterbadge ${ans.length?(okLet?'ok':'bad'):''}">${need}${ans.length?(okLet?' ✓':' ✗'):''}</div>
+    </div>
+    <div class="clrow2" style="margin:-2px 0 8px 30px;"><input style="width:calc(100% - 110px);" value="${esc(c.question)}" oninput="st().clues[${i}].question=this.value;renderLive();" placeholder="pytanie"> <button onclick="autoHi(${i})">auto litera</button></div>`;
+  }).join("");
+}
+function onAnswer(i,v){const s=st();s.clues[i].answer=up(v);renderClues();renderLive();}
+function autoHi(i){
+  const s=st();const need=chars(s.secretWord)[i];const ans=chars(up(s.clues[i].answer));
+  const pos=ans.indexOf(need);if(pos>=0)s.clues[i].highlightIndex=pos;
+  renderClues();renderLive();
+}
+
+// Walidacja po stronie klienta (lustro reguly serwera) - do feedbacku na zywo.
+function liveValidate(mode,entry){
+  const e=[];const dateOk=/^\d{4}-\d{2}-\d{2}$/.test(entry.date||"");
+  if(!dateOk)e.push("Brak/niepoprawna data (YYYY-MM-DD)");
+  if(mode==="word"){
+    const len=chars(entry.word).length;
+    if(!len)e.push("Puste slowo");
+    if(!entry.hint)e.push("Brak podpowiedzi");
+  }else if(mode==="connect"){
+    if(entry.categories.length!==4)e.push("Wymagane 4 kategorie");
+    const all=[],names=new Set();
+    entry.categories.forEach((c,ci)=>{
+      if(!c.name.trim())e.push(`Kategoria ${ci+1}: pusta nazwa`);
+      else if(names.has(c.name))e.push(`Zduplikowana nazwa: ${c.name}`);else names.add(c.name);
+      if(c.words.filter(w=>w.trim()).length!==4)e.push(`Kategoria ${ci+1}: musi miec 4 slowa`);
+      c.words.forEach(w=>{if(w.trim())all.push(up(w.trim()));});
+    });
+    const cnt={};all.forEach(w=>cnt[w]=(cnt[w]||0)+1);
+    Object.entries(cnt).filter(([,n])=>n>1).forEach(([w,n])=>e.push(`Slowo "${w}" powtarza sie ${n}x`));
+  }else{
+    const secret=chars(up(entry.secretWord));
+    if(!secret.length)e.push("Puste haslo");
+    if(entry.clues.length!==secret.length)e.push(`Liczba pytan (${entry.clues.length}) != dlugosc hasla (${secret.length})`);
+    const seen=new Set();
+    entry.clues.forEach((c,i)=>{
+      const ans=chars(up(c.answer));const A=up(c.answer);
+      if(!ans.length){e.push(`Pyt.${i+1}: pusta odpowiedz`);return;}
+      if(seen.has(A))e.push(`Pyt.${i+1}: odpowiedz "${A}" powtarza sie w tej krzyzowce`);else seen.add(A);
+      if(c.highlightIndex<0||c.highlightIndex>=ans.length){e.push(`Pyt.${i+1}: highlightIndex poza zakresem`);return;}
+      if(i<secret.length&&ans[c.highlightIndex]!==secret[i])e.push(`Pyt.${i+1}: "${c.answer}"[${c.highlightIndex}]="${ans[c.highlightIndex]}", a haslo wymaga "${secret[i]}"`);
+    });
+  }
+  // Globalna unikalnosc miedzy dniami (gracz gra codziennie)
+  e.push(...crossDupErrors(mode,entry));
+  return e;
+}
+function crossDupErrors(mode,entry){
+  const e=[];const kind=ALIAS_BACK[mode];
+  const others=(DATA&&DATA.modes[kind]?DATA.modes[kind].items:[]).filter(it=>it.date!==entry.date);
+  if(mode==="word"){
+    const used=new Set(others.map(it=>up(it.word)));
+    const W=up(entry.word);if(W&&used.has(W))e.push(`Slowo "${W}" juz uzyte w innym dniu`);
+  }else if(mode==="connect"){
+    /* Connect: powtorka slowa to tylko ostrzezenie, nie blokuje zapisu */
+  }else{
+    // Krzyzowka: pytanie te samo gdziekolwiek = blad; haslo/odpowiedz powtorzone w odstepie < GAP = blad.
+    const GAP=7;
+    const norm=q=>up(q).replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
+    const dd=(a,b)=>Math.abs(Math.round((Date.parse(a+"T00:00:00Z")-Date.parse(b+"T00:00:00Z"))/86400000));
+    const oq=[];others.forEach(it=>(it.clues||[]).forEach(c=>{if(c.question)oq.push({n:norm(c.question),date:it.date});}));
+    (entry.clues||[]).forEach((c,i)=>{const en=norm(c.question);if(en){const ex=oq.find(o=>o.n===en);if(ex)e.push(`Pyt.${i+1}: to samo pytanie juz uzyte w dniu ${ex.date}`);}});
+    const S=up(entry.secretWord);
+    if(S)others.forEach(it=>{if(up(it.secretWord)===S){const d=dd(it.date,entry.date);if(d<GAP)e.push(`Haslo "${S}" uzyte ${d} dni od ${it.date} (min odstep ${GAP} dni)`);}});
+    (entry.clues||[]).forEach(c=>{const A=up(c.answer);if(!A)return;others.forEach(it=>{if((it.clues||[]).some(x=>up(x.answer)===A)){const d=dd(it.date,entry.date);if(d<GAP)e.push(`Odpowiedz "${A}" uzyta ${d} dni od ${it.date} (min odstep ${GAP} dni)`);}});});
+  }
+  return e;
+}
+function buildEntry(mode){
+  const date=document.getElementById("cDate").value;const s=st();
+  if(mode==="word")return {date,word:up(s.word),hint:s.hint,variant:chars(s.word).length};
+  if(mode==="connect")return {date,categories:s.categories.map(c=>({name:c.name,words:c.words,difficulty:c.difficulty}))};
+  return {date,secretWord:up(s.secretWord),clues:s.clues};
+}
+function renderLive(){
+  const mode=curMode();const entry=buildEntry(mode);const errs=liveValidate(mode,entry);
+  const box=document.getElementById("liveChecks");
+  if(!errs.length){box.innerHTML=`<div class="checkitem ok">Zestaw zgodny — mozesz zapisac ✓</div>`;}
+  else{box.innerHTML=errs.map(x=>`<div class="checkitem bad">${esc(x)}</div>`).join("");}
+  document.getElementById("saveBtn").disabled=errs.length>0;
+}
+async function saveCreator(){
+  const mode=curMode();const kind=ALIAS_BACK[mode];const entry=buildEntry(mode);
+  const r=await fetch("/api/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,entry})});
+  const res=await r.json();const msg=document.getElementById("saveMsg");
+  if(!res.ok){msg.style.color="var(--red)";msg.textContent=(res.errors||[res.error]).join("\n");return;}
+  DATA=res.data;msg.style.color="var(--green)";msg.textContent=`Zapisano na ${entry.date}.`;
+  renderBanner();renderCalendar();renderValidate();
+}
+async function aiGenerate(){
+  const mode=curMode();const date=document.getElementById("cDate").value;const theme=document.getElementById("cTheme").value.trim();
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){document.getElementById("saveMsg").textContent="Najpierw ustaw date.";return;}
+  const btn=document.getElementById("aiBtn");const old=btn.textContent;btn.disabled=true;btn.textContent="Generuje...";
+  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent="Claude uklada zestaw...";
+  try{
+    const r=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:mode,date,theme})});
+    const res=await r.json();
+    if(!res.ok){msg.style.color="var(--red)";msg.textContent=res.error;return;}
+    const e=res.entry;
+    if(mode==="word")CST.word={word:e.word,hint:e.hint};
+    else if(mode==="connect")CST.connect={categories:e.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
+    else CST.crossword={secretWord:e.secretWord,clues:e.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex}))};
+    renderForm();renderLive();
+    msg.style.color=res.valid?"var(--green)":"var(--gold)";
+    msg.textContent=res.valid?"AI wygenerowalo zgodny zestaw — sprawdz i zapisz.":"AI wygenerowalo zestaw z uwagami — popraw recznie.";
+  }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
+  finally{btn.disabled=!CONFIG.hasApiKey;btn.textContent=old;}
+}
+
+/* ===== WALIDACJA (przeglad) ===== */
+function renderValidate(){
+  const body=document.getElementById("validateBody");let html="";
+  for(const k in MODES){
+    const mod=DATA.modes[k];const bad=mod.items.filter(i=>!i._valid);
+    const errs=[...mod.fileErrors,...bad.flatMap(i=>i._errors)];
+    html+=`<div class="vfile"><h3>${MODES[k].name} <span class="muted">(${mod.items.length} wpisow)</span></h3>`;
+    if(!errs.length)html+=`<div class="vok">Wszystko OK ✓</div>`;
+    else html+=errs.map(e=>`<div class="verr">✗ ${esc(e)}</div>`).join("");
+    html+=`</div>`;
+  }
+  body.innerHTML=html;
+}
+
+reload();
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
   "puzzles": [
     {
-      "id": 1, "date": "2026-04-01",
+      "id": 1, "date": "2026-07-20",
       "categories": [
         { "name": "Członkowie Chillwagon", "words": ["Kizo", "ReTo", "Żabson", "Borixon"], "difficulty": 2 },
         { "name": "Raperzy z 2115", "words": ["Bedoes", "White", "Kuqe", "Blacha"], "difficulty": 1 },
@@ -10,48 +10,48 @@
       ]
     },
     {
-      "id": 2, "date": "2026-04-02",
+      "id": 2, "date": "2026-07-21",
       "categories": [
-        { "name": "Raperzy z SBM Label", "words": ["Beteo", "Solar", "Kinny Zimmer", "White 2115"], "difficulty": 0 },
+        { "name": "Albumy Quebonafide", "words": ["Romantic Psycho", "Egzotyka", "Ezoteryka", "PÓŁNOC/POŁUDNIE"], "difficulty": 0 },
         { "name": "Duety / grupy rapowe", "words": ["Taconafide", "PRO8L3M", "PG$", "OIO"], "difficulty": 1 },
-        { "name": "Albumy Quebonafide", "words": ["Romantic Psycho", "Egzotyka", "Ezoteryka", "PÓŁNOC/POŁUDNIE"], "difficulty": 2 },
+        { "name": "Raperzy z SBM Label", "words": ["Fukaj", "Solar", "Kinny Zimmer", "Kacperczyk"], "difficulty": 2 },
         { "name": "Raperzy trap", "words": ["Malik Montana", "Young Multi", "Otsochodzi", "Young Igi"], "difficulty": 3 }
       ]
     },
     {
-      "id": 3, "date": "2026-04-03",
+      "id": 3, "date": "2026-07-22",
       "categories": [
         { "name": "Rapowe hity 2022", "words": ["Jeżyk", "Jetlag", "KETCHUP", "JESTEM POJ384NY"], "difficulty": 0 },
-        { "name": "Raperzy trap", "words": ["Malik Montana", "Young Multi", "Otsochodzi", "Young Igi"], "difficulty": 1 },
+        { "name": "Dwuczłonowa ksywa rapera", "words": ["Malik Montana", "Young Multi", "Kaz Bałagane", "Young Igi"], "difficulty": 1 },
         { "name": "Single Żabsona z 2025 roku", "words": ["BOUNCE BACK", "FUTURE TRUNKS", "MAGIC CITY", "I00"], "difficulty": 2 },
-        { "name": "Członkowie 2020label", "words": ["Otsochodzi", "Taco Hemingway", "OKI", "PRO8L3M"], "difficulty": 3 }
+        { "name": "Członkowie 2020label", "words": ["Otsochodzi", "Dziarma", "OKI", "PRO8L3M"], "difficulty": 3 }
       ]
     },
     {
-      "id": 4, "date": "2026-04-04",
+      "id": 4, "date": "2026-07-23",
       "categories": [
         { "name": "Duety w polskim rapie", "words": ["Taconafide", "PG$", "Dwa Sławy", "PRO8L3M"], "difficulty": 0 },
-        { "name": "Raperzy z Popkiller Młode Wilki", "words": ["Bedoes 2115", "ReTo", "Żabson", "White 2115"], "difficulty": 2 },
-        { "name": "Producenci", "words": ["@atutowy", "2K", "Deemz", "Lanek"], "difficulty": 1 },
-        { "name": "Popowi raperzy", "words": ["Sobel", "Gibbs", "Mata", "Kuban"], "difficulty": 3 }
+        { "name": "Producenci", "words": ["@atutowy", "2K", "Deemz", "Lanek"], "difficulty": 2 },
+        { "name": "Popowi/radiowi raperzy", "words": ["Sobel", "Gibbs", "Mata", "Kuban"], "difficulty": 1 },
+        { "name": "Raperzy z Popkiller Młode Wilki 4 (2015)", "words": ["Otsochodzi", "Guzior", "Żabson", "Sarius"], "difficulty": 3 }
       ]
     },
     {
-      "id": 5, "date": "2026-04-05",
-      "categories": [
-        { "name": "Utwory Otsochodzi", "words": ["RAP", "Mów", "SMS", "KFC"], "difficulty": 0 },
-        { "name": "Featy z Młody Matczak", "words": ["White 2115", "Popek", "Taco Hemingway", "Quebonafide"], "difficulty": 3 },
-        { "name": "Raperzy z Hotel Maffija", "words": ["Fukaj", "Mata", "Beteo", "Kinny Zimmer"], "difficulty": 2 },
-        { "name": "Skróty albumów Bedoesa 2115", "words": ["KPM", "AŚMZ", "RR", "OZDS"], "difficulty": 1 }
-      ]
-    },
-    {
-      "id": 6, "date": "2026-04-09",
+      "id": 6, "date": "2026-07-24",
       "categories": [
         { "name": "Utwory na literę S", "words": ["Szafir", "Sexoholik", "SIRI", "Smoki"], "difficulty": 0 },
         { "name": "Raperzy z Trójmiasta", "words": ["Kizo", "Young Igi", "Szczyl", "Belmondo"], "difficulty": 2 },
         { "name": "Utwory z cyframi w tytule", "words": ["100 dni do matury", "05:05", "300 BANIEK", "club2020"], "difficulty": 1 },
-        { "name": "Uczestniki Popkiller Młode Wilki 6", "words": ["White 2115", "Jan-rapowanie", "Zeamsone", "Tymek"], "difficulty": 3 }
+        { "name": "Uczestnicy Popkiller Młode Wilki 6 (2018)", "words": ["White 2115", "Jan-rapowanie", "Zeamsone", "Tymek"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 5, "date": "2026-07-25",
+      "categories": [
+        { "name": "Utwory Otsochodzi", "words": ["RAP", "Mów", "SMS", "KFC"], "difficulty": 0 },
+        { "name": "Skróty albumów Bedoesa 2115", "words": ["KPM", "AŚMZ", "RR", "OZDS"], "difficulty": 3 },
+        { "name": "Raperzy z Hotel Maffija", "words": ["Fukaj", "Bedoes 2115", "Beteo", "Kinny Zimmer"], "difficulty": 2 },
+        { "name": "Featy z Młody Matczak", "words": ["Malik Montana", "Popek", "Taco Hemingway", "Quebonafide"], "difficulty": 1 }
       ]
     }
   ]

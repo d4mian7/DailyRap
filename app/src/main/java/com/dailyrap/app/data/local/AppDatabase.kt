@@ -8,7 +8,7 @@ import com.dailyrap.app.data.local.entity.LiteralnieResultEntity
 
 @Database(
     entities = [ConnectionsResultEntity::class, LiteralnieResultEntity::class, CrosswordResultEntity::class],
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
