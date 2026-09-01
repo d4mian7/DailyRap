@@ -1,7 +1,7 @@
 {
   "puzzles": [
     {
-      "id": 1, "date": "2026-07-20",
+      "id": 1, "date": "2026-09-01",
       "categories": [
         { "name": "Członkowie Chillwagon", "words": ["Kizo", "ReTo", "Żabson", "Borixon"], "difficulty": 2 },
         { "name": "Raperzy z 2115", "words": ["Bedoes", "White", "Kuqe", "Blacha"], "difficulty": 1 },
@@ -10,7 +10,7 @@
       ]
     },
     {
-      "id": 2, "date": "2026-07-21",
+      "id": 2, "date": "2026-09-02",
       "categories": [
         { "name": "Albumy Quebonafide", "words": ["Romantic Psycho", "Egzotyka", "Ezoteryka", "PÓŁNOC/POŁUDNIE"], "difficulty": 0 },
         { "name": "Duety / grupy rapowe", "words": ["Taconafide", "PRO8L3M", "PG$", "OIO"], "difficulty": 1 },
@@ -19,7 +19,7 @@
       ]
     },
     {
-      "id": 3, "date": "2026-07-22",
+      "id": 3, "date": "2026-09-03",
       "categories": [
         { "name": "Rapowe hity 2022", "words": ["Jeżyk", "Jetlag", "KETCHUP", "JESTEM POJ384NY"], "difficulty": 0 },
         { "name": "Dwuczłonowa ksywa rapera", "words": ["Malik Montana", "Young Multi", "Kaz Bałagane", "Young Igi"], "difficulty": 1 },
@@ -28,7 +28,7 @@
       ]
     },
     {
-      "id": 4, "date": "2026-07-23",
+      "id": 4, "date": "2026-09-04",
       "categories": [
         { "name": "Duety w polskim rapie", "words": ["Taconafide", "PG$", "Dwa Sławy", "PRO8L3M"], "difficulty": 0 },
         { "name": "Producenci", "words": ["@atutowy", "2K", "Deemz", "Lanek"], "difficulty": 2 },
@@ -37,7 +37,7 @@
       ]
     },
     {
-      "id": 6, "date": "2026-07-24",
+      "id": 6, "date": "2026-09-05",
       "categories": [
         { "name": "Utwory na literę S", "words": ["Szafir", "Sexoholik", "SIRI", "Smoki"], "difficulty": 0 },
         { "name": "Raperzy z Trójmiasta", "words": ["Kizo", "Young Igi", "Szczyl", "Belmondo"], "difficulty": 2 },
@@ -46,7 +46,7 @@
       ]
     },
     {
-      "id": 5, "date": "2026-07-25",
+      "id": 5, "date": "2026-09-06",
       "categories": [
         { "name": "Utwory Otsochodzi", "words": ["RAP", "Mów", "SMS", "KFC"], "difficulty": 0 },
         { "name": "Skróty albumów Bedoesa 2115", "words": ["KPM", "AŚMZ", "RR", "OZDS"], "difficulty": 3 },

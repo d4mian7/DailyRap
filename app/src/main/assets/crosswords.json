@@ -2,7 +2,7 @@
   "crosswords": [
     {
       "id": 1,
-      "date": "2026-07-20",
+      "date": "2026-09-01",
       "secretWord": "SZPAKU",
       "clues": [
         {
@@ -39,7 +39,7 @@
     },
     {
       "id": 3,
-      "date": "2026-07-21",
+      "date": "2026-09-02",
       "secretWord": "GUZIOR",
       "clues": [
         {
@@ -76,7 +76,7 @@
     },
     {
       "id": 4,
-      "date": "2026-07-22",
+      "date": "2026-09-03",
       "secretWord": "FUTURA",
       "clues": [
         {
@@ -113,7 +113,7 @@
     },
     {
       "id": 5,
-      "date": "2026-07-23",
+      "date": "2026-09-04",
       "secretWord": "EUROPA",
       "clues": [
         {
@@ -150,7 +150,7 @@
     },
     {
       "id": 2,
-      "date": "2026-07-24",
+      "date": "2026-09-05",
       "secretWord": "BEDOES",
       "clues": [
         {
@@ -187,7 +187,7 @@
     },
     {
       "id": 6,
-      "date": "2026-07-25",
+      "date": "2026-09-06",
       "secretWord": "MALIK",
       "clues": [
         {
