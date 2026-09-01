@@ -32,23 +32,23 @@ class LiteralnieEngineTest {
     // ── Inicjalizacja ──────────────────────────────────────────────
 
     @Test
-    fun `createGame sets correct maxGuesses for variant 5`() {
+    fun `createGame sets 6 maxGuesses for variant 5`() {
         val state = engine.createGame(word5())
-        assertEquals(6, state.maxGuesses) // 5 + 1
+        assertEquals(6, state.maxGuesses)
         assertEquals(GameStatus.IN_PROGRESS, state.status)
         assertTrue(state.guesses.isEmpty())
     }
 
     @Test
-    fun `createGame sets correct maxGuesses for variant 4`() {
+    fun `createGame sets 6 maxGuesses for variant 4`() {
         val state = engine.createGame(word4())
-        assertEquals(5, state.maxGuesses) // 4 + 1
+        assertEquals(6, state.maxGuesses)
     }
 
     @Test
-    fun `createGame sets correct maxGuesses for variant 6`() {
+    fun `createGame sets 6 maxGuesses for variant 6`() {
         val state = engine.createGame(word6())
-        assertEquals(7, state.maxGuesses) // 6 + 1
+        assertEquals(6, state.maxGuesses)
     }
 
     // ── Wpisywanie liter ───────────────────────────────────────────
@@ -206,16 +206,16 @@ class LiteralnieEngineTest {
 
     @Test
     fun `submitGuess last attempt wrong - lose`() {
-        var state = engine.createGame(word4()) // MATA, maxGuesses=5
+        var state = engine.createGame(word4()) // MATA, maxGuesses=6
 
-        // 4 złe próby
-        repeat(4) {
+        // 5 złych prób
+        repeat(5) {
             "XXXX".forEach { c -> state = engine.typeLetter(state, c) }
             state = engine.submitGuess(state).first
         }
         assertEquals(GameStatus.IN_PROGRESS, state.status)
 
-        // 5. próba — też zła
+        // 6. próba — też zła
         "YYYY".forEach { state = engine.typeLetter(state, it) }
         val (finalState, result) = engine.submitGuess(state)
 
