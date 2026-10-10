@@ -53,6 +53,276 @@
         { "name": "Raperzy z Hotel Maffija", "words": ["Fukaj", "Bedoes 2115", "Beteo", "Kinny Zimmer"], "difficulty": 2 },
         { "name": "Featy z Młody Matczak", "words": ["Malik Montana", "Popek", "Taco Hemingway", "Quebonafide"], "difficulty": 1 }
       ]
+    },
+    {
+      "id": 7, "date": "2026-10-10",
+      "categories": [
+        { "name": "Raperzy z Warszawy", "words": ["MATA", "PEZET", "SOKÓŁ", "TACO HEMINGWAY"], "difficulty": 0 },
+        { "name": "Raperzy ze Śląska", "words": ["ABRADAB", "FOKUS", "RAHIM", "MIUOSH"], "difficulty": 1 },
+        { "name": "Albumy Taco Hemingwaya", "words": ["EUROPA", "JARMARK", "CAFE BELGA", "MARMUR"], "difficulty": 2 },
+        { "name": "Duety rapowe", "words": ["TACONAFIDE", "PG$", "DWA SŁAWY", "PRO8L3M"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 8, "date": "2026-10-11",
+      "categories": [
+        { "name": "Ksywy czteroliterowe", "words": ["RETO", "TEDE", "PONO", "OKI"], "difficulty": 0 },
+        { "name": "Klasyczne grupy hip-hopowe", "words": ["PAKTOFONIKA", "KALIBER 44", "MOLESTA", "ZIPERA"], "difficulty": 1 },
+        { "name": "Slang rapowy", "words": ["BANGER", "DISS", "FLOW", "BEAT"], "difficulty": 2 },
+        { "name": "Jednowyrazowe tytuły albumów", "words": ["EGZOTYKA", "POLON", "MARMUR", "JARMARK"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 9, "date": "2026-10-12",
+      "categories": [
+        { "name": "Ksywy pięcioliterowe", "words": ["POPEK", "TYMEK", "GIBBS", "HADES"], "difficulty": 0 },
+        { "name": "Raperki", "words": ["WDOWA", "YOUNG LEOSIA", "DZIARMA", "BAMBI"], "difficulty": 1 },
+        { "name": "Elementy utworu", "words": ["REFREN", "ZWROTKA", "BIT", "WERS"], "difficulty": 2 },
+        { "name": "Rapowe wytwórnie", "words": ["SBM", "2115", "QUEQUALITY", "20LAB"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 10, "date": "2026-10-13",
+      "categories": [
+        { "name": "Slangowo o pieniądzach", "words": ["HAJS", "SIANO", "KASA", "CASH"], "difficulty": 0 },
+        { "name": "Ksywy na literę K", "words": ["KIZO", "KUBAN", "KUKON", "KĘKĘ"], "difficulty": 1 },
+        { "name": "Etapy powstawania utworu", "words": ["NAGRANIE", "MIKS", "MASTERING", "SAMPEL"], "difficulty": 2 },
+        { "name": "Debiutowali w latach 90.", "words": ["PEJA", "TEDE", "SOKÓŁ", "PONO"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 11, "date": "2026-10-14",
+      "categories": [
+        { "name": "Gatunki rapu", "words": ["TRAP", "DRILL", "BOOM BAP", "CLOUD RAP"], "difficulty": 0 },
+        { "name": "Ksywy z liczbą", "words": ["WHITE 2115", "BEDOES 2115", "KUQE 2115", "PRO8L3M"], "difficulty": 1 },
+        { "name": "Sprzęt muzyczny", "words": ["GRAMOFON", "SAMPLER", "AUTOTUNE", "MIKSER"], "difficulty": 2 },
+        { "name": "Młode pokolenie rapu", "words": ["OKI", "SZCZYL", "YOUNG IGI", "KACPERCZYK"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 12, "date": "2026-10-15",
+      "categories": [
+        { "name": "Certyfikaty i sukces", "words": ["PLATYNA", "ZŁOTO", "DIAMENT", "HIT"], "difficulty": 0 },
+        { "name": "Ksywy sześcioliterowe", "words": ["SARIUS", "SZAFIR", "BLACHA", "GUZIOR"], "difficulty": 1 },
+        { "name": "Rapowe czasowniki", "words": ["RAPOWAĆ", "NAWIJAĆ", "DISSOWAĆ", "FREESTYLOWAĆ"], "difficulty": 2 },
+        { "name": "Miasta w polskim rapie", "words": ["POZNAŃ", "KATOWICE", "WARSZAWA", "GDYNIA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 13, "date": "2026-10-16",
+      "categories": [
+        { "name": "Ksywy zakończone na O", "words": ["KIZO", "RETO", "PONO", "OTSO"], "difficulty": 0 },
+        { "name": "Formaty wydawnictw", "words": ["ALBUM", "SINGIEL", "EPKA", "MIXTAPE"], "difficulty": 1 },
+        { "name": "Rytm i tempo", "words": ["TEMPO", "BPM", "LOOP", "GROOVE"], "difficulty": 2 },
+        { "name": "Założyciele wytwórni", "words": ["SOLAR", "BIAŁAS", "QUEBONAFIDE", "BEDOES"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 14, "date": "2026-10-17",
+      "categories": [
+        { "name": "Instrumenty", "words": ["PERKUSJA", "BAS", "SYNTEZATOR", "PIANINO"], "difficulty": 0 },
+        { "name": "Krótkie ksywy", "words": ["OKI", "KAZ", "GEDZ", "PIH"], "difficulty": 1 },
+        { "name": "Gdzie gra muzyka", "words": ["STUDIO", "SCENA", "KLUB", "FESTIWAL"], "difficulty": 2 },
+        { "name": "Warszawskie grupy", "words": ["ZIP SKŁAD", "WARSZAFSKI DESZCZ", "MOLESTA", "PRO8L3M"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 15, "date": "2026-10-18",
+      "categories": [
+        { "name": "Ksywy na literę B", "words": ["BEDOES", "BIAŁAS", "BLACHA", "BORIXON"], "difficulty": 0 },
+        { "name": "Role w branży", "words": ["PRODUCENT", "MANAGER", "DIDŻEJ", "REALIZATOR"], "difficulty": 1 },
+        { "name": "Tematy rapowych tekstów", "words": ["MIŁOŚĆ", "SŁAWA", "ULICA", "BLOK"], "difficulty": 2 },
+        { "name": "Rapowe pojedynki", "words": ["BATTLE", "FREESTYLE", "CYPHER", "PUNCHLINE"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 16, "date": "2026-10-19",
+      "categories": [
+        { "name": "Skróty z rapowego świata", "words": ["EP", "LP", "DJ", "MC"], "difficulty": 0 },
+        { "name": "Ksywy na literę S", "words": ["SOLAR", "SZPAKU", "SMOLASTY", "SOBEL"], "difficulty": 1 },
+        { "name": "Przy gramofonie", "words": ["SCRATCH", "WINYL", "SET", "IGŁA"], "difficulty": 2 },
+        { "name": "Slangowo o dobrym kawałku", "words": ["KLASYK", "STRZAŁ", "PETARDA", "NUTA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 17, "date": "2026-10-20",
+      "categories": [
+        { "name": "Rodzaje występów", "words": ["TRASA", "SUPPORT", "BIS", "KONCERT"], "difficulty": 0 },
+        { "name": "Ksywy na literę M", "words": ["MATA", "MEZO", "MIUOSH", "MALIK MONTANA"], "difficulty": 1 },
+        { "name": "Gdzie słuchamy muzyki", "words": ["SPOTIFY", "YOUTUBE", "TIDAL", "RADIO"], "difficulty": 2 },
+        { "name": "Rapowy styl ubierania", "words": ["BLUZA", "KAPTUR", "SNEAKERSY", "ŁAŃCUCH"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 18, "date": "2026-10-21",
+      "categories": [
+        { "name": "Elementy kultury hip-hopu", "words": ["RAP", "DJING", "BREAKDANCE", "GRAFFITI"], "difficulty": 0 },
+        { "name": "Ksywy na literę G", "words": ["GEDZ", "GIBBS", "GUZIOR", "GUSTAW"], "difficulty": 1 },
+        { "name": "Realizacja teledysku", "words": ["KAMERA", "KLIP", "PLAN", "REŻYSER"], "difficulty": 2 },
+        { "name": "Slangowo o pracy", "words": ["GRIND", "HUSTLE", "ROBOTA", "ZAJAWKA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 19, "date": "2026-10-22",
+      "categories": [
+        { "name": "Ksywy na literę P", "words": ["PEJA", "PEZET", "PONO", "PIH"], "difficulty": 0 },
+        { "name": "Rapowe ekipy", "words": ["SLUMS ATTACK", "CHILLWAGON", "HOTEL MAFFIJA", "2020LABEL"], "difficulty": 1 },
+        { "name": "Rytmika", "words": ["TAKT", "PAUZA", "RYTM", "METRUM"], "difficulty": 2 },
+        { "name": "Anglicyzmy w rapie", "words": ["SWAG", "DRIP", "VIBE", "HYPE"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 20, "date": "2026-10-23",
+      "categories": [
+        { "name": "Ksywy na literę T", "words": ["TEDE", "TYMEK", "TACO HEMINGWAY", "TOMB"], "difficulty": 0 },
+        { "name": "Atrybuty bogactwa w rapie", "words": ["FURA", "ZEGAREK", "ŁAŃCUCH", "GOTÓWKA"], "difficulty": 1 },
+        { "name": "Rodzaje rymów", "words": ["CZĘSTOCHOWSKI", "WEWNĘTRZNY", "DOKŁADNY", "ASONANS"], "difficulty": 2 },
+        { "name": "Życie fana muzyki", "words": ["STREAM", "PLAYLISTA", "MERCH", "BILET"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 21, "date": "2026-10-24",
+      "categories": [
+        { "name": "Ksywy na literę W", "words": ["WDOWA", "WHITE", "WANE", "WŁODI"], "difficulty": 0 },
+        { "name": "Gdzie rodzi się rap", "words": ["PODWÓRKO", "OSIEDLE", "GARAŻ", "PIWNICA"], "difficulty": 1 },
+        { "name": "Nośniki muzyki", "words": ["WINYL", "KASETA", "CD", "BOX"], "difficulty": 2 },
+        { "name": "Rapowe treści w sieci", "words": ["MEM", "SHORT", "STORY", "LIVE"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 22, "date": "2026-10-25",
+      "categories": [
+        { "name": "Ksywy na literę Z", "words": ["ŻABSON", "ZEAMSONE", "ZBUKU", "ZIPERA"], "difficulty": 0 },
+        { "name": "Ekipa SBM", "words": ["SOLAR", "BIAŁAS", "KUBAŃCZYK", "JAN-RAPOWANIE"], "difficulty": 1 },
+        { "name": "Środki stylistyczne", "words": ["METAFORA", "GRA SŁÓW", "PORÓWNANIE", "PUENTA"], "difficulty": 2 },
+        { "name": "Rapowe powitania", "words": ["SIEMA", "ELO", "JOŁ", "CZEŚĆ"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 23, "date": "2026-10-26",
+      "categories": [
+        { "name": "Ksywy na literę D", "words": ["DZIARMA", "DEEMZ", "DONGURALESKO", "DUDEK P56"], "difficulty": 0 },
+        { "name": "Emocje w tekstach", "words": ["ZŁOŚĆ", "DUMA", "TĘSKNOTA", "RADOŚĆ"], "difficulty": 1 },
+        { "name": "Głośno!", "words": ["DECYBEL", "GŁOŚNIK", "KOLUMNA", "BAS"], "difficulty": 2 },
+        { "name": "Weterani sceny", "words": ["PEJA", "TEDE", "SOKÓŁ", "POPEK"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 24, "date": "2026-10-27",
+      "categories": [
+        { "name": "Ksywy na literę J", "words": ["JAN-RAPOWANIE", "JOKA", "JARECKI", "JONGMEN"], "difficulty": 0 },
+        { "name": "Legendarne wytwórnie", "words": ["ASFALT RECORDS", "PROSTO", "ALKOPOLIGAMIA", "STEP RECORDS"], "difficulty": 1 },
+        { "name": "Części albumu", "words": ["INTRO", "OUTRO", "SKIT", "HOOK"], "difficulty": 2 },
+        { "name": "Co napędza popularność", "words": ["VIRAL", "TIKTOK", "TREND", "ZASIĘGI"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 25, "date": "2026-10-28",
+      "categories": [
+        { "name": "Ksywy na literę O", "words": ["OKI", "OTSOCHODZI", "OIO", "ONAR"], "difficulty": 0 },
+        { "name": "Producenci-legendy", "words": ["NOON", "DJ 600V", "MAGIERA", "DONATAN"], "difficulty": 1 },
+        { "name": "Sprzęt na scenie", "words": ["MIKROFON", "MONITOR", "STATYW", "KONSOLETA"], "difficulty": 2 },
+        { "name": "Publiczność", "words": ["FANBASE", "PUBLIKA", "TŁUM", "WIDOWNIA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 26, "date": "2026-10-29",
+      "categories": [
+        { "name": "Ksywy na literę L", "words": ["LANEK", "LUKASYNO", "LILU", "LOUIS VILLAIN"], "difficulty": 0 },
+        { "name": "Elementy breakdance'u", "words": ["POPPING", "LOCKING", "FREEZE", "TOPROCK"], "difficulty": 1 },
+        { "name": "Budowa frazy", "words": ["MELODIA", "FRAZA", "AKCENT", "ODDECH"], "difficulty": 2 },
+        { "name": "Slangowo o dzielnicy", "words": ["GETTO", "HOOD", "DZIELNIA", "BETON"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 27, "date": "2026-10-30",
+      "categories": [
+        { "name": "Ksywy na literę A", "words": ["ABRADAB", "AVI", "ARKADIO", "ADI NOWAK"], "difficulty": 0 },
+        { "name": "Rodzaje nagrań", "words": ["REMIX", "COVER", "INTERLUDE", "BONUS"], "difficulty": 1 },
+        { "name": "Gatunki pokrewne", "words": ["R&B", "SOUL", "FUNK", "REGGAE"], "difficulty": 2 },
+        { "name": "Nocne życie w tekstach", "words": ["NOC", "IMPREZA", "ŚWIT", "PARKIET"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 28, "date": "2026-10-31",
+      "categories": [
+        { "name": "Ksywy na literę F", "words": ["FOKUS", "FUKAJ", "FISZ", "FRENCHMAN"], "difficulty": 0 },
+        { "name": "Liczby w nazwach", "words": ["KALIBER 44", "600V", "DUDEK P56", "WHITE 2115"], "difficulty": 1 },
+        { "name": "W kabinie nagraniowej", "words": ["KABINA", "POP FILTR", "SŁUCHAWKI", "AKUSTYKA"], "difficulty": 2 },
+        { "name": "Słowa o szpanie", "words": ["FLEX", "PONT", "SZPAN", "BUTA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 29, "date": "2026-11-01",
+      "categories": [
+        { "name": "Rapowe określenia ekipy", "words": ["ZIOM", "SKŁAD", "EKIPA", "ZAŁOGA"], "difficulty": 0 },
+        { "name": "Raperzy starej szkoły", "words": ["WŁODI", "PONO", "SOKÓŁ", "NUMER RAZ"], "difficulty": 1 },
+        { "name": "Co słychać w bicie", "words": ["STOPA", "WERBEL", "HI-HAT", "LINIA BASU"], "difficulty": 2 },
+        { "name": "Określenia sukcesu", "words": ["SZCZYT", "TOPKA", "LISTA", "REKORD"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 30, "date": "2026-11-02",
+      "categories": [
+        { "name": "Kolory", "words": ["CZARNY", "BIAŁY", "ZŁOTY", "CZERWONY"], "difficulty": 0 },
+        { "name": "Ekipa 2115", "words": ["BEDOES", "WHITE 2115", "KUQE 2115", "LANEK"], "difficulty": 1 },
+        { "name": "Formaty plików", "words": ["MP3", "WAV", "FLAC", "OGG"], "difficulty": 2 },
+        { "name": "Slangowo o imprezie", "words": ["MELANŻ", "BALANGA", "PARTY", "AFTER"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 31, "date": "2026-11-03",
+      "categories": [
+        { "name": "Co pisze raper", "words": ["TEKST", "RYM", "SZKIC", "NOTES"], "difficulty": 0 },
+        { "name": "Role w hip-hopie", "words": ["BEATMAKER", "GRAFFICIARZ", "BBOY", "SELEKTOR"], "difficulty": 1 },
+        { "name": "Domowe studio", "words": ["LAPTOP", "INTERFEJS", "MIDI", "PAD"], "difficulty": 2 },
+        { "name": "Slangowo o najlepszym", "words": ["KRÓL", "GOAT", "NUMER JEDEN", "LEGENDA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 32, "date": "2026-11-04",
+      "categories": [
+        { "name": "Didżeje", "words": ["DJ DECKS", "DJ BRK", "DJ SPINACHE", "DJ 600V"], "difficulty": 0 },
+        { "name": "Polskie festiwale", "words": ["OPENER", "POLANDROCK", "FEST FESTIVAL", "ORANGE WARSAW"], "difficulty": 1 },
+        { "name": "Ulica nocą", "words": ["LATARNIA", "MURAL", "BRAMA", "CHODNIK"], "difficulty": 2 },
+        { "name": "Barwa głosu", "words": ["CHRYPA", "BARWA", "TON", "SZEPT"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 33, "date": "2026-11-05",
+      "categories": [
+        { "name": "Nazwy ze znakami specjalnymi", "words": ["PG$", "PRO8L3M", "I00", "JESTEM POJ384NY"], "difficulty": 0 },
+        { "name": "Upływ czasu w tekstach", "words": ["WCZORAJ", "DZIŚ", "JUTRO", "KIEDYŚ"], "difficulty": 1 },
+        { "name": "Co w portfelu", "words": ["BANKNOT", "MONETA", "KARTA", "BLIK"], "difficulty": 2 },
+        { "name": "Rapowe konflikty", "words": ["BEEF", "ZADYMA", "SPINA", "HEJT"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 34, "date": "2026-11-06",
+      "categories": [
+        { "name": "Ksywy na literę N", "words": ["NIZIOŁ", "NOON", "NUMER RAZ", "NOCNY"], "difficulty": 0 },
+        { "name": "Słowa o lojalności", "words": ["HONOR", "WIERNOŚĆ", "SŁOWO", "KODEKS"], "difficulty": 1 },
+        { "name": "Miejsca spotkań", "words": ["BOISKO", "ŁAWKA", "SKLEP", "PRZYSTANEK"], "difficulty": 2 },
+        { "name": "Jak powstaje tekst", "words": ["ZESZYT", "DYKTAFON", "NOTATKA", "BRUDNOPIS"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 35, "date": "2026-11-07",
+      "categories": [
+        { "name": "Rodzina w tekstach", "words": ["MATKA", "BRAT", "SIOSTRA", "OJCIEC"], "difficulty": 0 },
+        { "name": "Poznańska scena", "words": ["PEJA", "MEZO", "WDOWA", "NIZIOŁ"], "difficulty": 1 },
+        { "name": "Strona biznesowa", "words": ["KONTRAKT", "PROMOCJA", "BUDŻET", "UMOWA"], "difficulty": 2 },
+        { "name": "Przeciwności", "words": ["KRYTYKA", "PORAŻKA", "UPADEK", "BLOKADA"], "difficulty": 3 }
+      ]
+    },
+    {
+      "id": 36, "date": "2026-11-08",
+      "categories": [
+        { "name": "Marzenia w tekstach", "words": ["KARIERA", "WOLNOŚĆ", "SUKCES", "SPOKÓJ"], "difficulty": 0 },
+        { "name": "Znane polskie albumy rapowe", "words": ["KINEMATOGRAFIA", "MUZYKA KLASYCZNA", "NA LEGALU", "EGZOTYKA"], "difficulty": 1 },
+        { "name": "Po koncercie", "words": ["AUTOGRAF", "SELFIE", "GARDEROBA", "BUS"], "difficulty": 2 },
+        { "name": "Praca nad płytą", "words": ["SESJA", "NOCKA", "DEADLINE", "PREMIERA"], "difficulty": 3 }
+      ]
     }
   ]
 }

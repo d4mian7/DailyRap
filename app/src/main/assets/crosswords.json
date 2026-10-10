@@ -216,6 +216,1126 @@
           "highlightIndex": 3
         }
       ]
+    },
+    {
+      "id": 7,
+      "date": "2026-10-10",
+      "secretWord": "SARIUS",
+      "clues": [
+        {
+          "question": "Raper tworzący w duecie z Białasem",
+          "answer": "SOLAR",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Autor „100 dni do matury”",
+          "answer": "MATA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Seria koncertów w różnych miastach",
+          "answer": "TRASA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Film nakręcony do kawałka",
+          "answer": "KLIP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Dłuższe wydawnictwo, zwykle kilkanaście kawałków",
+          "answer": "ALBUM",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Slangowo o pieniądzach",
+          "answer": "HAJS",
+          "highlightIndex": 3
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "date": "2026-10-11",
+      "secretWord": "POPEK",
+      "clues": [
+        {
+          "question": "Warszawski raper, który nagrywał z Noonem",
+          "answer": "PEZET",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Młody wokalista częsty na rapowych featach",
+          "answer": "SOBEL",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Krótkie wydawnictwo, zaledwie kilka kawałków",
+          "answer": "EPKA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Weteran z Warszawy, kiedyś w Warszafskim Deszczu",
+          "answer": "TEDE",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Jedna z gwiazd polskiego trapu z Poznania",
+          "answer": "KIZO",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "date": "2026-10-12",
+      "secretWord": "BLACHA",
+      "clues": [
+        {
+          "question": "Budynek z wielkiej płyty, częsty w tekstach",
+          "answer": "BLOK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Płynność podawania tekstu",
+          "answer": "FLOW",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Gatunek z ciężkimi, mrocznymi bitami",
+          "answer": "TRAP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Miejsce występu przed publicznością",
+          "answer": "SCENA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Szum wokół premiery",
+          "answer": "HYPE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Rychu ze Slums Attack",
+          "answer": "PEJA",
+          "highlightIndex": 3
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "date": "2026-10-13",
+      "secretWord": "TYMEK",
+      "clues": [
+        {
+          "question": "Miejsce, gdzie powstają nagrania",
+          "answer": "STUDIO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Czarna płyta odtwarzana na gramofonie",
+          "answer": "WINYL",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Zbiór kawałków wydany poza albumem",
+          "answer": "MIXTAPE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Poznański raper, znany też z popowych duetów",
+          "answer": "MEZO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Zgrana grupa znajomych z osiedla",
+          "answer": "EKIPA",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "date": "2026-10-14",
+      "secretWord": "SOKÓŁ",
+      "clues": [
+        {
+          "question": "Poznańska ekipa Pei",
+          "answer": "SLUMS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Miejsce dorastania z rapowych tekstów",
+          "answer": "OSIEDLE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Młody raper o trzyliterowej ksywie",
+          "answer": "OKI",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Slangowo o najlepszym na scenie",
+          "answer": "KRÓL",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper ze Szczecina znany z inteligentnych tekstów",
+          "answer": "ŁONA",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "date": "2026-10-15",
+      "secretWord": "PALUCH",
+      "clues": [
+        {
+          "question": "Mocna, zapadająca w pamięć linijka",
+          "answer": "PUNCHLINE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kawałek, który rozbija imprezę",
+          "answer": "BANGER",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Katowicka grupa z liczbą 44 w nazwie",
+          "answer": "KALIBER",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper pochodzący z Białegostoku",
+          "answer": "SZPAKU",
+          "highlightIndex": 5
+        },
+        {
+          "question": "Efekt uzyskiwany przez DJ-a na gramofonie",
+          "answer": "SCRATCH",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper o ksywie wziętej z mitologii greckiej",
+          "answer": "HADES",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "date": "2026-10-16",
+      "secretWord": "REFREN",
+      "clues": [
+        {
+          "question": "Członek Paktofoniki, dziś solowy artysta",
+          "answer": "RAHIM",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, który założył wytwórnię 2115",
+          "answer": "BEDOES",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Drugi z raperów tworzących Paktofonikę",
+          "answer": "FOKUS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Mroczny gatunek wywodzący się z Chicago",
+          "answer": "DRILL",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Podkład, do którego powstaje tekst",
+          "answer": "BEAT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper z SBM o ksywie od karaibskiej wyspy",
+          "answer": "KUBAN",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "date": "2026-10-17",
+      "secretWord": "STUDIO",
+      "clues": [
+        {
+          "question": "Raper często poruszający trudne, osobiste tematy",
+          "answer": "SARIUS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, który zasłynął „Patointeligencją”",
+          "answer": "MATA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper pochodzący z Bytomia",
+          "answer": "GUZIOR",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper z Trójmiasta nagrywający od ponad dekady",
+          "answer": "GEDZ",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Wideo promujące singiel",
+          "answer": "KLIP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Skrócona ksywa Otsochodziego",
+          "answer": "OTSO",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "date": "2026-10-18",
+      "secretWord": "WDOWA",
+      "clues": [
+        {
+          "question": "Pojedyncza linijka zwrotki",
+          "answer": "WERS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kawałek wymierzony w rywala",
+          "answer": "DISS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper znany również z walk MMA",
+          "answer": "POPEK",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper z ekipy 2115",
+          "answer": "WHITE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raperka o ksywie jak bajkowy jelonek",
+          "answer": "BAMBI",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "date": "2026-10-19",
+      "secretWord": "FUKAJ",
+      "clues": [
+        {
+          "question": "Improwizowana zwrotka bez przygotowania",
+          "answer": "FREESTYLE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper znany z twardych, ulicznych tekstów",
+          "answer": "LUKASYNO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Krótka wstawka między kawałkami na płycie",
+          "answer": "SKIT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Styl, w którym króluje hi-hat i stopa 808",
+          "answer": "TRAP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Kasa, o której raperzy nawijają najczęściej",
+          "answer": "HAJS",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "date": "2026-10-20",
+      "secretWord": "MIXTAPE",
+      "clues": [
+        {
+          "question": "Impreza ciągnąca się do białego rana",
+          "answer": "MELANŻ",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Grupa z warszawskiej sceny lat 90.",
+          "answer": "ZIPERA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper starszego pokolenia, wciąż obecny na scenie",
+          "answer": "BORIXON",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Raper z SBM Label o czteroliterowej ksywie",
+          "answer": "TOMB",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Fragment cudzego nagrania wykorzystany w bicie",
+          "answer": "SAMPEL",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Gatunek, wokół którego kręci się ta gra",
+          "answer": "RAP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper, który tworzył w duecie z Małolatem",
+          "answer": "PEZET",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "date": "2026-10-21",
+      "secretWord": "KONCERT",
+      "clues": [
+        {
+          "question": "Raper z SBM, w którego ksywie dwa razy pojawia się K",
+          "answer": "KUKON",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Producent, który tworzył płyty z Pezetem",
+          "answer": "NOON",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Pojedynczy kawałek wydany przed płytą",
+          "answer": "SINGIEL",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Deski, na które raper wchodzi podczas trasy",
+          "answer": "SCENA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Producent związany z SBM Label",
+          "answer": "DEEMZ",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Moment, w którym wchodzi mocny bit",
+          "answer": "DROP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Kawałek, który podbija listy przebojów",
+          "answer": "HIT",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "date": "2026-10-22",
+      "secretWord": "WINYL",
+      "clues": [
+        {
+          "question": "Raper bywający gościem na płytach kolegów z branży",
+          "answer": "WANE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Katowicki raper, który nagrywał z orkiestrą",
+          "answer": "MIUOSH",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Pierwszy człon ksywy Kinny Zimmer",
+          "answer": "KINNY",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Młody raper o przekornej, zaczepnej ksywie",
+          "answer": "SZCZYL",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Raper, który prowadzi program Hotel Maffija",
+          "answer": "SOLAR",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "date": "2026-10-23",
+      "secretWord": "BIAŁAS",
+      "clues": [
+        {
+          "question": "Osiedlowy wieżowiec z rapowych klipów",
+          "answer": "BLOK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, w którego ksywie są dwie litery B obok siebie",
+          "answer": "GIBBS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Nieżyjący warszawski raper",
+          "answer": "CHADA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper tworzący razem z Webberem",
+          "answer": "ŁONA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Poznański weteran o pseudonimie od imienia Ryszard",
+          "answer": "PEJA",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Pierwszy człon nazwy ekipy Slums Attack",
+          "answer": "SLUMS",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "date": "2026-10-24",
+      "secretWord": "ALBUM",
+      "clues": [
+        {
+          "question": "Raper z katowickiej grupy Kaliber 44",
+          "answer": "ABRADAB",
+          "highlightIndex": 0
+        },
+        {
+          "question": "To, jak raper płynie po bicie",
+          "answer": "FLOW",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper, którego pełna ksywa brzmi Kubańczyk",
+          "answer": "KUBAN",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Linijka, która powala przeciwnika w diss-tracku",
+          "answer": "PUNCHLINE",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Trzeci z członków Paktofoniki",
+          "answer": "RAHIM",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "date": "2026-10-25",
+      "secretWord": "SZAFIR",
+      "clues": [
+        {
+          "question": "Raper znany z mocnych, emocjonalnych tekstów",
+          "answer": "SARIUS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Gdynianin na polskiej scenie rapowej",
+          "answer": "GEDZ",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Raper o nazwisku Matczak",
+          "answer": "MATA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Członek Paktofoniki o ksywie oznaczającej skupienie",
+          "answer": "FOKUS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raperka z nowej polskiej sceny",
+          "answer": "BAMBI",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Numer, od którego trzęsie się cały klub",
+          "answer": "BANGER",
+          "highlightIndex": 5
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "date": "2026-10-26",
+      "secretWord": "OSIEDLE",
+      "clues": [
+        {
+          "question": "Warszawski raper, weteran sceny",
+          "answer": "ONAR",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Nawierzchnia ulicy, symbol rapowego życia",
+          "answer": "ASFALT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Słowny strzał w stronę konkurenta",
+          "answer": "DISS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Szef ekipy 2115",
+          "answer": "BEDOES",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Surowy styl z agresywnym, ciężkim bitem",
+          "answer": "DRILL",
+          "highlightIndex": 0
+        },
+        {
+          "question": "To, co ogląda się na YouTubie do kawałka",
+          "answer": "KLIP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Jeden z najdłużej nagrywających polskich raperów",
+          "answer": "TEDE",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "date": "2026-10-27",
+      "secretWord": "KALIBER",
+      "clues": [
+        {
+          "question": "Władca, tytuł dla najlepszego w grze",
+          "answer": "KRÓL",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Siano, którego szuka się w rapowych tekstach",
+          "answer": "HAJS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Nocna zabawa, o której często rapują",
+          "answer": "MELANŻ",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Rytmiczna podstawa utworu",
+          "answer": "BIT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Weteran rapu o siedmioliterowej ksywie",
+          "answer": "BORIXON",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Warszawski klasyk o ksywie na literę P",
+          "answer": "PEZET",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Dźwięk szarpanej płyty pod igłą",
+          "answer": "SCRATCH",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "date": "2026-10-28",
+      "secretWord": "GUZIOR",
+      "clues": [
+        {
+          "question": "Nazwa wytwórni z powtórzoną sylabą",
+          "answer": "GUGU",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper o ksywie wziętej od nazwy ptaka",
+          "answer": "SZPAKU",
+          "highlightIndex": 5
+        },
+        {
+          "question": "Slangowo o kumplu z osiedla",
+          "answer": "ZIOM",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Najpopularniejsze rapowe powitanie",
+          "answer": "SIEMA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Producent o ksywie od pory dnia",
+          "answer": "NOON",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Muzyka, w której najbardziej liczy się słowo",
+          "answer": "RAP",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 26,
+      "date": "2026-10-29",
+      "secretWord": "SMOLASTY",
+      "clues": [
+        {
+          "question": "Gdzie staje artysta podczas festiwalu",
+          "answer": "SCENA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Nieżyjący członek Paktofoniki",
+          "answer": "MAGIK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper z charakterystycznymi tatuażami na twarzy",
+          "answer": "POPEK",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Producent z ekipy 2115",
+          "answer": "LANEK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Cykl występów po całej Polsce",
+          "answer": "TRASA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Występ DJ-a na imprezie",
+          "answer": "SET",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Numer, który zna absolutnie każdy",
+          "answer": "HIT",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper, który wszedł na scenę bardzo młodo",
+          "answer": "SZCZYL",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "date": "2026-10-30",
+      "secretWord": "FLAGEY",
+      "clues": [
+        {
+          "question": "Raper o ksywie brzmiącej jak czasownik",
+          "answer": "FUKAJ",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, którego ksywa brzmi jak imię Łukasz",
+          "answer": "LUKASYNO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, którego ksywa to angielskie słowo",
+          "answer": "WANE",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Polski raper młodego pokolenia",
+          "answer": "GIBBS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Producent o ksywie z podwójnym E",
+          "answer": "DEEMZ",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Napięte oczekiwanie fanów przed wydaniem płyty",
+          "answer": "HYPE",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "date": "2026-10-31",
+      "secretWord": "ZIPERA",
+      "clues": [
+        {
+          "question": "Raper kojarzony z twardym, ulicznym brzmieniem",
+          "answer": "ZBUKU",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, którego ksywa zaczyna się na K, a kończy na O",
+          "answer": "KIZO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Minialbum z kilkoma numerami",
+          "answer": "EPKA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper z SBM o ksywie kończącej się na O",
+          "answer": "BETEO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Kulminacja, po której wybucha bit",
+          "answer": "DROP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "To, co producent wycina ze starej płyty",
+          "answer": "SAMPEL",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "date": "2026-11-01",
+      "secretWord": "EGZOTYKA",
+      "clues": [
+        {
+          "question": "Paczka ludzi, z którą raper się pokazuje",
+          "answer": "EKIPA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kawałek stworzony do głośnego grania",
+          "answer": "BANGER",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Raper z Trójmiasta o bardzo krótkiej ksywie",
+          "answer": "GEDZ",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Raper, którego ksywę tworzą sylaby KU i KON",
+          "answer": "KUKON",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Dominujący dziś styl młodego rapu",
+          "answer": "TRAP",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Nośnik, który wrócił do łask kolekcjonerów",
+          "answer": "WINYL",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Scenka albo żart wpleciony w płytę",
+          "answer": "SKIT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper, który debiutował jeszcze jako licealista",
+          "answer": "MATA",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "date": "2026-11-02",
+      "secretWord": "MOLESTA",
+      "clues": [
+        {
+          "question": "Śląski raper i autor tekstów",
+          "answer": "MIUOSH",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper o ksywie z trzech liter, brzmiącej jak zgoda po angielsku",
+          "answer": "OKI",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Charakterystyczny sposób prowadzenia zwrotki",
+          "answer": "FLOW",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Najmniejsza cząstka rapowanego tekstu",
+          "answer": "WERS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Numer nagrany w ramach beefu",
+          "answer": "DISS",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Pomieszczenie z mikrofonem i kabiną",
+          "answer": "STUDIO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Artystka, której ksywa kojarzy się z bajką Disneya",
+          "answer": "BAMBI",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "date": "2026-11-03",
+      "secretWord": "BORIXON",
+      "clues": [
+        {
+          "question": "Miejsce, w którym wychowało się wielu raperów",
+          "answer": "BLOK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Młody artysta łączący pop z rapem",
+          "answer": "SOBEL",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Technika didżejska z ręcznym ruchem płyty",
+          "answer": "SCRATCH",
+          "highlightIndex": 2
+        },
+        {
+          "question": "To, co leci pod zwrotką",
+          "answer": "BIT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Angielskie słowo oznaczające toksyczny, bywa w tytułach",
+          "answer": "TOXIC",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Chwytliwa część refrenu",
+          "answer": "HOOK",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Raper kojarzony z warszawskim podziemiem",
+          "answer": "ONAR",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "date": "2026-11-04",
+      "secretWord": "SZPAKU",
+      "clues": [
+        {
+          "question": "Raper, który opowiada w kawałkach własne historie",
+          "answer": "SARIUS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kumpel, brat z podwórka",
+          "answer": "ZIOM",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Gatunek wywodzący się z nowojorskich blokowisk",
+          "answer": "RAP",
+          "highlightIndex": 2
+        },
+        {
+          "question": "To, co wpada na konto po koncertach",
+          "answer": "HAJS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Obrazkowa wersja kawałka",
+          "answer": "KLIP",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Celna puenta na końcu wersu",
+          "answer": "PUNCHLINE",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "date": "2026-11-05",
+      "secretWord": "HADES",
+      "clues": [
+        {
+          "question": "Numer, który leci ze wszystkich głośników",
+          "answer": "HIT",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper, którego historię opowiada film „Proceder”",
+          "answer": "CHADA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Styl, który przyszedł do nas z Chicago i Londynu",
+          "answer": "DRILL",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raper działający na scenie od lat 90.",
+          "answer": "TEDE",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper, który po śmierci Magika kontynuował karierę solo",
+          "answer": "FOKUS",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 34,
+      "date": "2026-11-06",
+      "secretWord": "SOLAR",
+      "clues": [
+        {
+          "question": "Dzielnica biedy po angielsku, też człon nazwy ekipy Pei",
+          "answer": "SLUMS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Krótka forma ksywy warszawskiego rapera",
+          "answer": "OTSO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Producent, który pracuje z Bedoesem",
+          "answer": "LANEK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Droga od miasta do miasta z koncertami",
+          "answer": "TRASA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Część utworu wracająca po każdej zwrotce",
+          "answer": "REFREN",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 35,
+      "date": "2026-11-07",
+      "secretWord": "SZCZYL",
+      "clues": [
+        {
+          "question": "Zestaw numerów zagranych pod rząd",
+          "answer": "SET",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Grupa, której nazwa kojarzy się z zamkiem błyskawicznym",
+          "answer": "ZIPERA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Przestrzeń, na której artysta występuje przed tłumem",
+          "answer": "SCENA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Poznański raper, dziś jedna z gwiazd sceny",
+          "answer": "KIZO",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Gorączka wokół nowego artysty",
+          "answer": "HYPE",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper nawijający o ulicy i sile charakteru",
+          "answer": "LUKASYNO",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 36,
+      "date": "2026-11-08",
+      "secretWord": "ABRADAB",
+      "clues": [
+        {
+          "question": "Czarna nawierzchnia, a także nazwa wytwórni",
+          "answer": "ASFALT",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Młody raper z ekipy SBM",
+          "answer": "BETEO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Nurt, który zdominował listy w ostatniej dekadzie",
+          "answer": "TRAP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper, którego ksywa to słowo oznaczające dywanik",
+          "answer": "MATA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Producent, który stoi za hitami polskiego rapu",
+          "answer": "DEEMZ",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Zespół ludzi pracujących przy trasie koncertowej",
+          "answer": "EKIPA",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Raper, którego ksywa kojarzy się z amerykańskim kolegą po fachu",
+          "answer": "GIBBS",
+          "highlightIndex": 2
+        }
+      ]
     }
   ]
 }
