@@ -1,14 +1,34 @@
-// Generowanie zestawow przez Claude API (Messages API, structured outputs).
-// Dziala tylko gdy ustawiona zmienna ANTHROPIC_API_KEY.
+// Generowanie zestawow przez Claude. Dwa tryby (zmienna AI_BACKEND w tools/puzzle/.env):
+//   claude-code (domyslnie) - wywoluje zainstalowane Claude Code (`claude -p`), rozlicza sie z subskrypcji.
+//   api                     - Messages API z ANTHROPIC_API_KEY, zuzywa kredyty API.
+import { spawn, spawnSync } from "node:child_process";
+import { tmpdir } from "node:os";
 import { validateEntry, crossCheck, usedTokens } from "./schema.js";
 import { readItems } from "./io.js";
 
-const MODEL = process.env.ANTHROPIC_MODEL || "claude-opus-4-8";
+const BACKEND = (process.env.AI_BACKEND || "claude-code").toLowerCase();
+const MODEL = process.env.AI_MODEL || process.env.ANTHROPIC_MODEL || (BACKEND === "api" ? "claude-opus-5" : "sonnet");
+const CLAUDE_BIN = process.env.CLAUDE_BIN || "claude";
+const TIMEOUT_MS = Number(process.env.AI_TIMEOUT_MS) || 300_000;
 const chars = (s) => [...String(s ?? "")];
 const up = (s) => String(s ?? "").toUpperCase();
 
-export function hasApiKey() {
-  return Boolean(process.env.ANTHROPIC_API_KEY);
+let claudeCodeCheck = null;
+function claudeCodeInstalled() {
+  if (claudeCodeCheck === null) {
+    const r = spawnSync(CLAUDE_BIN, ["--version"], { encoding: "utf8", timeout: 15_000 });
+    claudeCodeCheck = r.status === 0;
+  }
+  return claudeCodeCheck;
+}
+
+export function aiStatus() {
+  if (BACKEND === "api") {
+    const ok = Boolean(process.env.ANTHROPIC_API_KEY);
+    return { available: ok, backend: "api", model: MODEL, reason: ok ? null : "Brak ANTHROPIC_API_KEY w tools/puzzle/.env" };
+  }
+  const ok = claudeCodeInstalled();
+  return { available: ok, backend: "claude-code", model: MODEL, reason: ok ? null : `Nie znaleziono programu "${CLAUDE_BIN}" (Claude Code)` };
 }
 
 const SYSTEM = `Jestes ekspertem od polskiego rapu (raperzy, raperki, ksywki, albumy, single, wytwornie: SBM, 2115, Chillwagon, 20lab, QueQuality; kolaboracje, slang). Ukladasz zestawy do gier o tematyce polskiego rapu. Trzymaj sie faktow - nie zmyslaj nieistniejacych albumow ani utworow; gdy nie masz pewnosci, wybierz pewniejsza opcje. Pisz WIELKIMI literami tam gdzie wymagane. Odpowiadaj wylacznie danymi w zadanym formacie JSON.`;
@@ -102,7 +122,7 @@ function userPrompt(kind, theme, used) {
 - Policz dokladnie pozycje liter, zanim zwrocisz wynik.${avoid}`;
 }
 
-async function callClaude(kind, theme, used) {
+async function callApi(kind, theme, used) {
   const body = {
     model: MODEL,
     max_tokens: 8000,
@@ -131,6 +151,64 @@ async function callClaude(kind, theme, used) {
   return JSON.parse(textBlock.text);
 }
 
+function callClaudeCode(kind, theme, used) {
+  // Klucz API i znacznik zagniezdzonej sesji usuwamy, inaczej Claude Code rozliczaloby sie z API
+  // zamiast subskrypcji albo odmowilo startu wewnatrz innej sesji.
+  const env = { ...process.env };
+  delete env.ANTHROPIC_API_KEY;
+  delete env.CLAUDECODE;
+
+  const args = [
+    "-p",
+    "--output-format", "json",
+    "--json-schema", JSON.stringify(SCHEMAS[kind]),
+    "--system-prompt", SYSTEM,
+    "--model", MODEL,
+    "--effort", "high",
+    "--tools", "",
+    "--disable-slash-commands",
+    "--no-session-persistence",
+  ];
+
+  return new Promise((resolve, reject) => {
+    // cwd poza repo: bez CLAUDE.md, hookow i ustawien projektu.
+    const child = spawn(CLAUDE_BIN, args, { env, cwd: tmpdir(), stdio: ["pipe", "pipe", "pipe"] });
+    let out = "";
+    let err = "";
+    const timer = setTimeout(() => {
+      child.kill();
+      reject(new Error(`Claude Code nie odpowiedzialo w ${Math.round(TIMEOUT_MS / 1000)} s.`));
+    }, TIMEOUT_MS);
+
+    child.stdout.on("data", (d) => (out += d));
+    child.stderr.on("data", (d) => (err += d));
+    child.on("error", (e) => {
+      clearTimeout(timer);
+      reject(new Error(e.code === "ENOENT" ? `Nie znaleziono programu "${CLAUDE_BIN}" (Claude Code).` : e.message));
+    });
+    child.on("close", (code) => {
+      clearTimeout(timer);
+      let data;
+      try {
+        data = JSON.parse(out);
+      } catch {
+        return reject(new Error(`Claude Code (kod ${code}): ${(err || out).trim().slice(0, 300) || "brak odpowiedzi"}`));
+      }
+      if (data.is_error || data.subtype !== "success") {
+        return reject(new Error(`Claude Code: ${String(data.result || data.subtype || "blad").slice(0, 300)}`));
+      }
+      if (data.structured_output) return resolve(data.structured_output);
+      try {
+        resolve(JSON.parse(data.result));
+      } catch {
+        reject(new Error("Claude Code zwrocilo odpowiedz, ktora nie jest JSON-em."));
+      }
+    });
+
+    child.stdin.end(userPrompt(kind, theme, used));
+  });
+}
+
 // Auto-naprawa krzyzowki: ustaw highlightIndex tam, gdzie odpowiedz zawiera wymagana litere.
 function repairCrossword(entry) {
   const secret = chars(up(entry.secretWord));
@@ -146,10 +224,11 @@ function repairCrossword(entry) {
 
 // Zwraca { entry, valid, errors }. Nie zapisuje - to robi UI po akceptacji.
 export async function generate(kind, date, theme) {
-  if (!hasApiKey()) throw new Error("Brak ANTHROPIC_API_KEY - przycisk AI nieaktywny.");
+  const status = aiStatus();
+  if (!status.available) throw new Error(`${status.reason} - przycisk AI nieaktywny.`);
   const corpus = readItems(kind);
   const used = usedTokens(kind, corpus, date);
-  const raw = await callClaude(kind, theme, used);
+  const raw = BACKEND === "api" ? await callApi(kind, theme, used) : await callClaudeCode(kind, theme, used);
   let entry;
   if (kind === "words") {
     const word = up(raw.word).trim();

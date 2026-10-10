@@ -21,13 +21,21 @@ Otwiera http://localhost:5173. Trzy zakladki w jednym miejscu:
 - **Walidacja** — przeglad wszystkich bledow w trzech plikach.
 
 ### Przycisk AI w przegladarce
-Dziala gdy ustawisz klucz Anthropic (zuzywa kredyty API). Model domyslny: `claude-opus-4-8`.
-```powershell
-$env:ANTHROPIC_API_KEY = "sk-ant-..."   # przed: .\puzzle.ps1 plan
-# opcjonalnie inny model:
-$env:ANTHROPIC_MODEL = "claude-sonnet-4-6"
+Domyslnie przycisk wywoluje zainstalowane **Claude Code** (`claude -p`) i rozlicza sie z Twojej subskrypcji Claude — bez klucza API i bez kredytow. Wymaga tylko, zeby `claude` bylo w PATH i zalogowane (`claude auth status`). Jedno generowanie trwa zwykle od kilku sekund do minuty i zuzywa limit subskrypcji.
+
+Ustawienia opcjonalne w pliku `tools/puzzle/.env` (jest w `.gitignore`, nie trafia do repo):
 ```
-Bez klucza przycisk jest nieaktywny — reszta panelu (kreator reczny, kalendarz, walidacja) dziala normalnie. AI mozna tez wywolac w terminalu przez skill `/uloz-zestaw` (bez osobnego klucza).
+# model: alias (sonnet, opus) albo pelna nazwa; domyslnie sonnet
+AI_MODEL=sonnet
+
+# tryb platnego API zamiast subskrypcji (zuzywa kredyty z console.anthropic.com):
+# AI_BACKEND=api
+# ANTHROPIC_API_KEY=sk-ant-...
+```
+Uruchamiaj przez `.\puzzle.ps1 plan` (albo `npm run serve` w `tools/puzzle`). Samo `node server.js` pliku `.env` nie wczyta.
+
+Nie ustawiaj `ANTHROPIC_API_KEY` jako globalnej zmiennej systemowej — Claude Code tez by ja wykryl i rozliczal sie z API zamiast subskrypcji. Generator w trybie `claude-code` sam usuwa ten klucz ze srodowiska wywolania.
+Gdy Claude Code nie jest dostepne, przycisk jest nieaktywny (powod widac po najechaniu myszka) — reszta panelu (kreator reczny, kalendarz, walidacja) dziala normalnie. AI mozna tez wywolac w terminalu przez skill `/uloz-zestaw`.
 
 ## Walidacja (z linii polecen)
 ```

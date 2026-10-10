@@ -171,7 +171,7 @@
 <script>
 const MODES={words:{tag:"W",name:"RapWord"},puzzles:{tag:"C",name:"RapConnect"},crosswords:{tag:"X",name:"RapCrossword"}};
 const KIND={word:"words",connect:"puzzles",crossword:"crosswords"};
-let DATA=null, CONFIG={hasApiKey:false};
+let DATA=null, CONFIG={available:false};
 let view=new Date(); view.setDate(1);
 let selected=null;
 
@@ -183,8 +183,8 @@ const fmt=d=>d.toLocaleDateString("sv-SE");
 async function reload(){
   const [d,c]=await Promise.all([fetch("/api/data").then(r=>r.json()),fetch("/api/config").then(r=>r.json())]);
   DATA=d; CONFIG=c;
-  document.getElementById("aiBtn").disabled=!c.hasApiKey;
-  document.getElementById("aiBtn").title=c.hasApiKey?("Model: "+c.model):"Ustaw ANTHROPIC_API_KEY aby wlaczyc";
+  document.getElementById("aiBtn").disabled=!c.available;
+  document.getElementById("aiBtn").title=c.available?("Model: "+c.model+(c.backend==="api"?" (API)":" (Claude Code, subskrypcja)")):c.reason;
   renderBanner(); renderCalendar(); if(selected) renderSide(selected);
   renderLive(); renderValidate();
 }
@@ -431,7 +431,7 @@ async function aiGenerate(){
   const mode=curMode();const date=document.getElementById("cDate").value;const theme=document.getElementById("cTheme").value.trim();
   if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){document.getElementById("saveMsg").textContent="Najpierw ustaw date.";return;}
   const btn=document.getElementById("aiBtn");const old=btn.textContent;btn.disabled=true;btn.textContent="Generuje...";
-  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent="Claude uklada zestaw...";
+  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent="Claude uklada zestaw... (zwykle 1-2 minuty)";
   try{
     const r=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:mode,date,theme})});
     const res=await r.json();
@@ -444,7 +444,7 @@ async function aiGenerate(){
     msg.style.color=res.valid?"var(--green)":"var(--gold)";
     msg.textContent=res.valid?"AI wygenerowalo zgodny zestaw — sprawdz i zapisz.":"AI wygenerowalo zestaw z uwagami — popraw recznie.";
   }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
-  finally{btn.disabled=!CONFIG.hasApiKey;btn.textContent=old;}
+  finally{btn.disabled=!CONFIG.available;btn.textContent=old;}
 }
 
 /* ===== WALIDACJA (przeglad) ===== */

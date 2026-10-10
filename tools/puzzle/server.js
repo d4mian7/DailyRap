@@ -1,5 +1,6 @@
 // Lokalny serwer kalendarza do planowania zestawow.
-// Uruchom:  node server.js   (otwiera sie na http://localhost:5173)
+// Uruchom:  .\puzzle.ps1 plan  albo  npm run serve   (http://localhost:5173)
+// Ustawienia AI (AI_BACKEND, AI_MODEL, ANTHROPIC_API_KEY) wczytywane z tools/puzzle/.env (flaga --env-file-if-exists).
 import { createServer } from "node:http";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -7,7 +8,7 @@ import { dirname, join } from "node:path";
 import { readItems, upsert, removeByDate, FILES } from "./src/io.js";
 import { validateEntry, VALIDATORS, crossCheck } from "./src/schema.js";
 import { read } from "./src/io.js";
-import { generate, hasApiKey } from "./src/generate.js";
+import { generate, aiStatus } from "./src/generate.js";
 
 const KIND_ALIAS = { word: "words", connect: "puzzles", crossword: "crosswords" };
 
@@ -57,7 +58,7 @@ const server = createServer(async (req, res) => {
       return send(res, 200, buildData());
     }
     if (req.method === "GET" && path === "/api/config") {
-      return send(res, 200, { hasApiKey: hasApiKey(), model: process.env.ANTHROPIC_MODEL || "claude-opus-4-8" });
+      return send(res, 200, aiStatus());
     }
     if (req.method === "POST" && path === "/api/generate") {
       const { kind: rawKind, date, theme } = await readBody(req);

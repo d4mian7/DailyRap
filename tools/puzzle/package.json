@@ -6,6 +6,6 @@
   "description": "Walidator + kalendarz do planowania zestawow RapWord / RapConnect / RapCrossword",
   "scripts": {
     "validate": "node validate.js",
-    "serve": "node server.js"
+    "serve": "node --env-file-if-exists=.env server.js"
   }
 }

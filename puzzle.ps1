@@ -11,7 +11,7 @@ $tools = Join-Path $PSScriptRoot "tools\puzzle"
 switch ($cmd.ToLower()) {
     "plan" {
         Start-Process "http://localhost:5173"
-        node (Join-Path $tools "server.js")
+        node "--env-file-if-exists=$(Join-Path $tools '.env')" (Join-Path $tools "server.js")
     }
     "check" {
         $map = @{ word = "words"; connect = "puzzles"; crossword = "crosswords" }

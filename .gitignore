@@ -19,5 +19,9 @@
 *.swp
 local.properties
 
+# Sekrety (klucze API)
+.env
+.env.*
+
 # AI tooling (lokalne)
 .claude/
