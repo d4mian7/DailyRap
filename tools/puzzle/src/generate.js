@@ -38,7 +38,7 @@ const SCHEMAS = {
   words: {
     type: "object",
     properties: {
-      word: { type: "string", description: "Slowo WIELKIMI literami, 4-8 liter" },
+      word: { type: "string", description: "Slowo WIELKIMI literami, 4-6 liter" },
       hint: { type: "string", description: "Krotka kategoria, np. Raper/ka, Album, Slang" },
     },
     required: ["word", "hint"],
@@ -106,7 +106,7 @@ function userPrompt(kind, theme, used) {
   const t = theme ? ` Temat/wskazowka: ${theme}.` : "";
   const avoid = avoidBlock(kind, used);
   if (kind === "words") {
-    return `Wymysl jedno haslo do gry typu Wordle o polskim rapie (4-8 liter).${t} Zwroc word (WIELKIMI literami) i hint.${avoid}`;
+    return `Wymysl jedno haslo do gry typu Wordle o polskim rapie (4-6 liter, rozpoznawalne dla szerokiego grona fanow).${t} Zwroc word (WIELKIMI literami) i hint.${avoid}`;
   }
   if (kind === "puzzles") {
     return `Uloz zestaw Connections: DOKLADNIE 4 kategorie, kazda z DOKLADNIE 4 slowami o polskim rapie.${t}

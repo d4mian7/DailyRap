@@ -1,7 +1,7 @@
 // Walidacja zestawow DailyRap. Jeden zrodlo prawdy dla CLI i serwera web.
 //
 // Twarde reguly (blad => zestaw NIE moze trafic do apki):
-//  RapWord (words.json):     variant == dlugosc slowa; word/hint niepuste
+//  RapWord (words.json):     variant == dlugosc slowa; dlugosc 4-6; word/hint niepuste
 //  RapConnect (puzzles.json): 4 kategorie x 4 slowa; difficulty dokladnie {0,1,2,3};
 //                             16 slow unikalnych (bez wzgledu na wielkosc liter)
 //  RapCrossword (crosswords.json): liczba pytan == dlugosc hasla;
@@ -18,6 +18,9 @@ const NORM = (s) => up(String(s ?? "").trim());
 const dayDiff = (a, b) => Math.abs(Math.round((Date.parse(a + "T00:00:00Z") - Date.parse(b + "T00:00:00Z")) / 86400000));
 // Minimalny odstep (w dniach) zanim ta sama odpowiedz/haslo moze wrocic w krzyzowce.
 export const GAP_DAYS = 7;
+// RapWord: dozwolona dlugosc hasla (decyzja Damiana 2026-10-19: tylko 4, 5 i 6 liter).
+export const WORD_MIN = 4;
+export const WORD_MAX = 6;
 // Normalizacja pytania do porownan (wielkie litery, bez interpunkcji, pojedyncze spacje).
 const normQ = (s) => up(String(s ?? "")).replace(/[^\p{L}\p{N}\s]/gu, " ").replace(/\s+/g, " ").trim();
 const qWords = (s) => new Set(normQ(s).split(" ").filter((w) => w.length > 2));
@@ -73,6 +76,9 @@ export function validateWords(data) {
       issues.push({ level: "error", where: at, msg: "Brak pola variant" });
     } else if (w.variant !== len) {
       issues.push({ level: "error", where: at, msg: `variant=${w.variant}, ale slowo "${w.word}" ma ${len} liter` });
+    }
+    if (len > 0 && (len < WORD_MIN || len > WORD_MAX)) {
+      issues.push({ level: "error", where: at, msg: `"${w.word}" ma ${len} liter — RapWord bierze tylko ${WORD_MIN}-${WORD_MAX}` });
     }
   });
   issues.push(...crossDayIssues("words", list));
