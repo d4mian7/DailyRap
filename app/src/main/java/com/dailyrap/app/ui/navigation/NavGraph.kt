@@ -1,6 +1,8 @@
 package com.dailyrap.app.ui.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.Lifecycle
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +31,22 @@ object Routes {
     const val SETTINGS = "settings"
 }
 
+/**
+ * Akcje nawigacji wykonujemy tylko z ekranu, który jest aktualnie aktywny (RESUMED).
+ * Bez tego szybkie podwójne kliknięcie „wstecz" zdejmowało też ekran główny
+ * (zostawało puste fioletowe tło), a podwójne kliknięcie kafelka otwierało grę dwa razy.
+ */
+private fun NavBackStackEntry.isActive(): Boolean =
+    lifecycle.currentState == Lifecycle.State.RESUMED
+
+private fun NavHostController.popBackFrom(entry: NavBackStackEntry) {
+    if (entry.isActive()) popBackStack()
+}
+
+private fun NavHostController.navigateFrom(entry: NavBackStackEntry, route: String) {
+    if (entry.isActive()) navigate(route)
+}
+
 @Composable
 fun NavGraph(
     navController: NavHostController = rememberNavController()
@@ -37,56 +55,56 @@ fun NavGraph(
         navController = navController,
         startDestination = Routes.HOME
     ) {
-        composable(Routes.HOME) {
+        composable(Routes.HOME) { entry ->
             HomeScreen(
-                onNavigateToConnections = { navController.navigate(Routes.CONNECTIONS) },
-                onNavigateToLiteralnie = { navController.navigate(Routes.LITERALNIE) },
-                onNavigateToCrossword = { navController.navigate(Routes.CROSSWORD) },
-                onNavigateToStats = { navController.navigate(Routes.STATS) },
-                onNavigateToHelp = { navController.navigate(Routes.HELP) },
-                onNavigateToSettings = { navController.navigate(Routes.SETTINGS) }
+                onNavigateToConnections = { navController.navigateFrom(entry, Routes.CONNECTIONS) },
+                onNavigateToLiteralnie = { navController.navigateFrom(entry, Routes.LITERALNIE) },
+                onNavigateToCrossword = { navController.navigateFrom(entry, Routes.CROSSWORD) },
+                onNavigateToStats = { navController.navigateFrom(entry, Routes.STATS) },
+                onNavigateToHelp = { navController.navigateFrom(entry, Routes.HELP) },
+                onNavigateToSettings = { navController.navigateFrom(entry, Routes.SETTINGS) }
             )
         }
-        composable(Routes.CONNECTIONS) {
+        composable(Routes.CONNECTIONS) { entry ->
             ConnectionsScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackFrom(entry) }
             )
         }
-        composable(Routes.LITERALNIE) {
+        composable(Routes.LITERALNIE) { entry ->
             LiteralnieScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackFrom(entry) }
             )
         }
-        composable(Routes.CROSSWORD) {
+        composable(Routes.CROSSWORD) { entry ->
             CrosswordScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackFrom(entry) }
             )
         }
-        composable(Routes.STATS) {
+        composable(Routes.STATS) { entry ->
             StatsScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackFrom(entry) }
             )
         }
-        composable(Routes.HELP) {
+        composable(Routes.HELP) { entry ->
             HelpScreen(
-                onNavigateBack = { navController.popBackStack() },
+                onNavigateBack = { navController.popBackFrom(entry) },
                 onNavigateToTutorial = { type ->
-                    navController.navigate("help/$type")
+                    navController.navigateFrom(entry, "help/$type")
                 }
             )
         }
-        composable(Routes.HELP_RAPCONNECT) {
-            RapConnectTutorial(onClose = { navController.popBackStack() })
+        composable(Routes.HELP_RAPCONNECT) { entry ->
+            RapConnectTutorial(onClose = { navController.popBackFrom(entry) })
         }
-        composable(Routes.HELP_RAPWORD) {
-            RapWordTutorial(onClose = { navController.popBackStack() })
+        composable(Routes.HELP_RAPWORD) { entry ->
+            RapWordTutorial(onClose = { navController.popBackFrom(entry) })
         }
-        composable(Routes.HELP_RAPCROSSWORD) {
-            RapCrosswordTutorial(onClose = { navController.popBackStack() })
+        composable(Routes.HELP_RAPCROSSWORD) { entry ->
+            RapCrosswordTutorial(onClose = { navController.popBackFrom(entry) })
         }
-        composable(Routes.SETTINGS) {
+        composable(Routes.SETTINGS) { entry ->
             SettingsScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackFrom(entry) }
             )
         }
     }
