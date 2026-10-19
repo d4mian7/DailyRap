@@ -13,6 +13,7 @@ import com.dailyrap.app.domain.LiteralnieEngine
 import com.dailyrap.app.domain.LiteralnieEngine.SubmitResult
 import com.dailyrap.app.domain.usecase.GetDailyWordUseCase
 import com.dailyrap.app.domain.usecase.SaveGameResultUseCase
+import com.dailyrap.app.util.Haptics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -51,6 +52,7 @@ class LiteralnieViewModel @Inject constructor(
     private val saveGameResult: SaveGameResultUseCase,
     private val wordRepository: WordRepository,
     private val gameProgressRepository: GameProgressRepository,
+    private val haptics: Haptics,
     val rewardedAdManager: RewardedAdManager
 ) : ViewModel() {
 
@@ -115,6 +117,7 @@ class LiteralnieViewModel @Inject constructor(
     fun onKeyPress(letter: Char) {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         val newState = engine.typeLetter(state, letter)
         if (newState !== state) {
             _uiState.value = _uiState.value.copy(gameState = newState)
@@ -125,12 +128,14 @@ class LiteralnieViewModel @Inject constructor(
     fun onDelete() {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         _uiState.value = _uiState.value.copy(gameState = engine.deleteLetter(state))
     }
 
     fun onEnter() {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         val (newState, result) = engine.submitGuess(state, dictionary)
 
         when (result) {

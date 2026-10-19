@@ -17,8 +17,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -142,11 +145,11 @@ fun ClueRow(
                     colors = ButtonDefaults.buttonColors(containerColor = AccentPurple),
                     contentPadding = androidx.compose.foundation.layout.PaddingValues(horizontal = 12.dp)
                 ) {
-                    Text(
-                        text = "\u2713",
-                        color = TileText,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 14.sp
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Sprawdź",
+                        tint = TileText,
+                        modifier = Modifier.size(18.dp)
                     )
                 }
             }

@@ -12,6 +12,7 @@ import com.dailyrap.app.domain.ConnectionsEngine
 import com.dailyrap.app.domain.ConnectionsEngine.GuessResult
 import com.dailyrap.app.domain.usecase.GetDailyPuzzleUseCase
 import com.dailyrap.app.domain.usecase.SaveGameResultUseCase
+import com.dailyrap.app.util.Haptics
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -51,6 +52,7 @@ class ConnectionsViewModel @Inject constructor(
     private val getDailyPuzzle: GetDailyPuzzleUseCase,
     private val saveGameResult: SaveGameResultUseCase,
     private val gameProgressRepository: GameProgressRepository,
+    private val haptics: Haptics,
     val rewardedAdManager: RewardedAdManager
 ) : ViewModel() {
 
@@ -141,24 +143,28 @@ class ConnectionsViewModel @Inject constructor(
     fun toggleWord(word: String) {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         _uiState.value = _uiState.value.copy(gameState = engine.toggleWord(state, word))
     }
 
     fun clearSelection() {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         _uiState.value = _uiState.value.copy(gameState = engine.clearSelection(state))
     }
 
     fun shuffle() {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         _uiState.value = _uiState.value.copy(gameState = engine.shuffle(state))
     }
 
     fun submitGuess() {
         val state = _uiState.value.gameState ?: return
         if (state.status != GameStatus.IN_PROGRESS) return
+        haptics.tap()
         val (newState, result) = engine.submitGuess(state)
         _uiState.value = _uiState.value.copy(gameState = newState)
 

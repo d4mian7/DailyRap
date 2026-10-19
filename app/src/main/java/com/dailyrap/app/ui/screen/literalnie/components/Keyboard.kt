@@ -12,13 +12,18 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.outlined.Backspace
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -72,13 +77,18 @@ fun Keyboard(
         // Row 3: ASDFGHJKL (9 liter)
         KeyRow(keys = ROW2, keyboardState = keyboardState, onKey = onKey)
 
-        // Row 4: ⌫ + ZXCVBNM + OK — klawisze akcji szersze (1.5x)
+        // Row 4: Backspace + ZXCVBNM + OK — klawisze akcji szersze (1.5x)
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(KEY_GAP),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ActionKey(text = "⌫", onClick = onDelete, weight = 1.5f)
+            ActionKey(
+                icon = Icons.AutoMirrored.Outlined.Backspace,
+                contentDescription = "Usuń literę",
+                onClick = onDelete,
+                weight = 1.5f
+            )
 
             ROW3.forEach { letter ->
                 LetterKey(
@@ -146,6 +156,31 @@ private fun RowScope.LetterKey(
 
 @Composable
 private fun RowScope.ActionKey(
+    icon: ImageVector,
+    contentDescription: String,
+    onClick: () -> Unit,
+    weight: Float = 1f
+) {
+    Box(
+        modifier = Modifier
+            .weight(weight)
+            .height(KEY_HEIGHT)
+            .clip(RoundedCornerShape(8.dp))
+            .background(TileDefault)
+            .clickable { onClick() },
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = contentDescription,
+            tint = TileText,
+            modifier = Modifier.size(22.dp)
+        )
+    }
+}
+
+@Composable
+private fun RowScope.ActionKey(
     text: String,
     onClick: () -> Unit,
     weight: Float = 1f
@@ -163,7 +198,7 @@ private fun RowScope.ActionKey(
             text = text,
             color = TileText,
             fontWeight = FontWeight.Bold,
-            fontSize = if (text == "⌫") 20.sp else 14.sp
+            fontSize = 14.sp
         )
     }
 }

@@ -39,10 +39,13 @@ import androidx.compose.ui.window.Dialog
 import com.dailyrap.app.data.model.GameStatus
 import com.dailyrap.app.data.model.LetterResult
 import com.dailyrap.app.data.model.LiteralnieGameState
+import com.dailyrap.app.ui.components.ResultSquaresGrid
 import com.dailyrap.app.ui.theme.AccentPurpleEnd
 import com.dailyrap.app.ui.theme.AccentPurpleStart
 import com.dailyrap.app.ui.theme.BackgroundDark
+import com.dailyrap.app.ui.theme.LetterAbsent
 import com.dailyrap.app.ui.theme.LetterCorrect
+import com.dailyrap.app.ui.theme.LetterPresent
 import com.dailyrap.app.ui.theme.TextSecondary
 import com.dailyrap.app.ui.theme.TileText
 
@@ -50,6 +53,12 @@ private fun resultEmoji(result: LetterResult): String = when (result) {
     LetterResult.CORRECT -> "\uD83D\uDFE9"
     LetterResult.PRESENT -> "\uD83D\uDFE8"
     LetterResult.ABSENT -> "\u2B1B"
+}
+
+private fun resultColor(result: LetterResult): Color = when (result) {
+    LetterResult.CORRECT -> LetterCorrect
+    LetterResult.PRESENT -> LetterPresent
+    LetterResult.ABSENT -> LetterAbsent
 }
 
 fun buildLiteralnieShareText(
@@ -118,15 +127,9 @@ fun LiteralnieResultDialog(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Emoji grid — larger
-            val emojiGrid = guessResults.joinToString("\n") { row ->
-                row.joinToString("") { resultEmoji(it) }
-            }
-            Text(
-                text = emojiGrid,
-                fontSize = 28.sp,
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp
+            // Result grid — własne kafelki zamiast emotek
+            ResultSquaresGrid(
+                rows = guessResults.map { row -> row.map { resultColor(it) } }
             )
 
             Spacer(modifier = Modifier.height(12.dp))

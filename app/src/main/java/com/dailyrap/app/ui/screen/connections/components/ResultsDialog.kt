@@ -38,6 +38,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.dailyrap.app.data.model.ConnectionsGameState
+import com.dailyrap.app.ui.components.ResultSquaresGrid
+import com.dailyrap.app.ui.theme.CategoryEasy
+import com.dailyrap.app.ui.theme.CategoryHard
+import com.dailyrap.app.ui.theme.CategoryMedium
+import com.dailyrap.app.ui.theme.CategoryTricky
+import com.dailyrap.app.ui.theme.TileDefault
 import com.dailyrap.app.data.model.GameStatus
 import com.dailyrap.app.ui.theme.AccentPurpleEnd
 import com.dailyrap.app.ui.theme.AccentPurpleStart
@@ -52,6 +58,14 @@ private fun difficultyEmoji(difficulty: Int): String = when (difficulty) {
     2 -> "\uD83D\uDFE6"  // blue
     3 -> "\uD83D\uDFEA"  // purple
     else -> "\u2B1C"      // white
+}
+
+private fun difficultyColor(difficulty: Int): Color = when (difficulty) {
+    0 -> CategoryEasy
+    1 -> CategoryMedium
+    2 -> CategoryHard
+    3 -> CategoryTricky
+    else -> TileDefault
 }
 
 fun buildEmojiGrid(state: ConnectionsGameState): String {
@@ -118,15 +132,14 @@ fun ResultsDialog(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Emoji grid — larger squares
-            Text(
-                text = buildEmojiGrid(gameState).lines()
-                    .drop(2) // skip title and empty line
-                    .takeWhile { it.isNotBlank() }
-                    .joinToString("\n"),
-                fontSize = 28.sp,
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp
+            // Result grid — własne kafelki zamiast emotek
+            ResultSquaresGrid(
+                rows = gameState.guessHistory.map { guess ->
+                    guess.map { word ->
+                        val category = gameState.puzzle.categories.find { word in it.words }
+                        difficultyColor(category?.difficulty ?: -1)
+                    }
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))

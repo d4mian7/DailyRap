@@ -17,6 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
@@ -180,7 +183,11 @@ private fun CrosswordStep2() {
     )
 
     Spacer(modifier = Modifier.height(16.dp))
-    TutorialDescription("\u2705 Poprawna odpowiedź — wiersz podświetla się na zielono i odsłania literę hasła")
+    TutorialDescription(
+        "Poprawna odpowiedź — wiersz podświetla się na zielono i odsłania literę hasła",
+        icon = Icons.Default.CheckCircle,
+        iconTint = CorrectGreen
+    )
 }
 
 @Composable
@@ -220,7 +227,11 @@ private fun CrosswordStep3() {
     }
 
     Spacer(modifier = Modifier.height(20.dp))
-    TutorialDescription("Twój wynik to liczba poprawnych odpowiedzi. Ukryte hasło to bonus! \uD83E\uDDE9")
+    TutorialDescription(
+        "Twój wynik to liczba poprawnych odpowiedzi. Ukryte hasło to bonus!",
+        icon = Icons.Default.Extension,
+        iconTint = SecretPurple
+    )
 }
 
 @Composable

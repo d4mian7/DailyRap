@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Celebration
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.LockOpen
 import androidx.compose.material.icons.filled.SentimentDissatisfied
@@ -43,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.dailyrap.app.data.model.CrosswordGameState
 import com.dailyrap.app.data.model.GameStatus
+import com.dailyrap.app.ui.components.ResultSquare
 import com.dailyrap.app.ui.theme.AccentPurpleEnd
 import com.dailyrap.app.ui.theme.AccentPurpleStart
 import com.dailyrap.app.ui.theme.BackgroundDark
@@ -106,15 +110,16 @@ fun CrosswordResultDialog(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Emoji row
-            val emojiRow = gameState.puzzle.clues.indices.joinToString("") { i ->
-                if (i in gameState.correctRows) "\u2705" else "\u274C"
+            // Result row — własne kafelki zamiast emotek
+            Row(horizontalArrangement = Arrangement.spacedBy(5.dp)) {
+                gameState.puzzle.clues.indices.forEach { i ->
+                    val ok = i in gameState.correctRows
+                    ResultSquare(
+                        color = if (ok) LetterCorrect else Color(0xFFEF4444),
+                        icon = if (ok) Icons.Default.Check else Icons.Default.Close
+                    )
+                }
             }
-            Text(
-                text = emojiRow,
-                fontSize = 28.sp,
-                textAlign = TextAlign.Center
-            )
 
             Spacer(modifier = Modifier.height(8.dp))
 

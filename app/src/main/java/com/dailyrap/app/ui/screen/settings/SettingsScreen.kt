@@ -120,7 +120,7 @@ fun SettingsScreen(
                 icon = Icons.Default.Vibration,
                 iconTint = TileSelected,
                 title = "Wibracje",
-                description = "Wibracja przy klikaniu klawiszy w RapWord"
+                description = "Wibracja przy klawiszach w RapWord i kafelkach w RapConnect"
             ) {
                 Switch(
                     checked = uiState.vibrationEnabled,

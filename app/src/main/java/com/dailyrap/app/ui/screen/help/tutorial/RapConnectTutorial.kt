@@ -16,6 +16,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Cancel
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedButton
@@ -29,7 +33,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.dailyrap.app.ui.theme.AccentPurple
 import com.dailyrap.app.ui.theme.BackgroundDark
+import com.dailyrap.app.ui.theme.LetterCorrect
 import com.dailyrap.app.ui.theme.CategoryEasy
 import com.dailyrap.app.ui.theme.CategoryHard
 import com.dailyrap.app.ui.theme.CategoryMedium
@@ -155,10 +161,18 @@ private fun ConnectStep2() {
     )
 
     Spacer(modifier = Modifier.height(12.dp))
-    TutorialDescription("\u2705 Jeśli trafisz — kategoria się odsłania w kolorze")
+    TutorialDescription(
+        "Jeśli trafisz — kategoria się odsłania w kolorze",
+        icon = Icons.Default.CheckCircle,
+        iconTint = LetterCorrect
+    )
 
     Spacer(modifier = Modifier.height(20.dp))
-    TutorialDescription("\u274C Jeśli pudło — tracisz jedną z 4 prób")
+    TutorialDescription(
+        "Jeśli pudło — tracisz jedną z 4 prób",
+        icon = Icons.Default.Cancel,
+        iconTint = Color(0xFFEF4444)
+    )
 }
 
 @Composable
@@ -176,5 +190,9 @@ private fun ConnectStep3() {
     }
 
     Spacer(modifier = Modifier.height(20.dp))
-    TutorialDescription("Po grze możesz udostępnić wynik znajomym \uD83C\uDFA4")
+    TutorialDescription(
+        "Po grze możesz udostępnić wynik znajomym",
+        icon = Icons.Default.Share,
+        iconTint = AccentPurple
+    )
 }

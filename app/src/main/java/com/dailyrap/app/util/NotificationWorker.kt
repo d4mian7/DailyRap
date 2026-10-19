@@ -48,7 +48,7 @@ class NotificationWorker(
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle("DailyRap")
-            .setContentText("\uD83C\uDFA4 Dzisiejsze wyzwanie czeka! Zagraj w DailyRap")
+            .setContentText("Dzisiejsze wyzwanie czeka! Zagraj w DailyRap")
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setAutoCancel(true)
             .build()
