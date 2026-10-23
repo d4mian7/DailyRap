@@ -17,7 +17,12 @@ const NORM = (s) => up(String(s ?? "").trim());
 // Roznica dni miedzy dwiema datami YYYY-MM-DD (wartosc bezwzgledna).
 const dayDiff = (a, b) => Math.abs(Math.round((Date.parse(a + "T00:00:00Z") - Date.parse(b + "T00:00:00Z")) / 86400000));
 // Minimalny odstep (w dniach) zanim ta sama odpowiedz/haslo moze wrocic w krzyzowce.
-export const GAP_DAYS = 7;
+// Od 2026-10-22 (decyzja Damiana 2026-10-21): ta sama odpowiedz/haslo wraca dopiero po 21 dniach,
+// zawsze z pytaniem z innej beczki. Starsze pary dni ocenia sie po dawnej regule 7 dni.
+export const GAP_DAYS = 21;
+const OLD_GAP_DAYS = 7;
+const GAP_SINCE = "2026-10-22";
+const gapFor = (a, b) => ((a > b ? a : b) >= GAP_SINCE ? GAP_DAYS : OLD_GAP_DAYS);
 // RapWord: dozwolona dlugosc hasla (decyzja Damiana 2026-10-19: tylko 4, 5 i 6 liter).
 export const WORD_MIN = 4;
 export const WORD_MAX = 6;
@@ -225,7 +230,8 @@ export function crossDayIssues(kind, items) {
       const dates = [...set].sort();
       for (let i = 1; i < dates.length; i++) {
         const d = dayDiff(dates[i], dates[i - 1]);
-        if (d < GAP_DAYS) out.push({ level: "error", where: `${kind} (za blisko)`, msg: `${label} "${tok}" powtarza sie zbyt blisko: ${dates[i - 1]} i ${dates[i]} (odstep ${d} dni, wymagane >= ${GAP_DAYS})` });
+        const need = gapFor(dates[i], dates[i - 1]);
+        if (d < need) out.push({ level: "error", where: `${kind} (za blisko)`, msg: `${label} "${tok}" powtarza sie zbyt blisko: ${dates[i - 1]} i ${dates[i]} (odstep ${d} dni, wymagane >= ${need})` });
       }
     }
   };
@@ -294,7 +300,8 @@ export function crossCheck(kind, entry, items) {
       others.forEach((it) => {
         if (tokensOf(it).includes(tok)) {
           const d = dayDiff(it.date, entry.date);
-          if (d < GAP_DAYS) out.push({ level: "error", where: `${kind} (${entry.date})`, msg: `${label} "${tok}" uzyte juz ${d} dni od dnia ${it.date} (wymagany odstep >= ${GAP_DAYS} dni)` });
+          const need = gapFor(it.date, entry.date);
+          if (d < need) out.push({ level: "error", where: `${kind} (${entry.date})`, msg: `${label} "${tok}" uzyte juz ${d} dni od dnia ${it.date} (wymagany odstep >= ${need} dni)` });
         }
       });
     };
