@@ -716,6 +716,80 @@
       ]
     },
     {
+      "id": 41,
+      "date": "2026-10-24",
+      "secretWord": "PAPUGA",
+      "clues": [
+        {
+          "question": "Przesterowany hit duetu PG$",
+          "answer": "PRZESTER",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Producent z „małpką” przed ksywą",
+          "answer": "ATUTOWY",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Opatrunkowy numer Szpaku",
+          "answer": "PLASTER",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Całuśny przebój Young Igiego",
+          "answer": "BUZI",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Angielski skrót, którym raperzy nazywają najlepszego w historii",
+          "answer": "GOAT",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Raperka, autorka „Czarnego Bzu”",
+          "answer": "DZIARMA",
+          "highlightIndex": 6
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "date": "2026-10-25",
+      "secretWord": "CARDIO",
+      "clues": [
+        {
+          "question": "Numer Bambi z Bedoesem",
+          "answer": "CYRK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Tytuł hitu zarówno Young Leosii, jak i Sentino",
+          "answer": "MARBELLA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Hit Żabsona, a zarazem tytuł jego EP-ki z 2018 roku",
+          "answer": "TRAPOLLO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Numer Białasa z Matą",
+          "answer": "DRIFT",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Letniak Maty z 2025 roku",
+          "answer": "KAMIKAZE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Skład Oskara, Igora i Miłosza",
+          "answer": "OIO",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
