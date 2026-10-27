@@ -790,6 +790,70 @@
       ]
     },
     {
+      "id": 43,
+      "date": "2026-10-26",
+      "secretWord": "KINOL",
+      "clues": [
+        {
+          "question": "Numer Malika Montany z Diho",
+          "answer": "RUNDKI",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Winny hit Taco Hemingwaya",
+          "answer": "FRASCATI",
+          "highlightIndex": 7
+        },
+        {
+          "question": "Morska płyta Kizo z 2020 roku",
+          "answer": "POSEJDON",
+          "highlightIndex": 7
+        },
+        {
+          "question": "Kumpel z osiedla, po rapowemu",
+          "answer": "ZIOMAL",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Zimowy numer Otsochodziego",
+          "answer": "LUTY",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 44,
+      "date": "2026-10-27",
+      "secretWord": "UMOWA",
+      "clues": [
+        {
+          "question": "Modowy numer Bedoesa i Lanka",
+          "answer": "VOGUE",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Label, w którym zaczynał Mata",
+          "answer": "SBM",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Klasyczny styl bitu, w opozycji do trapu",
+          "answer": "BOOMBAP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Styl i pewność siebie po rapowemu",
+          "answer": "SWAG",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Kontrowersyjna raperka",
+          "answer": "FAGATA",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
