@@ -955,6 +955,97 @@
       ]
     },
     {
+      "id": 48,
+      "date": "2026-10-31",
+      "secretWord": "MATA",
+      "clues": [
+        {
+          "question": "Kinny …",
+          "answer": "ZIMMER",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Banger z płyty „Hollywood Smile” Żabsona",
+          "answer": "COWABONGA",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Płyta Otsochodzi z 2026 roku",
+          "answer": "RIOTT",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Tusz na skórze rapera",
+          "answer": "DZIARA",
+          "highlightIndex": 3
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "date": "2026-11-01",
+      "secretWord": "SIANO",
+      "clues": [
+        {
+          "question": "Raper, którego ksywa to potoczne określenie dzieciaka",
+          "answer": "SZCZYL",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Samochodowy numer Gibbsa",
+          "answer": "DRIVE",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Właściciel mieszkania z płyty „club2020”",
+          "answer": "LANDLORD",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Rapowanie, potocznie: ostra … na bicie",
+          "answer": "NAWIJKA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Płyta Schaftera jak dawne płatne infolinie",
+          "answer": "AUDIOTELE",
+          "highlightIndex": 4
+        }
+      ]
+    },
+    {
+      "id": 50,
+      "date": "2026-11-02",
+      "secretWord": "HOTEL",
+      "clues": [
+        {
+          "question": "Pisze same złe komentarze",
+          "answer": "HEJTER",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kolorowe … Huberta",
+          "answer": "DOMY",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Pierwszy mixtape Young Igiego",
+          "answer": "TRAPPIST",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Popisywanie się furą i kasą",
+          "answer": "FLEX",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Stworzył z Bedoesem „1998”",
+          "answer": "LANEK",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
