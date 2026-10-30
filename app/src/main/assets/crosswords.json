@@ -1147,6 +1147,97 @@
       ]
     },
     {
+      "id": 54,
+      "date": "2026-11-06",
+      "secretWord": "MALIK",
+      "clues": [
+        {
+          "question": "… de Mallorca Maty i Żabsona",
+          "answer": "PALMA",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Targowa płyta Taco Hemingwaya",
+          "answer": "JARMARK",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Bez tego nawet dobry tekst nie siądzie",
+          "answer": "FLOW",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Kultura, z której wyrósł polski rap",
+          "answer": "HIPHOP",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Autor płyty „Produkt47”",
+          "answer": "OKI",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 55,
+      "date": "2026-11-07",
+      "secretWord": "KUBAN",
+      "clues": [
+        {
+          "question": "… 2115",
+          "answer": "KUQE",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Kreskówkowy numer Quebonafide",
+          "answer": "FUTURAMA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Cafe … Taco Hemingwaya",
+          "answer": "BELGA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Po premierze płyty rusza się w nią po całej Polsce",
+          "answer": "TRASA",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Numer Wenexta z Młodym Westem",
+          "answer": "TENTEN",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "date": "2026-11-08",
+      "secretWord": "RETO",
+      "clues": [
+        {
+          "question": "… Balu od Kizo",
+          "answer": "KRÓL",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Konflikt dwóch raperów",
+          "answer": "BEEF",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Kontrowersyjny numer Young Igiego i Włodiego",
+          "answer": "THC",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Autor „Mini Mana”",
+          "answer": "OKEKEL",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
