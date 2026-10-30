@@ -1046,6 +1046,107 @@
       ]
     },
     {
+      "id": 51,
+      "date": "2026-11-03",
+      "secretWord": "BAMBI",
+      "clues": [
+        {
+          "question": "Raper z 2115",
+          "answer": "BLACHA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Taconafide: … 0,5 mg",
+          "answer": "SOMA",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Nazwisko Maty",
+          "answer": "MATCZAK",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Impreza, ale potocznie",
+          "answer": "BIBA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Nałogowy numer ReTo",
+          "answer": "PAPIEROSY",
+          "highlightIndex": 3
+        }
+      ]
+    },
+    {
+      "id": 52,
+      "date": "2026-11-04",
+      "secretWord": "WHITE",
+      "clues": [
+        {
+          "question": "… Polskiej Młodzieży",
+          "answer": "KWIAT",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Wąsacz z Warszawy",
+          "answer": "HEMINGWAY",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Autor hitu „Disney”",
+          "answer": "KIZO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Tarchomin w skrócie u Otsochodzi",
+          "answer": "TARCHO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Pikantne nagranie Sobla z Okim",
+          "answer": "SEXTAPE",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "date": "2026-11-05",
+      "secretWord": "GUZIOR",
+      "clues": [
+        {
+          "question": "Autor płyty „SAFE”",
+          "answer": "GIBBS",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Young … od „Młodego Mansona”",
+          "answer": "MULTI",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Część numeru między refrenami",
+          "answer": "ZWROTKA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Z Matą nagrał „Drift”",
+          "answer": "BIAŁAS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Tak do ziomków zwraca się Malik Montana",
+          "answer": "MORDO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Zasada ubioru w hicie 2115",
+          "answer": "DRESSCODE",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
