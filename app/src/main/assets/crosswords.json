@@ -854,6 +854,107 @@
       ]
     },
     {
+      "id": 45,
+      "date": "2026-10-28",
+      "secretWord": "HUBERT",
+      "clues": [
+        {
+          "question": "Autor numeru „Prawie straciłem głos”",
+          "answer": "CHIVAS",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Saneczkowy numer Kaza Bałagane",
+          "answer": "KULIG",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Szefowski numer ReTo",
+          "answer": "BOSSMAN",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Debiutancka płyta Kinny’ego Zimmera",
+          "answer": "LETNISKO",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Policyjny numer PRO8L3M-u",
+          "answer": "INTERPOL",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Miłosny numer Zdechłego Osy",
+          "answer": "PATOLOVE",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "date": "2026-10-29",
+      "secretWord": "BETEO",
+      "clues": [
+        {
+          "question": "Brudny numer Wane’a",
+          "answer": "BŁOTO",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Imprezowa płyta Young Igiego",
+          "answer": "KONFETTI",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Amerykański numer Aleshena",
+          "answer": "ATLANTA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Klubowy numer Sobla",
+          "answer": "IMPREZA",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Luksusowy przebój Malika",
+          "answer": "DIOR",
+          "highlightIndex": 2
+        }
+      ]
+    },
+    {
+      "id": 47,
+      "date": "2026-10-30",
+      "secretWord": "KINNY",
+      "clues": [
+        {
+          "question": "Kolczasty numer Okiego",
+          "answer": "JEŻYK",
+          "highlightIndex": 4
+        },
+        {
+          "question": "Spódniczkowy numer Kukona",
+          "answer": "MINIÓWA",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Francuski numer PRO8L3M-u",
+          "answer": "NICEA",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Autor płyty „Ten sam stan”",
+          "answer": "WANE",
+          "highlightIndex": 2
+        },
+        {
+          "question": "Japoński numer Kubana",
+          "answer": "KYOTO",
+          "highlightIndex": 1
+        }
+      ]
+    },
+    {
       "id": 37,
       "date": "2026-11-09",
       "secretWord": "LEOSIA",
