@@ -3,6 +3,7 @@ package com.dailyrap.app.di
 import android.content.Context
 import com.dailyrap.app.data.repository.CrosswordRepository
 import com.dailyrap.app.data.repository.GameProgressRepository
+import com.dailyrap.app.data.repository.GuessArtistRepository
 import com.dailyrap.app.data.repository.PuzzleRepository
 import com.dailyrap.app.data.repository.WordRepository
 import dagger.Module
@@ -38,6 +39,14 @@ object AppModule {
         @ApplicationContext context: Context
     ): CrosswordRepository {
         return CrosswordRepository(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGuessArtistRepository(
+        @ApplicationContext context: Context
+    ): GuessArtistRepository {
+        return GuessArtistRepository(context)
     }
 
     @Provides

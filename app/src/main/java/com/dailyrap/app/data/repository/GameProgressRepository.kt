@@ -3,6 +3,7 @@ package com.dailyrap.app.data.repository
 import android.content.Context
 import com.dailyrap.app.data.model.ConnectionsGameState
 import com.dailyrap.app.data.model.CrosswordGameState
+import com.dailyrap.app.data.model.GuessArtistGameState
 import com.dailyrap.app.data.model.LiteralnieGameState
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -75,6 +76,26 @@ class GameProgressRepository @Inject constructor(
         val stateJson = prefs.getString("crossword_state", null) ?: return null
         return try {
             json.decodeFromString<CrosswordGameState>(stateJson)
+        } catch (_: Exception) {
+            null
+        }
+    }
+
+    // ── Kim jestem? ──────────────────────────────────────────
+
+    fun saveGuessArtistProgress(state: GuessArtistGameState, date: String) {
+        prefs.edit()
+            .putString("guess_artist_state", json.encodeToString(state))
+            .putString("guess_artist_date", date)
+            .apply()
+    }
+
+    fun loadGuessArtistProgress(date: String): GuessArtistGameState? {
+        val savedDate = prefs.getString("guess_artist_date", null) ?: return null
+        if (savedDate != date) return null
+        val stateJson = prefs.getString("guess_artist_state", null) ?: return null
+        return try {
+            json.decodeFromString<GuessArtistGameState>(stateJson)
         } catch (_: Exception) {
             null
         }

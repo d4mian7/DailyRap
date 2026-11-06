@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dailyrap.app.data.model.CrosswordPuzzle
 import com.dailyrap.app.data.model.DailyWord
+import com.dailyrap.app.data.model.GameStatus
 import com.dailyrap.app.data.model.Puzzle
+import com.dailyrap.app.data.repository.GameProgressRepository
 import com.dailyrap.app.data.repository.StatsRepository
 import com.dailyrap.app.domain.usecase.GetDailyCrosswordUseCase
 import com.dailyrap.app.domain.usecase.GetDailyPuzzleUseCase
@@ -28,6 +30,7 @@ data class HomeUiState(
     val connectionsPlayed: Boolean = false,
     val literalniePlayed: Boolean = false,
     val crosswordPlayed: Boolean = false,
+    val guessArtistPlayed: Boolean = false,
     val connectionsStreak: Int = 0,
     val literalnieStreak: Int = 0,
     val crosswordStreak: Int = 0,
@@ -40,7 +43,8 @@ class HomeViewModel @Inject constructor(
     private val getDailyPuzzle: GetDailyPuzzleUseCase,
     private val getDailyWord: GetDailyWordUseCase,
     private val getDailyCrossword: GetDailyCrosswordUseCase,
-    private val statsRepository: StatsRepository
+    private val statsRepository: StatsRepository,
+    private val gameProgressRepository: GameProgressRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -77,6 +81,8 @@ class HomeViewModel @Inject constructor(
                 connectionsPlayed = connectionsResult != null,
                 literalniePlayed = literalnieResult != null,
                 crosswordPlayed = crosswordResult != null,
+                guessArtistPlayed = gameProgressRepository.loadGuessArtistProgress(todayStr)
+                    ?.let { it.status != GameStatus.IN_PROGRESS } ?: false,
                 connectionsStreak = stats.connectionsStreak,
                 literalnieStreak = stats.literalnieStreak,
                 crosswordStreak = stats.crosswordStreak,

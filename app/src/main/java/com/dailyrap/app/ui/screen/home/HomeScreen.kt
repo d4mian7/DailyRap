@@ -27,6 +27,7 @@ import androidx.compose.material.icons.filled.Extension
 import androidx.compose.material.icons.automirrored.filled.HelpOutline
 import androidx.compose.material.icons.filled.LocalFireDepartment
 import androidx.compose.material.icons.filled.Headphones
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -52,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dailyrap.app.R
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.dailyrap.app.ui.screen.guessartist.GuessArtistAccent
 import com.dailyrap.app.ui.theme.BackgroundDark
 import com.dailyrap.app.ui.theme.BorderSubtle
 import com.dailyrap.app.ui.theme.LetterPresent
@@ -67,6 +69,7 @@ fun HomeScreen(
     onNavigateToConnections: () -> Unit,
     onNavigateToLiteralnie: () -> Unit,
     onNavigateToCrossword: () -> Unit,
+    onNavigateToGuessArtist: () -> Unit,
     onNavigateToStats: () -> Unit,
     onNavigateToHelp: () -> Unit = {},
     onNavigateToSettings: () -> Unit = {},
@@ -160,6 +163,19 @@ fun HomeScreen(
                         gradientColors = listOf(TileDefault, Color(0xFF3D2F1F)),
                         accentColor = LetterPresent,
                         onClick = onNavigateToCrossword
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    GameTile(
+                        icon = Icons.Default.Person,
+                        title = "KIM JESTEM?",
+                        subtitle = if (uiState.guessArtistPlayed) "Zagrane!" else "Zgadnij artystę po tropach",
+                        streak = 0,
+                        played = uiState.guessArtistPlayed,
+                        gradientColors = listOf(TileDefault, Color(0xFF1F3347)),
+                        accentColor = GuessArtistAccent,
+                        onClick = onNavigateToGuessArtist
                     )
 
                     // Countdown timer

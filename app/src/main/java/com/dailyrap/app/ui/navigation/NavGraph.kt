@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dailyrap.app.ui.screen.connections.ConnectionsScreen
 import com.dailyrap.app.ui.screen.crossword.CrosswordScreen
+import com.dailyrap.app.ui.screen.guessartist.GuessArtistScreen
 import com.dailyrap.app.ui.screen.help.HelpScreen
 import com.dailyrap.app.ui.screen.help.tutorial.RapConnectTutorial
 import com.dailyrap.app.ui.screen.help.tutorial.RapCrosswordTutorial
@@ -23,6 +24,7 @@ object Routes {
     const val CONNECTIONS = "connections"
     const val LITERALNIE = "literalnie"
     const val CROSSWORD = "crossword"
+    const val GUESS_ARTIST = "guess_artist"
     const val STATS = "stats"
     const val HELP = "help"
     const val HELP_RAPCONNECT = "help/rapconnect"
@@ -60,6 +62,7 @@ fun NavGraph(
                 onNavigateToConnections = { navController.navigateFrom(entry, Routes.CONNECTIONS) },
                 onNavigateToLiteralnie = { navController.navigateFrom(entry, Routes.LITERALNIE) },
                 onNavigateToCrossword = { navController.navigateFrom(entry, Routes.CROSSWORD) },
+                onNavigateToGuessArtist = { navController.navigateFrom(entry, Routes.GUESS_ARTIST) },
                 onNavigateToStats = { navController.navigateFrom(entry, Routes.STATS) },
                 onNavigateToHelp = { navController.navigateFrom(entry, Routes.HELP) },
                 onNavigateToSettings = { navController.navigateFrom(entry, Routes.SETTINGS) }
@@ -77,6 +80,11 @@ fun NavGraph(
         }
         composable(Routes.CROSSWORD) { entry ->
             CrosswordScreen(
+                onNavigateBack = { navController.popBackFrom(entry) }
+            )
+        }
+        composable(Routes.GUESS_ARTIST) { entry ->
+            GuessArtistScreen(
                 onNavigateBack = { navController.popBackFrom(entry) }
             )
         }

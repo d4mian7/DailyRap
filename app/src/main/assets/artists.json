@@ -1,0 +1,329 @@
+{
+  "pool": ["Bambi", "Bedoes 2115", "Beteo", "Białas", "Blacha 2115", "Borixon", "Chivas", "Dziarma", "Fukaj", "Gedz", "Gibbs", "Guzior", "Hubert.", "Jan-rapowanie", "Kaz Bałagane", "Kinny Zimmer", "Kizo", "Kuban", "Kukon", "Kuqe 2115", "Malik Montana", "Mata", "Oki", "OIO", "Oskar83", "Otsochodzi", "Paluch", "Pezet", "PG$", "PRO8L3M", "Quebonafide", "ReTo", "Schafter", "Sentino", "Sobel", "Solar", "Szczyl", "Szpaku", "Taco Hemingway", "Taconafide", "Wane", "White 2115", "Young Igi", "Young Leosia", "Żabson"],
+  "artists": [
+    {
+      "id": 1,
+      "date": "2026-11-01",
+      "artist": "Taco Hemingway",
+      "clues": [
+        "Moje miasto to Warszawa.",
+        "Mam na koncie Fryderyki za album hip-hopowy.",
+        "Rzadko można mnie zobaczyć w wywiadach.",
+        "Grałem/am dwa razy z rzędu na PGE Narodowym.",
+        "Współprowadzę wytwórnię 2020."
+      ]
+    },
+    {
+      "id": 2,
+      "date": "2026-11-02",
+      "artist": "Szpaku",
+      "clues": [
+        "Moja ksywa brzmi podobnie do mojego nazwiska.",
+        "Jestem powiązany/a z B.O.R.",
+        "W 2024 publiczność Popkillera wybrała mnie Raperem Roku.",
+        "Zwrotka z #hot16challenge2 dała mi diamentową płytę.",
+        "Założyłem/am własną wytwórnię."
+      ]
+    },
+    {
+      "id": 3,
+      "date": "2026-11-03",
+      "artist": "Young Leosia",
+      "clues": [
+        "Pochodzę ze Szczecina.",
+        "Zaczynałem/am jako DJ w klubach.",
+        "Kiedyś nagrywałem/am pod inną ksywą.",
+        "Występowałem/am w teledysku Maty „Kiss cam”.",
+        "Byłem/am związany/a z wytwórnią Internaziomale."
+      ]
+    },
+    {
+      "id": 4,
+      "date": "2026-11-04",
+      "artist": "Mata",
+      "clues": [
+        "Mój pseudonim wymyślił ktoś z rodziny.",
+        "Gram w amatorskim klubie piłkarskim.",
+        "W 2019 zostałem/am Warszawiakiem Roku.",
+        "Do 2023 należałem/am do SBM.",
+        "Założyłem/am grupę Gombao33."
+      ]
+    },
+    {
+      "id": 5,
+      "date": "2026-11-05",
+      "artist": "Malik Montana",
+      "clues": [
+        "Urodziłem/am się poza Polską.",
+        "Zaczynałem/am od rapowania po angielsku.",
+        "Mówię biegle po niemiecku.",
+        "W 2021 zostałem/am twarzą federacji freak fightów.",
+        "Założyłem/am wytwórnię GM2L."
+      ]
+    },
+    {
+      "id": 6,
+      "date": "2026-11-06",
+      "artist": "Bedoes 2115",
+      "clues": [
+        "W 2017 trafiłem/am do Młodych Wilków Popkillera.",
+        "Debiutancką płytę wydałem/am jako 18-latek.",
+        "Moja pierwsza płyta dotarła na 1. miejsce OLiS.",
+        "Byłem/am powiązany/a z SB Maffiją.",
+        "Założyłem/am label z liczbą w nazwie."
+      ]
+    },
+    {
+      "id": 7,
+      "date": "2026-11-07",
+      "artist": "Żabson",
+      "clues": [
+        "Podkładałem/am głos w anime.",
+        "Nagrywałem/am z Borixonem.",
+        "Mój debiutancki album trafił na 3. miejsce OLiS.",
+        "Założyłem/am wytwórnię Internaziomale.",
+        "Moja ksywa pochodzi od płaza."
+      ]
+    },
+    {
+      "id": 8,
+      "date": "2026-11-08",
+      "artist": "Quebonafide",
+      "clues": [
+        "Zaczynałem/am od bitew freestyle'owych.",
+        "Studiowałem/am filozofię i socjologię na UW.",
+        "Mój pierwszy głośny mixtape wyszedł w SB Maffii.",
+        "Cztery płyty z moim udziałem pokryły się diamentem.",
+        "Założyłem/am wytwórnię QueQuality."
+      ]
+    },
+    {
+      "id": 9,
+      "date": "2026-11-09",
+      "artist": "PG$",
+      "clues": [
+        "Zadebiutowałem/am w 2023 roku.",
+        "Mój pierwszy singiel pokrył się diamentem.",
+        "Tytuł mojej pierwszej EP-ki to moja nazwa.",
+        "Za debiutancką EP-kę dostałem/am potrójną platynę.",
+        "Jesteśmy duetem."
+      ]
+    },
+    {
+      "id": 12,
+      "date": "2026-11-10",
+      "artist": "Kizo",
+      "clues": [
+        "Jestem ambasadorem marki streetwearowej.",
+        "W jednym roku wydałem/am debiut i drugą płytę.",
+        "Należałem/am do Chillwagonu.",
+        "Jedna z moich płyt nosi imię greckiego boga mórz.",
+        "Mój numer z Bletką ma potrójny diament."
+      ]
+    },
+    {
+      "id": 11,
+      "date": "2026-11-11",
+      "artist": "White 2115",
+      "clues": [
+        "W 2017 wziąłem/am udział w SB Starter.",
+        "Część zysków z mojej płyty poszła na odnowienie lasu.",
+        "Preorder mojej trzeciej płyty wyprzedał się w niecałą dobę.",
+        "Założyłem/am wytwórnię z nazwą amerykańskiego stanu.",
+        "Jestem częścią składu 2115."
+      ]
+    },
+    {
+      "id": 10,
+      "date": "2026-11-12",
+      "artist": "Sobel",
+      "clues": [
+        "W 2021 nominowano mnie do Fryderyka za debiut roku.",
+        "Pojawiłem/am się na „Hotelu Maffija 3”.",
+        "Śpiewam, rapuję i sam produkuję muzykę.",
+        "Mój duet z Michałem Szczygłem był hitem.",
+        "Mój pierwszy diament to singiel o imprezie."
+      ]
+    },
+    {
+      "id": 15,
+      "date": "2026-11-13",
+      "artist": "Young Igi",
+      "clues": [
+        "Moja ksywa to zdrobnienie mojego imienia.",
+        "Moje pierwsze głośne single nie trafiły na żaden album.",
+        "Mój pierwszy oficjalny album ma tytuł kojarzący się z imprezą.",
+        "Nagrałem/am „Deszcz banknotów” z Malikiem Montaną.",
+        "Tworzę supergrupę z Okim i Otsochodzi."
+      ]
+    },
+    {
+      "id": 13,
+      "date": "2026-11-14",
+      "artist": "Otsochodzi",
+      "clues": [
+        "Zadebiutowałem/am EP-ką z jedną cyfrą w tytule.",
+        "Używam też drugiej ksywy.",
+        "Jedna z moich płyt ma w tytule rok.",
+        "Byłem/am związany/a z Asfalt Records.",
+        "Moja warszawska dzielnica dała tytuł mojej płycie."
+      ]
+    },
+    {
+      "id": 14,
+      "date": "2026-11-15",
+      "artist": "Oki",
+      "clues": [
+        "Grałem/am supporty przed koncertami PRO8L3M.",
+        "Zdobyłem/am Popkillera za progres roku.",
+        "W 2023 wziąłem/am udział w Red Bull SoundClash.",
+        "Mam numer nazwany jak polski koszykarz NBA.",
+        "Kolczasta fryzura stała się moim znakiem rozpoznawczym."
+      ]
+    },
+    {
+      "id": 16,
+      "date": "2026-11-16",
+      "artist": "Gedz",
+      "clues": [
+        "Rap robię od ponad 20 lat.",
+        "Nagrałem/am numer z ukraińskim zespołem znanym z Eurowizji.",
+        "Nagrywałem/am z Taco Hemingwayem.",
+        "Moja piąta płyta nazywa się jak artystyczny styl życia.",
+        "Mój największy hit opowiada o przybyszu z kosmosu."
+      ]
+    },
+    {
+      "id": 17,
+      "date": "2026-11-17",
+      "artist": "Guzior",
+      "clues": [
+        "Pochodzę z Wrocławia.",
+        "Dwie moje płyty mają w tytule angielskie słowo oznaczające zło.",
+        "Dwa moje single przebiły 60 mln wyświetleń w niecały rok.",
+        "Należałem/am do wytwórni QueQuality.",
+        "Moja płyta nazywa się jak grzyb na starym chlebie."
+      ]
+    },
+    {
+      "id": 18,
+      "date": "2026-11-18",
+      "artist": "Taconafide",
+      "clues": [
+        "Mój pierwszy singiel pobił rekord odsłuchań w dobę na Spotify.",
+        "Zapowiedzią mojej płyty była plansza do gry Go.",
+        "Moja trasa nazywała się Ekodiesel Tour.",
+        "Mój drugi singiel nazywa się jak elektroniczne zwierzątko.",
+        "Tworzymy supergrupę."
+      ]
+    },
+    {
+      "id": 19,
+      "date": "2026-11-19",
+      "artist": "Białas",
+      "clues": [
+        "Pochodzę z małej miejscowości pod Warszawą.",
+        "Trzy razy dochodziłem/am do finału Wielkiej Bitwy Warszawskiej (WBW).",
+        "W tytułach moich płyt wraca „H8”.",
+        "Nagrałem/am „Drift” z Matą.",
+        "Tworzę duet z Solarem."
+      ]
+    },
+    {
+      "id": 21,
+      "date": "2026-11-20",
+      "artist": "Paluch",
+      "clues": [
+        "Zanim poszedłem/am solo, rapowałem/am w grupie Aifam.",
+        "20-lecie kariery świętowałem/am koncertem w katowickim Spodku.",
+        "Pochodzę z Poznania.",
+        "W moich numerach ciągle wracają bloki, osiedle i ulica.",
+        "Prowadzę wytwórnię B.O.R. Records."
+      ]
+    },
+    {
+      "id": 20,
+      "date": "2026-11-21",
+      "artist": "Solar",
+      "clues": [
+        "Poza rapem zajmuję się też realizacją dźwięku.",
+        "Jestem rocznikiem '89 ze stolicy.",
+        "Zbiórka, którą zapoczątkowałem/am, kupiła siedem karetek.",
+        "Współzałożyłem/am SBM Label.",
+        "Moja ksywa kojarzy się ze słońcem."
+      ]
+    },
+    {
+      "id": 22,
+      "date": "2026-11-22",
+      "artist": "Szczyl",
+      "clues": [
+        "Wychowałem/am się nad morzem.",
+        "Dostałem/am nagrodę artystyczną Torunia imienia Grzegorza Ciechowskiego.",
+        "Wygrałem/am SBM Starter, ale nie dołączyłem/am do labelu.",
+        "Moja debiutancka płyta nazywa Trójmiasto amerykańskim stanem.",
+        "Moja ksywa to potoczne określenie dzieciaka."
+      ]
+    },
+    {
+      "id": 23,
+      "date": "2026-11-23",
+      "artist": "Dziarma",
+      "clues": [
+        "Brałem/am udział w X-Factorze.",
+        "Moja muzyka łączy pop, hip-hop i witch house.",
+        "Moja debiutancka EP-ka nazywa się jak rzymska piątka.",
+        "Wydaję w wytwórni 2020.",
+        "Mój hit to „Czarny bez”."
+      ]
+    },
+    {
+      "id": 24,
+      "date": "2026-11-24",
+      "artist": "Pezet",
+      "clues": [
+        "W 2011 magazyn Machina uznał mnie za najlepszego polskiego rapera.",
+        "Mam własną markę odzieżową.",
+        "Tworzyłem/am duet z producentem Noonem.",
+        "Pochodzę z warszawskiego Ursynowa.",
+        "Mój znany numer to „Ukryty w mieście krzyk”."
+      ]
+    },
+    {
+      "id": 25,
+      "date": "2026-11-25",
+      "artist": "PRO8L3M",
+      "clues": [
+        "Jedną płytę oparłem/am na samplach z polskiej muzyki lat 70. i 80.",
+        "Dostałem/am Fryderyka za mixtape wydany w 2018.",
+        "Płytę na 10-lecie dało się kupić w preorderze zapisaną na klapkowej Nokii.",
+        "Jedna z moich płyt nosi tytuł kultowego filmu z Bradem Pittem.",
+        "Tworzymy duet: raper i producent."
+      ]
+    },
+    {
+      "id": 26,
+      "date": "2026-11-26",
+      "artist": "Kaz Bałagane",
+      "clues": [
+        "Pierwsze kroki w muzyce stawiałem/am jako producent.",
+        "Moje teksty są pełne neologizmów i niecodziennych odmian słów.",
+        "Mój znany numer nazywa się jak gruzińskie ciasto z serem.",
+        "Mój duet z Belmondawgiem dał początek zespołowi Mobbyn.",
+        "Prowadzę wytwórnię Narkopop."
+      ]
+    },
+    {
+      "id": 27,
+      "date": "2026-11-27",
+      "artist": "Sentino",
+      "clues": [
+        "Pierwszy kontrakt płytowy podpisałem/am z Def Jam w 1999 roku.",
+        "Teksty piszę w czterech językach.",
+        "Wydałem/am autobiografię „Tatuażyk”.",
+        "Zaczynałem/am w niemieckim rapie.",
+        "Mój singiel „Lato” ma trzy platyny."
+      ]
+    }
+  ]
+}
