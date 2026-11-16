@@ -53,7 +53,7 @@
   .mode{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:12px;}
   .mhead{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
   .tag{font-size:11px;padding:2px 7px;border-radius:6px;font-weight:700;}
-  .tag.W{background:rgba(59,130,246,.2);color:var(--blue);}.tag.C{background:rgba(139,92,246,.2);color:var(--purple);}.tag.X{background:rgba(234,179,8,.2);color:var(--gold);}
+  .tag.W{background:rgba(59,130,246,.2);color:var(--blue);}.tag.C{background:rgba(139,92,246,.2);color:var(--purple);}.tag.X{background:rgba(234,179,8,.2);color:var(--gold);}.tag.K{background:rgba(56,189,248,.2);color:#38bdf8;}
   .status{font-size:11px;margin-left:auto;padding:2px 8px;border-radius:6px;}
   .status.ok{background:rgba(34,197,94,.15);color:var(--green);}.status.bad{background:rgba(239,68,68,.15);color:var(--red);}.status.none{background:#2a2a38;color:var(--muted);}
   .body{font-size:13px;line-height:1.5;}.kv{color:var(--muted);}
@@ -74,6 +74,7 @@
   .clrow{display:grid;grid-template-columns:24px 1fr 110px 90px;gap:6px;align-items:center;margin-bottom:6px;}
   .clrow .idx{color:var(--gold);font-weight:700;text-align:center;}
   .letterbadge{font-size:12px;padding:4px 0;text-align:center;border-radius:6px;background:#2a2a38;color:var(--muted);}
+  .quote{font-size:11px;color:var(--muted);margin:4px 0 6px;}.opt{border:1px solid var(--line);border-radius:8px;padding:8px;margin-top:6px;cursor:pointer;}.opt:hover{border-color:#38bdf8;}.opt .quote{margin:4px 0 0;}button.on{background:#38bdf8;color:#0f0f14;}
   .letterbadge.ok{background:rgba(34,197,94,.2);color:var(--green);}
   .letterbadge.bad{background:rgba(239,68,68,.2);color:var(--red);}
   .live{position:sticky;top:18px;}
@@ -137,6 +138,7 @@
         <option value="word">RapWord (haslo)</option>
         <option value="connect">RapConnect (4x4)</option>
         <option value="crossword">RapCrossword (krzyzowka)</option>
+        <option value="artist">Kim jestem? (artysta)</option>
       </select>
     </div>
     <div class="field" style="margin:0;">
@@ -169,15 +171,16 @@
 </div>
 
 <script>
-const MODES={words:{tag:"W",name:"RapWord"},puzzles:{tag:"C",name:"RapConnect"},crosswords:{tag:"X",name:"RapCrossword"}};
-const KIND={word:"words",connect:"puzzles",crossword:"crosswords"};
+const MODES={words:{tag:"W",name:"RapWord"},puzzles:{tag:"C",name:"RapConnect"},crosswords:{tag:"X",name:"RapCrossword"},artists:{tag:"K",name:"Kim jestem?"}};
+const KIND={word:"words",connect:"puzzles",crossword:"crosswords",artist:"artists"};
 let DATA=null, CONFIG={available:false};
 let view=new Date(); view.setDate(1);
 let selected=null;
 
 const up=s=>String(s==null?"":s).toUpperCase();
 const chars=s=>[...String(s==null?"":s)];
-const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+// Cudzyslow tez, bo tekst trafia do atrybutu value="..." (inaczej trop z " jest ucinany w polu).
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const fmt=d=>d.toLocaleDateString("sv-SE");
 
 async function reload(){
@@ -228,6 +231,7 @@ function renderCalendar(){
 }
 function summaryHtml(kind,it){
   if(kind==="words")return `<div><b>${esc(it.word)}</b> <span class="kv">(${it.variant} liter · ${esc(it.hint||"")})</span></div>`;
+  if(kind==="artists")return `<div><b>${esc(it.artist)}</b></div>`+(it.clues||[]).map((c,i)=>`<div class="cat">${i+1}. ${esc(c)}</div>`).join("");
   if(kind==="crosswords"){
     const cl=(it.clues||[]).map((c,i)=>`<div class="cat">${i+1}. ${esc(c.question)} — <b>${esc(c.answer)}</b> <span class="kv">[${c.highlightIndex}]</span></div>`).join("");
     return `<div>Haslo: <b>${esc(it.secretWord)}</b></div>${cl}`;
@@ -268,12 +272,13 @@ async function move(kind,date){
 }
 
 /* ===== KREATOR ===== */
-const ALIAS_BACK={word:"words",connect:"puzzles",crossword:"crosswords"};
-let CST={word:null,connect:null,crossword:null}; // stan formularzy
+const ALIAS_BACK={word:"words",connect:"puzzles",crossword:"crosswords",artist:"artists"};
+let CST={word:null,connect:null,crossword:null,artist:null}; // stan formularzy
 
 function blank(mode){
   if(mode==="word")return {word:"",hint:""};
   if(mode==="connect")return {categories:[0,1,2,3].map(d=>({name:"",words:["","","",""],difficulty:d}))};
+  if(mode==="artist")return artistState("",["","","","",""],[]);
   return {secretWord:"",clues:[]};
 }
 function curMode(){return document.getElementById("cMode").value;}
@@ -287,6 +292,7 @@ function openInCreator(kind,date){
   switchTab("creator");document.getElementById("cMode").value=mode;document.getElementById("cDate").value=date;
   if(mode==="word")CST.word={word:it.word,hint:it.hint};
   else if(mode==="connect")CST.connect={categories:it.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
+  else if(mode==="artist")CST.artist=artistState(it.artist,it.clues,[]);
   else CST.crossword={secretWord:it.secretWord,clues:it.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex}))};
   renderForm();renderLive();
 }
@@ -311,6 +317,14 @@ function renderForm(){
           <input value="${esc(c.name)}" oninput="st().categories[${ci}].name=this.value;renderLive();" placeholder="Nazwa kategorii"></div>
         <div class="wordsgrid">${c.words.map((w,wi)=>`<input value="${esc(w)}" oninput="st().categories[${ci}].words[${wi}]=this.value;renderLive();" placeholder="slowo ${wi+1}">`).join("")}</div>
       </div>`).join("");
+  } else if(m==="artist"){
+    const pool=(DATA&&DATA.modes.artists&&DATA.modes.artists.pool)||[];
+    const toFix=s.decision.filter(d=>d==="replace").length;
+    f.innerHTML=`
+      <div class="field"><label>Artysta lub sklad (z puli)</label>
+        <select onchange="st().artist=this.value;renderLive();"><option value="">— wybierz —</option>${pool.map(p=>`<option ${p===s.artist?"selected":""}>${esc(p)}</option>`).join("")}</select></div>
+      ${s.clues.map((c,i)=>clueBox(s,i)).join("")}
+      <div class="row"><button class="ai" id="fixBtn" onclick="fixArtist()" ${toFix&&s.artist&&CONFIG.available?"":"disabled"}>Popraw odrzucone (${toFix}) — 3 wersje</button></div>`;
   } else {
     f.innerHTML=`
       <div class="field"><label>Haslo (secretWord, WIELKIMI literami)</label>
@@ -349,6 +363,59 @@ function autoHi(i){
   renderClues();renderLive();
 }
 
+/* ===== Kim jestem?: petla poprawek ===== */
+function artistState(artist,clues,quotes){
+  const c=[...clues,"","","","",""].slice(0,5);
+  return {artist,clues:c,quotes:c.map((_,i)=>quotes[i]||""),decision:c.map(()=>"keep"),notes:c.map(()=>""),options:{},shown:{}};
+}
+function clueBox(s,i){
+  const label=`Trop ${i+1}${i===0?" (najtrudniejszy)":i===4?" (najlatwiejszy)":""}`;
+  const rep=s.decision[i]==="replace";
+  const opts=(s.options[i]||[]).map((o,j)=>`<div class="opt" onclick="pickOpt(${i},${j})"><b>${esc(o.text)}</b>${o.quote?`<div class="quote">zrodlo: „${esc(o.quote)}”</div>`:""}${o.errors.length?`<div class="errs">${esc(o.errors.join("\n"))}</div>`:""}</div>`).join("");
+  return `<div class="catbox">
+    <div class="field" style="margin-bottom:4px;"><label>${label}</label><input value="${esc(s.clues[i])}" oninput="st().clues[${i}]=this.value;st().quotes[${i}]='';renderLive();"></div>
+    ${s.quotes[i]?`<div class="quote">zrodlo: „${esc(s.quotes[i])}”</div>`:""}
+    <div class="row" style="margin-top:4px;">
+      <button class="${rep?"":"on"}" onclick="setDecision(${i},'keep')">Zostaw</button>
+      <button class="${rep?"danger on":""}" onclick="setDecision(${i},'replace')">Wymien</button>
+      ${rep?`<input style="flex:1;" placeholder="uwaga: dlaczego (trafi do regul)" value="${esc(s.notes[i])}" oninput="st().notes[${i}]=this.value;">`:""}
+    </div>${opts}</div>`;
+}
+function setDecision(i,d){st().decision[i]=d;renderForm();renderLive();}
+function pickOpt(i,j){
+  const s=st();const o=s.options[i][j];
+  s.clues[i]=o.text;s.quotes[i]=o.quote;s.decision[i]="keep";s.notes[i]="";delete s.options[i];
+  renderForm();renderLive();
+}
+async function fixArtist(){
+  const s=st();const date=document.getElementById("cDate").value;const msg=document.getElementById("saveMsg");
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){msg.textContent="Najpierw ustaw date.";return;}
+  const replace=s.decision.map((d,i)=>d==="replace"?i:-1).filter(i=>i>=0);
+  const keep=s.decision.map((d,i)=>d==="keep"?i:-1).filter(i=>i>=0);
+  const notes={};replace.forEach(i=>{notes[i]=s.notes[i]||"slaby trop";});
+  // Wszystko, co juz padlo przy tych tropach (wczesniejsze rundy), zeby model nie wracal do tych samych pomyslow.
+  s.shown=s.shown||{};
+  const shown=replace.flatMap(i=>[s.quotes[i]?`${s.clues[i]} [fakt: ${s.quotes[i]}]`:s.clues[i],...(s.shown[i]||[])]);
+  // Odrzucenia z uwagami trafiaja do regul, zanim powstana nowe wersje.
+  fetch("/api/feedback",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({lines:replace.map(i=>`${s.artist}, trop ${i+1}: odrzucony „${s.clues[i]}” — ${s.notes[i]||"bez uwagi"}`)})});
+  const btn=document.getElementById("fixBtn");btn.disabled=true;btn.textContent="Generuje 3 wersje...";
+  msg.style.color="var(--muted)";msg.textContent="Claude poprawia odrzucone tropy... (zwykle ok. 1 minuty)";
+  try{
+    const r=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"artist",date,review:{artist:s.artist,clues:s.clues,keep,notes,shown}})});
+    const res=await r.json();
+    if(!res.ok){msg.style.color="var(--red)";msg.textContent=res.error;return;}
+    replace.forEach(i=>{
+      const seen=new Set();
+      s.options[i]=res.runs.map(run=>({text:run.entry.clues[i],quote:run.quotes[i],errors:run.errors.filter(e=>e.includes(`Trop ${i+1}`))}))
+        .filter(o=>o.text&&!seen.has(o.text)&&seen.add(o.text));
+      // Z cytatem: model ma omijac sam fakt, nie tylko jego sformulowanie.
+      s.shown[i]=[...(s.shown[i]||[]),...s.options[i].map(o=>o.quote?`${o.text} [fakt: ${o.quote}]`:o.text)];
+    });
+    msg.style.color="var(--green)";msg.textContent="Wybierz wersje przy kazdym odrzuconym tropie.";
+  }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
+  finally{renderForm();}
+}
+
 // Walidacja po stronie klienta (lustro reguly serwera) - do feedbacku na zywo.
 function liveValidate(mode,entry){
   const e=[];const dateOk=/^\d{4}-\d{2}-\d{2}$/.test(entry.date||"");
@@ -368,6 +435,10 @@ function liveValidate(mode,entry){
     });
     const cnt={};all.forEach(w=>cnt[w]=(cnt[w]||0)+1);
     Object.entries(cnt).filter(([,n])=>n>1).forEach(([w,n])=>e.push(`Slowo "${w}" powtarza sie ${n}x`));
+  }else if(mode==="artist"){
+    if(!entry.artist)e.push("Wybierz artyste z puli");
+    st().decision.forEach((d,i)=>{if(d==="replace")e.push(`Trop ${i+1}: oznaczony do wymiany`);});
+    entry.clues.forEach((c,i)=>{if(!c)e.push(`Trop ${i+1}: pusty`);});
   }else{
     const secret=chars(up(entry.secretWord));
     if(!secret.length)e.push("Puste haslo");
@@ -393,6 +464,11 @@ function crossDupErrors(mode,entry){
     const W=up(entry.word);if(W&&used.has(W))e.push(`Slowo "${W}" juz uzyte w innym dniu`);
   }else if(mode==="connect"){
     /* Connect: powtorka slowa to tylko ostrzezenie, nie blokuje zapisu */
+  }else if(mode==="artist"){
+    // Pelne reguly (pula, cykl, zdradzanie ksywy) sprawdza serwer przy zapisie; tu tylko powtorzone tropy.
+    const norm=q=>up(q).replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
+    const used=new Map();others.forEach(it=>(it.clues||[]).forEach(c=>used.set(norm(c),it.date)));
+    entry.clues.forEach((c,i)=>{const n=norm(c);if(n&&used.has(n))e.push(`Trop ${i+1}: juz uzyty w dniu ${used.get(n)}`);});
   }else{
     // Krzyzowka: pytanie te samo gdziekolwiek = blad; haslo/odpowiedz powtorzone w odstepie < GAP = blad.
     const GAP=7;
@@ -410,6 +486,7 @@ function buildEntry(mode){
   const date=document.getElementById("cDate").value;const s=st();
   if(mode==="word")return {date,word:up(s.word),hint:s.hint,variant:chars(s.word).length};
   if(mode==="connect")return {date,categories:s.categories.map(c=>({name:c.name,words:c.words,difficulty:c.difficulty}))};
+  if(mode==="artist")return {date,artist:s.artist,clues:s.clues.map(c=>c.trim())};
   return {date,secretWord:up(s.secretWord),clues:s.clues};
 }
 function renderLive(){
@@ -439,10 +516,11 @@ async function aiGenerate(){
     const e=res.entry;
     if(mode==="word")CST.word={word:e.word,hint:e.hint};
     else if(mode==="connect")CST.connect={categories:e.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
+    else if(mode==="artist")CST.artist=artistState(e.artist,e.clues,res.quotes||[]);
     else CST.crossword={secretWord:e.secretWord,clues:e.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex}))};
     renderForm();renderLive();
     msg.style.color=res.valid?"var(--green)":"var(--gold)";
-    msg.textContent=res.valid?"AI wygenerowalo zgodny zestaw — sprawdz i zapisz.":"AI wygenerowalo zestaw z uwagami — popraw recznie.";
+    msg.textContent=res.valid?"AI wygenerowalo zgodny zestaw — sprawdz i zapisz.":"AI wygenerowalo zestaw z uwagami — popraw recznie:\n"+(res.errors||[]).join("\n");
   }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
   finally{btn.disabled=!CONFIG.available;btn.textContent=old;}
 }

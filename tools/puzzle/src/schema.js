@@ -194,6 +194,97 @@ export function validateCrosswords(data) {
   return issues;
 }
 
+// Kim jestem? (artists.json): 5 tropow, artysta z puli, zero tropow powtorzonych
+// i powtorka artysty dopiero po wykorzystaniu calej puli (decyzje Damiana 2026-10-31).
+export const ARTIST_CLUES = 5;
+
+// Kim jestem?: plec nie moze wyjsc z gramatyki („zrobilam”, „pierwsza kobieta”), tylko z faktow.
+// Forma „-em/am” jest dozwolona, wiec usuwamy ja przed szukaniem samotnych koncowek.
+// Rzeczowniki w narzedniku na „-lem” („z zespolem”, „kanalem”) to nie czasowniki; imiona i nazwiska
+// („z Michalem Szczyglem”) pomijamy po wielkiej literze w srodku zdania.
+const NOUN_LEM = /(?:ołem|kanałem|materiałem|działem|finałem|sygnałem|ideałem|kapitałem|zapałem|upałem)$/u;
+
+export function genderLeak(clue) {
+  const s = String(clue).replace(/\p{L}+ł(?:em\/am|am\/em)(?!\p{L})/gu, " ");
+  const verb = [...s.matchAll(/\p{L}+ł(?:am|em|abym|bym)(?!\p{L})/gu)]
+    .filter((m) => m.index === s.search(/\p{L}/u) || m[0][0] === m[0][0].toLowerCase())
+    .map((m) => m[0].toLowerCase()).find((w) => !NOUN_LEM.test(w));
+  if (verb) return verb;
+  const noun = s.toLowerCase().match(/(?<!\p{L})(?:kobiet|raperk|piosenkark|wokalistk|artystk|dziewczyn|producentk|reżyserk|ambasadork|założycielk|autork|twórczyn|laureatk|zwyciężczyn)\p{L}*/u);
+  return noun?.[0] ?? null;
+}
+
+// Meska rola o samym artyscie („jestem rezyserem”, „jako producent”) tez zdradza plec, ale mniej
+// (w puli prawie sami faceci), a nazwy nagrod („Raperem Roku”) sa faktem - dlatego tylko ostrzezenie.
+// Rola bez odniesienia do siebie („z producentem Noonem”) przechodzi.
+export function maleRoleHint(clue) {
+  const t = String(clue).toLowerCase();
+  if (!/(?<!\p{L})(?:jestem|jako|mnie|zostałem\/am|byłem\/am)(?!\p{L})/u.test(t)) return null;
+  return t.match(/(?<!\p{L})(?:współ)?(?:producent|raper|reżyser|ambasador|założyciel|autor|wokalist|gospodarz|zwycięzc|laureat|twórc)(?:em|iem|a|ą|y)?(?!\p{L})/u)?.[0] ?? null;
+}
+
+export function validateArtists(data) {
+  const issues = [];
+  const list = data?.artists;
+  if (!Array.isArray(list)) return [{ level: "error", where: "artists.json", msg: 'Brak tablicy "artists"' }];
+  commonChecks(list, issues, "artists");
+  const pool = Array.isArray(data?.pool) ? data.pool : null;
+  const clueDates = new Map();
+  // Czlon wspolny dla kilku ksyw w puli (np. „2115”) nie wskazuje jednej osoby, wiec go nie blokujemy.
+  const partCount = new Map();
+  (pool || []).forEach((name) => qWords(name).forEach((p) => partCount.set(p, (partCount.get(p) ?? 0) + 1)));
+  list.forEach((a, i) => {
+    const at = `artists[${i}] (${a?.date ?? "?"})`;
+    if (!a?.artist) issues.push({ level: "error", where: at, msg: "Brak artysty" });
+    else if (pool && !pool.includes(a.artist)) issues.push({ level: "error", where: at, msg: `"${a.artist}" nie ma w puli` });
+    if (!Array.isArray(a?.clues) || a.clues.length !== ARTIST_CLUES) {
+      issues.push({ level: "error", where: at, msg: `Wymagane ${ARTIST_CLUES} tropow (jest ${a?.clues?.length ?? 0})` });
+      return;
+    }
+    const nameParts = [...qWords(a.artist)].filter((p) => (partCount.get(p) ?? 0) < 2);
+    a.clues.forEach((c, ci) => {
+      const where = `${at} trop ${ci + 1}`;
+      const n = normQ(c);
+      if (!n) {
+        issues.push({ level: "error", where, msg: "Pusty trop" });
+        return;
+      }
+      if (clueDates.has(n)) issues.push({ level: "error", where, msg: `Trop juz uzyty w dniu ${clueDates.get(n)}: "${c}"` });
+      else clueDates.set(n, a.date);
+      const clueWords = qWords(c);
+      const leaked = nameParts.find((p) => clueWords.has(p));
+      if (leaked) issues.push({ level: "error", where, msg: `Trop zdradza artyste ("${leaked}"): "${c}"` });
+      const gender = genderLeak(c);
+      if (gender) issues.push({ level: "error", where, msg: `Trop zdradza plec ("${gender}") - pisz „-em/am” albo neutralnie: "${c}"` });
+      const role = !gender && maleRoleHint(c);
+      if (role) issues.push({ level: "warn", where, msg: `Meska forma roli ("${role}") - jesli to nie nazwa nagrody, napisz czasownikiem („produkuje”, „rezyseruje”): "${c}"` });
+    });
+  });
+  // Artysta wraca dopiero, gdy w biezacym cyklu wykorzystano cala pule.
+  if (pool) {
+    let cycle = new Set();
+    [...list].sort((a, b) => String(a.date).localeCompare(String(b.date))).forEach((a) => {
+      if (!a?.artist) return;
+      if (cycle.has(a.artist)) {
+        if (cycle.size < pool.length) {
+          issues.push({ level: "error", where: `artists (${a.date})`, msg: `"${a.artist}" wraca przed wykorzystaniem calej puli (${cycle.size}/${pool.length})` });
+        }
+        cycle = new Set();
+      }
+      cycle.add(a.artist);
+    });
+  }
+  return issues;
+}
+
+// Bledy jednego zestawu „Kim jestem?” liczone na calym pliku (pula, cykl, powtorki tropow).
+export function artistEntryErrors(entry, items, pool) {
+  const merged = [...items.filter((it) => it.date !== entry.date), { ...entry, id: entry.id ?? 0 }];
+  return validateArtists({ pool, artists: merged }).filter(
+    (e) => e.level === "error" && String(e.where).includes(entry.date) && !/Duplikat id/.test(e.msg)
+  );
+}
+
 // === Globalna unikalnosc miedzy dniami ===
 // Gracz wchodzi codziennie - zadne haslo/odpowiedz/slowo nie moze sie powtorzyc
 // miedzy roznymi dniami w obrebie jednego trybu.
@@ -265,6 +356,8 @@ export function crossDayIssues(kind, items) {
 
 // Sprawdza pojedynczy wpis wzgledem ISTNIEJACEGO korpusu (inne dni).
 export function crossCheck(kind, entry, items) {
+  // Kim jestem?: reguly miedzy dniami sprawdza caly validateArtists (add.js waliduje plik po zmianie).
+  if (kind === "artists") return [];
   const others = items.filter((it) => it.date !== entry.date);
   const out = [];
   const usedMap = (tokensOf) => {
@@ -334,10 +427,11 @@ export const VALIDATORS = {
   words: validateWords,
   puzzles: validatePuzzles,
   crosswords: validateCrosswords,
+  artists: validateArtists,
 };
 
 // Waliduje pojedynczy wpis (dla zapisu z serwera/skilla) — opakowuje go w mini-liste.
 export function validateEntry(kind, entry) {
-  const wrap = { words: "words", puzzles: "puzzles", crosswords: "crosswords" }[kind];
+  const wrap = { words: "words", puzzles: "puzzles", crosswords: "crosswords", artists: "artists" }[kind];
   return VALIDATORS[kind]({ [wrap]: [entry] }).filter((x) => x.level === "error");
 }

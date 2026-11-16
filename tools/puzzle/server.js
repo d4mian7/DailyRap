@@ -2,17 +2,53 @@
 // Uruchom:  .\puzzle.ps1 plan  albo  npm run serve   (http://localhost:5173)
 // Ustawienia AI (AI_BACKEND, AI_MODEL, ANTHROPIC_API_KEY) wczytywane z tools/puzzle/.env (flaga --env-file-if-exists).
 import { createServer } from "node:http";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { readItems, upsert, removeByDate, FILES } from "./src/io.js";
-import { validateEntry, VALIDATORS, crossCheck } from "./src/schema.js";
+import { validateEntry, VALIDATORS, crossCheck, artistEntryErrors } from "./src/schema.js";
 import { read } from "./src/io.js";
 import { generate, aiStatus } from "./src/generate.js";
 
-const KIND_ALIAS = { word: "words", connect: "puzzles", crossword: "crosswords" };
+const KIND_ALIAS = { word: "words", connect: "puzzles", crossword: "crosswords", artist: "artists" };
+
+// Bledy blokujace zapis jednego zestawu. „Kim jestem?” sprawdzamy na calym pliku, bo reguly zaleza od puli.
+function entryErrors(kind, entry, all) {
+  const errs = kind === "artists"
+    ? artistEntryErrors(entry, all, read("artists").pool)
+    : [...validateEntry(kind, entry), ...crossCheck(kind, entry, all).filter((e) => e.level === "error")];
+  return errs.map((e) => `${e.where}: ${e.msg}`);
+}
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+// Kazda wersja poprawki dostaje inny kierunek, inaczej modele trafiaja w ten sam pomysl.
+const ANGLES = [
+  "dyskografia: plyty, numery, wspolprace",
+  "zyciorys i kariera: poczatki, nagrody, wytwornie, koncerty",
+  "gra slow na tytule albo cecha stylu artysty",
+];
+const SKILL_PATH = join(__dirname, "..", "..", ".claude", "skills", "uloz-zestaw", "SKILL.md");
+const FEEDBACK_HEADING = "### Uwagi Damiana z panelu (Kim jestem?)";
+
+// Uwagi z panelu trafiaja do regul w SKILL.md, ktore generator czyta przy kazdym zestawie.
+function appendFeedback(lines) {
+  if (!existsSync(SKILL_PATH)) return;
+  const raw = readFileSync(SKILL_PATH, "utf8");
+  // Kolejne rundy poprawek wysylaja te sama uwage - zapisujemy ja raz.
+  lines = lines.filter((l) => !raw.includes(`: ${l}`));
+  if (!lines.length) return;
+  const nl = raw.includes("\r\n") ? "\r\n" : "\n";
+  const entry = lines.map((l) => `- ${new Date().toISOString().slice(0, 10)}: ${l}`).join(nl);
+  let out;
+  if (raw.includes(FEEDBACK_HEADING)) {
+    out = raw.replace(FEEDBACK_HEADING + nl, FEEDBACK_HEADING + nl + entry + nl);
+  } else {
+    // Sekcja wewnatrz „## Tryb Kim jestem?”, zeby generator ja wczytal; tuz przed „## Procedura”.
+    out = raw.replace(nl + "## Procedura", nl + FEEDBACK_HEADING + nl + entry + nl + nl + "## Procedura");
+  }
+  writeFileSync(SKILL_PATH, out, "utf8");
+}
+
 const PORT = process.env.PORT || 5173;
 
 const today = () => new Date().toLocaleDateString("sv-SE"); // YYYY-MM-DD lokalnie
@@ -22,16 +58,14 @@ function buildData() {
   for (const kind of Object.keys(FILES)) {
     const all = readItems(kind);
     const items = all.map((it) => {
-      const errors = [
-        ...validateEntry(kind, it),
-        ...crossCheck(kind, it, all).filter((e) => e.level === "error"),
-      ].map((e) => `${e.where}: ${e.msg}`);
+      const errors = entryErrors(kind, it, all);
       return { ...it, _valid: errors.length === 0, _errors: errors };
     });
     // Globalne bledy (duplikaty dat itd.) liczone na calym pliku:
     const fileIssues = VALIDATORS[kind](read(kind)).filter((i) => i.level === "error");
     modes[kind] = { items, fileErrors: fileIssues.map((e) => `${e.where}: ${e.msg}`) };
   }
+  modes.artists.pool = read("artists").pool;
   return { today: today(), modes };
 }
 
@@ -61,24 +95,38 @@ const server = createServer(async (req, res) => {
       return send(res, 200, aiStatus());
     }
     if (req.method === "POST" && path === "/api/generate") {
-      const { kind: rawKind, date, theme } = await readBody(req);
+      const { kind: rawKind, date, theme, review } = await readBody(req);
       const kind = KIND_ALIAS[rawKind] || rawKind;
       if (!FILES[kind]) return send(res, 400, { ok: false, error: "Nieznany tryb" });
       try {
+        // Poprawka zestawu „Kim jestem?”: kilka niezaleznych wersji do wyboru dla odrzuconych tropow.
+        if (kind === "artists" && review) {
+          // Po kolei: kazda wersja wie, co zaproponowaly poprzednie, i nie moze tego powtorzyc.
+          const runs = [];
+          for (const angle of ANGLES) {
+            // + propozycje z wczesniejszych rund poprawek (panel je pamieta).
+            const taken = [...(review.shown || []),
+              ...runs.flatMap((r) => r.entry.clues.filter((_, i) => !review.keep.includes(i)))];
+            runs.push(await generate(kind, date, theme, { ...review, angle, taken }));
+          }
+          return send(res, 200, { ok: true, runs });
+        }
         const result = await generate(kind, date, theme);
         return send(res, 200, { ok: true, ...result });
       } catch (e) {
         return send(res, 502, { ok: false, error: e.message });
       }
     }
+    if (req.method === "POST" && path === "/api/feedback") {
+      const { lines } = await readBody(req);
+      appendFeedback(lines || []);
+      return send(res, 200, { ok: true });
+    }
     if (req.method === "POST" && path === "/api/save") {
       const { kind, entry } = await readBody(req);
       if (!FILES[kind]) return send(res, 400, { ok: false, error: "Nieznany tryb" });
-      const errs = [
-        ...validateEntry(kind, entry),
-        ...crossCheck(kind, entry, readItems(kind)).filter((e) => e.level === "error"),
-      ];
-      if (errs.length) return send(res, 422, { ok: false, errors: errs.map((e) => `${e.where}: ${e.msg}`) });
+      const errs = entryErrors(kind, entry, readItems(kind));
+      if (errs.length) return send(res, 422, { ok: false, errors: errs });
       upsert(kind, entry);
       return send(res, 200, { ok: true, data: buildData() });
     }
@@ -94,11 +142,8 @@ const server = createServer(async (req, res) => {
       const item = readItems(kind).find((it) => it.date === fromDate);
       if (!item) return send(res, 404, { ok: false, error: "Nie znaleziono wpisu" });
       const moved = { ...item, date: toDate };
-      const errs = [
-        ...validateEntry(kind, moved),
-        ...crossCheck(kind, moved, readItems(kind)).filter((e) => e.level === "error"),
-      ];
-      if (errs.length) return send(res, 422, { ok: false, errors: errs.map((e) => `${e.where}: ${e.msg}`) });
+      const errs = entryErrors(kind, moved, readItems(kind).filter((it) => it.date !== fromDate));
+      if (errs.length) return send(res, 422, { ok: false, errors: errs });
       removeByDate(kind, fromDate);
       upsert(kind, moved);
       return send(res, 200, { ok: true, data: buildData() });

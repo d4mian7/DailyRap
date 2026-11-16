@@ -10,10 +10,10 @@
 //   word      -> words.json      (RapWord)
 //   connect   -> puzzles.json    (RapConnect)
 //   crossword -> crosswords.json (RapCrossword)
-import { validateEntry, crossCheck } from "./src/schema.js";
-import { upsert, readItems } from "./src/io.js";
+import { validateEntry, crossCheck, validateArtists } from "./src/schema.js";
+import { upsert, read, readItems } from "./src/io.js";
 
-const ALIAS = { word: "words", words: "words", connect: "puzzles", puzzles: "puzzles", crossword: "crosswords", crosswords: "crosswords" };
+const ALIAS = { word: "words", words: "words", connect: "puzzles", puzzles: "puzzles", crossword: "crosswords", crosswords: "crosswords", artist: "artists", artists: "artists" };
 
 const arg = process.argv[2];
 const checkOnly = process.argv.includes("--check");
@@ -36,7 +36,13 @@ try {
 
 const corpus = readItems(kind);
 const cross = crossCheck(kind, entry, corpus);
-const errs = [...validateEntry(kind, entry), ...cross.filter((e) => e.level === "error")];
+// Kim jestem?: wpis bez puli dalby falszywe bledy, wiec sprawdza go dopiero walidacja calego pliku nizej.
+const errs = [...(kind === "artists" ? [] : validateEntry(kind, entry)), ...cross.filter((e) => e.level === "error")];
+// Kim jestem?: pula, cykl i powtorki tropow zaleza od calego pliku, wiec walidujemy go po zmianie.
+if (kind === "artists") {
+  const merged = [...corpus.filter((it) => it.date !== entry.date), { id: 0, ...entry }];
+  errs.push(...validateArtists({ pool: read(kind).pool, artists: merged }).filter((e) => e.level === "error" && !/Duplikat id/.test(e.msg)));
+}
 if (errs.length) {
   console.error(`NIEZGODNY (${errs.length} bledow):`);
   errs.forEach((e) => console.error("  x " + e.where + ": " + e.msg));

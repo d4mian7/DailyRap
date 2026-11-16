@@ -11,6 +11,7 @@ export const FILES = {
   words: { file: "words.json", root: "words" },
   puzzles: { file: "puzzles.json", root: "puzzles" },
   crosswords: { file: "crosswords.json", root: "crosswords" },
+  artists: { file: "artists.json", root: "artists" },
 };
 
 const pathFor = (kind) => join(ASSETS_DIR, FILES[kind].file);
@@ -58,7 +59,16 @@ function fmtCrosswords(items) {
   return `{\n  "crosswords": [\n${blocks.join(",\n")}\n  ]\n}\n`;
 }
 
-const FORMATTERS = { words: fmtWords, puzzles: fmtPuzzles, crosswords: fmtCrosswords };
+// Kim jestem?: plik trzyma tez pule artystow, ktorej zapis zestawu nie moze zgubic.
+function fmtArtists(items) {
+  const blocks = items.map((a) => {
+    const clues = a.clues.map((c) => `        ${j(c)}`).join(",\n");
+    return `    {\n      "id": ${j(a.id)},\n      "date": ${j(a.date)},\n      "artist": ${j(a.artist)},\n      "clues": [\n${clues}\n      ]\n    }`;
+  });
+  return `{\n  "pool": [${read("artists").pool.map(j).join(", ")}],\n  "artists": [\n${blocks.join(",\n")}\n  ]\n}\n`;
+}
+
+const FORMATTERS = { words: fmtWords, puzzles: fmtPuzzles, crosswords: fmtCrosswords, artists: fmtArtists };
 
 export function writeItems(kind, items) {
   // Sortuj po dacie, zeby plik byl czytelny i terminarz spojny.
