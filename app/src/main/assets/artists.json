@@ -114,7 +114,7 @@
       "date": "2026-11-10",
       "artist": "Kizo",
       "clues": [
-        "Jestem ambasadorem marki streetwearowej.",
+        "Jestem twarzą marki streetwearowej.",
         "W jednym roku wydałem/am debiut i drugą płytę.",
         "Należałem/am do Chillwagonu.",
         "Jedna z moich płyt nosi imię greckiego boga mórz.",
@@ -306,7 +306,7 @@
       "date": "2026-11-26",
       "artist": "Kaz Bałagane",
       "clues": [
-        "Pierwsze kroki w muzyce stawiałem/am jako producent.",
+        "Zaczynałem/am w muzyce od produkcji bitów.",
         "Moje teksty są pełne neologizmów i niecodziennych odmian słów.",
         "Mój znany numer nazywa się jak gruzińskie ciasto z serem.",
         "Mój duet z Belmondawgiem dał początek zespołowi Mobbyn.",
@@ -316,6 +316,42 @@
     {
       "id": 27,
       "date": "2026-11-27",
+      "artist": "Kukon",
+      "clues": [
+        "W 2016 pojawiłem/am się na kanale wytwórni Piękny Syf.",
+        "Jeden album nagrałem/am w całości z producentem Magierą.",
+        "W jednym roku wydałem/am aż cztery albumy.",
+        "Jedna z moich płyt ma w tytule Kraków i marzec.",
+        "Mój platynowy hit nazywa się jak krótka spódniczka."
+      ]
+    },
+    {
+      "id": 28,
+      "date": "2026-11-28",
+      "artist": "Jan-rapowanie",
+      "clues": [
+        "Pierwsze numery wrzucałem/am na kanał Karwan TV.",
+        "Pochodzę z Krakowa.",
+        "Zadebiutowałem/am w 2017 utworem „Tańczę”.",
+        "Współprowadziłem/am audycję „Bolesne poranki” w newonce.radio.",
+        "Moja płyta „Plansze” pokryła się złotem."
+      ]
+    },
+    {
+      "id": 29,
+      "date": "2026-11-29",
+      "artist": "Schafter",
+      "clues": [
+        "Reżyseruję też teledyski.",
+        "Pierwsze bity wrzucałem/am na kanale YouTube „Kstyk”.",
+        "Dołączyłem/am do kolektywu Club2020.",
+        "Mój pierwszy album studyjny to „audiotele”.",
+        "Singiel „hot coffee” przyniósł mi diamentową płytę."
+      ]
+    },
+    {
+      "id": 30,
+      "date": "2026-11-30",
       "artist": "Sentino",
       "clues": [
         "Pierwszy kontrakt płytowy podpisałem/am z Def Jam w 1999 roku.",
@@ -323,6 +359,54 @@
         "Wydałem/am autobiografię „Tatuażyk”.",
         "Zaczynałem/am w niemieckim rapie.",
         "Mój singiel „Lato” ma trzy platyny."
+      ]
+    },
+    {
+      "id": 31,
+      "date": "2026-12-01",
+      "artist": "Kuqe 2115",
+      "clues": [
+        "Oprócz rapu śpiewam i piszę własne teksty.",
+        "Na co dzień nazywam się Łukasz Dziemiński.",
+        "Moja debiutancka płyta wyszła w 2025 roku.",
+        "Jeden z moich numerów nagrałem/am na Red Bull Track Takeover.",
+        "Należę do zespołu, którego nazwa to liczba."
+      ]
+    },
+    {
+      "id": 32,
+      "date": "2026-12-02",
+      "artist": "Oskar83",
+      "clues": [
+        "Pojawiłem/am się gościnnie na płycie „club2020”.",
+        "Gościłem/am na albumie Okiego „ERA47”.",
+        "Mam w dyskografii EP-kę z serii „Def Jam World Tour”.",
+        "Rapuję w duecie z DJ-em Steezem.",
+        "Słychać mnie w utworze „Fala” na płycie Guziora."
+      ]
+    },
+    {
+      "id": 33,
+      "date": "2026-12-03",
+      "artist": "Gibbs",
+      "clues": [
+        "Mam na koncie aż 11 albumów kolaboracyjnych.",
+        "Produkowałem/am bity dla Kaliego i Sariusa.",
+        "Wydałem/am serię albumów „Połączenia”.",
+        "Współzakładałem/am studio i ekipę DopeHouse.",
+        "Nagrałem/am hit „Piękny Świat”."
+      ]
+    },
+    {
+      "id": 34,
+      "date": "2026-12-04",
+      "artist": "Bambi",
+      "clues": [
+        "Pierwsze nagranie zrobiłem/am w warszawskim studiu Nobocoto.",
+        "W 2018 w The Voice Kids odwróciłem/am trzy fotele.",
+        "Na moim drugim albumie gościnnie pojawił się Tede.",
+        "Sieć McDonald's wypuściła zestaw z moją ksywą.",
+        "Wspólną EP-kę „PG$” nagrałem/am z Young Leosią."
       ]
     }
   ]
