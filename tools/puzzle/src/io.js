@@ -100,3 +100,20 @@ export function removeByDate(kind, date) {
   const items = readItems(kind).filter((it) => it.date !== date);
   return writeItems(kind, items);
 }
+
+// Krotki opis zestawu do komunikatow ("Na 2026-12-05 jest juz: Borixon").
+export function entryLabel(kind, it) {
+  if (kind === "words") return it.word;
+  if (kind === "crosswords") return it.secretWord;
+  if (kind === "artists") return it.artist;
+  return (it.categories || []).map((c) => c.name).join(" / ");
+}
+
+// Pierwszy wolny dzien PO podanej dacie (UTC, zeby zmiana czasu nie przesuwala dni).
+export function nextFreeDate(items, date) {
+  const taken = new Set(items.map((it) => it.date));
+  const d = new Date(date + "T00:00:00Z");
+  do d.setUTCDate(d.getUTCDate() + 1);
+  while (taken.has(d.toISOString().slice(0, 10)));
+  return d.toISOString().slice(0, 10);
+}

@@ -1,0 +1,1489 @@
+{
+  "updated": "2026-11-17",
+  "words": [
+    {
+      "word": "AMFISBENA",
+      "type": "album",
+      "artist": "Żabson, Young Igi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "AUDIOTELE",
+      "type": "album",
+      "artist": "Schafter",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "EGZOTYKA",
+      "type": "album",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "KONFETTI",
+      "type": "album",
+      "artist": "Young Igi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "LETNISKO",
+      "type": "album",
+      "artist": "Kinny Zimmer",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MARMUR",
+      "type": "album",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "OIO",
+      "type": "album",
+      "artist": "OIO",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "OZDS",
+      "type": "album",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "PLEŚŃ",
+      "type": "album",
+      "artist": "Guzior",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "POSEJDON",
+      "type": "album",
+      "artist": "Kizo",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "RIOTT",
+      "type": "album",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SOMA",
+      "type": "album",
+      "artist": "Taconafide",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "TRAPOLLO",
+      "type": "album",
+      "artist": "Żabson",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "TRAPPIST",
+      "type": "album",
+      "artist": "Young Igi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "WOSK",
+      "type": "album",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BAŁAGANE",
+      "type": "artysta",
+      "artist": "Kaz Bałagane",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BAMBI",
+      "type": "artysta",
+      "artist": "Bambi",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BEDOES",
+      "type": "artysta",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BETEO",
+      "type": "artysta",
+      "artist": "Beteo",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BIAŁAS",
+      "type": "artysta",
+      "artist": "Białas",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BLACHA",
+      "type": "artysta",
+      "artist": "Blacha 2115",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BORIXON",
+      "type": "artysta",
+      "artist": "Borixon",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "CHIVAS",
+      "type": "artysta",
+      "artist": "Chivas",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "DZIARMA",
+      "type": "artysta",
+      "artist": "Dziarma",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "FAGATA",
+      "type": "artysta",
+      "artist": "Fagata",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "FUKAJ",
+      "type": "artysta",
+      "artist": "Fukaj",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "GEDZ",
+      "type": "artysta",
+      "artist": "Gedz",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "GIBBS",
+      "type": "artysta",
+      "artist": "Gibbs",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "GUZIOR",
+      "type": "artysta",
+      "artist": "Guzior",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "HEMINGWAY",
+      "type": "artysta",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "HUBERT",
+      "type": "artysta",
+      "artist": "Hubert.",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "IGI",
+      "type": "artysta",
+      "artist": "Young Igi",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KAZ",
+      "type": "artysta",
+      "artist": "Kaz Bałagane",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KINNY",
+      "type": "artysta",
+      "artist": "Kinny Zimmer",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KIZO",
+      "type": "artysta",
+      "artist": "Kizo",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KUBAN",
+      "type": "artysta",
+      "artist": "Kuban",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KUKON",
+      "type": "artysta",
+      "artist": "Kukon",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "KUQE",
+      "type": "artysta",
+      "artist": "Kuqe 2115",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "LANEK",
+      "type": "artysta",
+      "artist": "Lanek",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "LEOSIA",
+      "type": "artysta",
+      "artist": "Young Leosia",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "MAGIK",
+      "type": "artysta",
+      "artist": "Magik",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "MALIK",
+      "type": "artysta",
+      "artist": "Malik Montana",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "MATA",
+      "type": "artysta",
+      "artist": "Mata",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "MONTANA",
+      "type": "artysta",
+      "artist": "Malik Montana",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MULTI",
+      "type": "artysta",
+      "artist": "Young Multi",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "OKI",
+      "type": "artysta",
+      "artist": "OKI",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "OTSO",
+      "type": "artysta",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "PALUCH",
+      "type": "artysta",
+      "artist": "Paluch",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "PEZET",
+      "type": "artysta",
+      "artist": "Pezet",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "QUEBO",
+      "type": "artysta",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "RETO",
+      "type": "artysta",
+      "artist": "ReTo",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SCHAFTER",
+      "type": "artysta",
+      "artist": "Schafter",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SENTINO",
+      "type": "artysta",
+      "artist": "Sentino",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SOBEL",
+      "type": "artysta",
+      "artist": "Sobel",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SOLAR",
+      "type": "artysta",
+      "artist": "Solar",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SZCZYL",
+      "type": "artysta",
+      "artist": "Szczyl",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "SZPAKU",
+      "type": "artysta",
+      "artist": "Szpaku",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "TACO",
+      "type": "artysta",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "WANE",
+      "type": "artysta",
+      "artist": "Wane",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "WHITE",
+      "type": "artysta",
+      "artist": "White 2115",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "ZIMMER",
+      "type": "artysta",
+      "artist": "Kinny Zimmer",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "ŻABSON",
+      "type": "artysta",
+      "artist": "Żabson",
+      "status": "ok",
+      "from": "biala-lista",
+      "main": true
+    },
+    {
+      "word": "BELGA",
+      "type": "fragment tytulu",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "DOMY",
+      "type": "fragment tytulu",
+      "artist": "Hubert.",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HOTEL",
+      "type": "fragment tytulu",
+      "artist": "SBM Label",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "KOLOR",
+      "type": "fragment tytulu",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "KWIAT",
+      "type": "fragment tytulu",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "MANSON",
+      "type": "fragment tytulu",
+      "artist": "Young Multi",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "MATCZAK",
+      "type": "fragment tytulu",
+      "artist": "Mata",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "PALMA",
+      "type": "fragment tytulu",
+      "artist": "Mata",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "TARCHO",
+      "type": "fragment tytulu",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "UMOWA",
+      "type": "fragment tytulu",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "CARDIO",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "EUROPA",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "FOKUS",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "FUTURA",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "GUGU",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "HADES",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "JARMARK",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "KALIBER",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "KINOL",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "KRÓL",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "LUKASYNO",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "ŁONA",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "MARBELLA",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "MEZO",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "NOON",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "OKEKEL",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "PAPUGA",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "PEJA",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "POLON",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "POPEK",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "RAHIM",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "SARIUS",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "SLUMS",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "SOKÓŁ",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "TEDE",
+      "type": "historia",
+      "artist": null,
+      "status": "odrzucone",
+      "from": "historia"
+    },
+    {
+      "word": "TOMB",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "TYMEK",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "WDOWA",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "ZIPERA",
+      "type": "historia",
+      "artist": null,
+      "status": "do-oceny",
+      "from": "historia"
+    },
+    {
+      "word": "PROSTO",
+      "type": "inne",
+      "artist": "Prosto",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SBM",
+      "type": "inne",
+      "artist": "SBM Label",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "ATUTOWY",
+      "type": "producent",
+      "artist": "@atutowy",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DEEMZ",
+      "type": "producent",
+      "artist": "Deemz",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "KUBI",
+      "type": "producent",
+      "artist": "Kubi Producent",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SKOLIM",
+      "type": "producent",
+      "artist": "Skolim",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "ALBUM",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BANGER",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BEAT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BEEF",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BIBA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BLOK",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BOOMBAP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "DISS",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "DRILL",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "DROP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "DZIARA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "EKIPA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "EPKA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "FEAT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "FLEX",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "FLOW",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "FREESTYLE",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "GOAT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HAJS",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HEJTER",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HIPHOP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HIT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "HYPE",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "KLIP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "KONCERT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "MELANŻ",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "MIXTAPE",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "MORDO",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "NAWIJKA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "OSIEDLE",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "PUNCHLINE",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "RAP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "REFREN",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SAMPEL",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SCENA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SCRATCH",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SIANO",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SINGIEL",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SKIT",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "STUDIO",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "SWAG",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "TRAP",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "TRASA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "WERS",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "WINYL",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "ZIOMAL",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "ZWROTKA",
+      "type": "slang",
+      "artist": null,
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "ATLANTA",
+      "type": "utwor",
+      "artist": "Aleshen",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BACIATA",
+      "type": "utwor",
+      "artist": "Malik Montana",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BALI",
+      "type": "utwor",
+      "artist": "Gedz",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BFF",
+      "type": "utwor",
+      "artist": "Bambi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BŁOTO",
+      "type": "utwor",
+      "artist": "Wane",
+      "status": "ok",
+      "from": "historia"
+    },
+    {
+      "word": "BOGINI",
+      "type": "utwor",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BOSSMAN",
+      "type": "utwor",
+      "artist": "ReTo",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BUBBLETEA",
+      "type": "utwor",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "BUZI",
+      "type": "utwor",
+      "artist": "Young Igi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "CANDY",
+      "type": "utwor",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "COWABONGA",
+      "type": "utwor",
+      "artist": "Żabson",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "CYRK",
+      "type": "utwor",
+      "artist": "Bambi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DIOR",
+      "type": "utwor",
+      "artist": "Malik Montana",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DISNEY",
+      "type": "utwor",
+      "artist": "Kizo",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DRESSCODE",
+      "type": "utwor",
+      "artist": "2115",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DRIFT",
+      "type": "utwor",
+      "artist": "Białas",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "DRIVE",
+      "type": "utwor",
+      "artist": "Gibbs",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "FANTAZJE",
+      "type": "utwor",
+      "artist": "MIÜ",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "FRASCATI",
+      "type": "utwor",
+      "artist": "Taco Hemingway",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "FUTURAMA",
+      "type": "utwor",
+      "artist": "Quebonafide",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "HINATA",
+      "type": "utwor",
+      "artist": "Szpaku",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "IMPREZA",
+      "type": "utwor",
+      "artist": "Sobel",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "INTERPOL",
+      "type": "utwor",
+      "artist": "PRO8L3M",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "JANOSIK",
+      "type": "utwor",
+      "artist": "Gedz",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "JETLAG",
+      "type": "utwor",
+      "artist": "Malik Montana",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "JEŻYK",
+      "type": "utwor",
+      "artist": "OKI",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "KAMIKAZE",
+      "type": "utwor",
+      "artist": "Mata",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "KOSMITA",
+      "type": "utwor",
+      "artist": "Gedz",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "KULIG",
+      "type": "utwor",
+      "artist": "Kaz Bałagane",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "KYOTO",
+      "type": "utwor",
+      "artist": "Kuban",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "LANDLORD",
+      "type": "utwor",
+      "artist": "club2020",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "LOLA",
+      "type": "utwor",
+      "artist": "Żabson",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "LUTY",
+      "type": "utwor",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MINIÓWA",
+      "type": "utwor",
+      "artist": "Kukon",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MOLLY",
+      "type": "utwor",
+      "artist": "PRO8L3M",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MORGAN",
+      "type": "utwor",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "MÓW",
+      "type": "utwor",
+      "artist": "Otsochodzi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "NICEA",
+      "type": "utwor",
+      "artist": "PRO8L3M",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "PAPIEROSY",
+      "type": "utwor",
+      "artist": "ReTo",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "PATOLOVE",
+      "type": "utwor",
+      "artist": "Zdechły Osa",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "PLASTER",
+      "type": "utwor",
+      "artist": "Szpaku",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "PRZESTER",
+      "type": "utwor",
+      "artist": "Young Leosia",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "RIRI",
+      "type": "utwor",
+      "artist": "White 2115",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "RUNDKI",
+      "type": "utwor",
+      "artist": "Young Leosia",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SEXTAPE",
+      "type": "utwor",
+      "artist": "Sobel",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SZAMAN",
+      "type": "utwor",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "SZKLANKI",
+      "type": "utwor",
+      "artist": "Young Leosia",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "TAXI",
+      "type": "utwor",
+      "artist": "Kizo",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "TENTEN",
+      "type": "utwor",
+      "artist": "Wenext",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "THC",
+      "type": "utwor",
+      "artist": "Young Igi",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "VHS",
+      "type": "utwor",
+      "artist": "PRO8L3M",
+      "status": "ok",
+      "from": "biala-lista"
+    },
+    {
+      "word": "VOGUE",
+      "type": "utwor",
+      "artist": "Bedoes 2115",
+      "status": "ok",
+      "from": "biala-lista"
+    }
+  ]
+}

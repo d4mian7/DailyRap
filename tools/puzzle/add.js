@@ -5,18 +5,20 @@
 //   (JSON wpisu podawany na stdin)
 //
 //   --check  -> tylko waliduj, nie zapisuj
+//   --force  -> pozwol nadpisac zestaw na zajetej dacie (bez tego: blad, kod 3)
 //
 // Mapowanie nazw przyjaznych -> pliki:
 //   word      -> words.json      (RapWord)
 //   connect   -> puzzles.json    (RapConnect)
 //   crossword -> crosswords.json (RapCrossword)
 import { validateEntry, crossCheck, validateArtists } from "./src/schema.js";
-import { upsert, read, readItems } from "./src/io.js";
+import { upsert, read, readItems, entryLabel, nextFreeDate } from "./src/io.js";
 
 const ALIAS = { word: "words", words: "words", connect: "puzzles", puzzles: "puzzles", crossword: "crosswords", crosswords: "crosswords", artist: "artists", artists: "artists" };
 
 const arg = process.argv[2];
 const checkOnly = process.argv.includes("--check");
+const force = process.argv.includes("--force");
 const kind = ALIAS[arg];
 
 if (!kind) {
@@ -50,12 +52,20 @@ if (errs.length) {
 }
 cross.filter((e) => e.level === "warn").forEach((e) => console.error("  ! " + e.where + ": " + e.msg));
 
-// Ostrzezenie o kolizji daty (nadpisze istniejacy wpis tego dnia).
+// Kolizja daty: bez --force NIE nadpisujemy (po cichu zniknal tak zestaw Sentino).
 const existing = corpus.find((it) => it.date === entry.date);
+const conflictMsg = existing
+  ? `Data ${entry.date} jest zajeta (${entryLabel(kind, existing)}). Pierwszy wolny dzien: ${nextFreeDate(corpus, entry.date)}. Nadpisanie tylko z --force.`
+  : "";
 
 if (checkOnly) {
-  console.log(`OK — zestaw zgodny.${existing ? " (UWAGA: nadpisze istniejacy wpis z tego dnia)" : ""}`);
+  console.log(`OK — zestaw zgodny.${existing ? " UWAGA: " + conflictMsg : ""}`);
   process.exit(0);
+}
+
+if (existing && !force) {
+  console.error("ZAJETA DATA: " + conflictMsg);
+  process.exit(3);
 }
 
 upsert(kind, entry);

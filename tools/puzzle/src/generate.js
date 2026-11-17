@@ -2,11 +2,11 @@
 //   claude-code (domyslnie) - wywoluje zainstalowane Claude Code (`claude -p`), rozlicza sie z subskrypcji.
 //   api                     - Messages API z ANTHROPIC_API_KEY, zuzywa kredyty API.
 import { spawn, spawnSync } from "node:child_process";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { validateEntry, crossCheck, usedTokens, artistEntryErrors, ARTIST_CLUES } from "./schema.js";
+import { validateEntry, crossCheck, usedTokens, artistEntryErrors, ARTIST_CLUES, crosswordPool, GAP_DAYS } from "./schema.js";
 import { read, readItems } from "./io.js";
 
 const BACKEND = (process.env.AI_BACKEND || "claude-code").toLowerCase();
@@ -56,7 +56,7 @@ const SKILL_PATH = join(dirname(fileURLToPath(import.meta.url)), "..", "..", "..
 const RULE_SECTIONS = {
   words: ["## Tematyka", "#### RapWord", "### BIALA LISTA"],
   puzzles: ["## Tematyka", "### RapConnect"],
-  crosswords: ["## Tematyka", "### RapCrossword — styl", "### RapCrossword — czego", "### BIALA LISTA"],
+  crosswords: ["## Tematyka", "### RapCrossword — styl", "### RapCrossword — czego", "### RapCrossword — uwagi Damiana z panelu", "### BIALA LISTA"],
   artists: ["## Tryb „Kim jestem?"],
 };
 
@@ -127,6 +127,60 @@ const SCHEMAS = {
       },
     },
     required: ["secretWord", "clues"],
+    additionalProperties: false,
+  },
+  // RapCrossword v2: wybor odpowiedzi z puli, pytania ze zrodel, alternatywy do poprawek.
+  crossPick: {
+    type: "object",
+    properties: { answers: { type: "array", items: { type: "string" }, description: "Po jednym slowie z listy kandydatow na kazda litere hasla, w kolejnosci liter" } },
+    required: ["answers"],
+    additionalProperties: false,
+  },
+  crossWrite: {
+    type: "object",
+    properties: {
+      clues: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            question: { type: "string", description: "Pytanie pokazywane graczowi" },
+            quote: { type: "string", description: "Doslowny fragment ZRODEL potwierdzajacy pytanie (pusty tylko dla slangu)" },
+          },
+          required: ["question", "quote"],
+          additionalProperties: false,
+        },
+      },
+    },
+    required: ["clues"],
+    additionalProperties: false,
+  },
+  crossAlt: {
+    type: "object",
+    properties: {
+      positions: {
+        type: "array",
+        description: "W kolejnosci poprawianych pozycji",
+        items: {
+          type: "object",
+          properties: {
+            options: {
+              type: "array",
+              description: "Dokladnie 3 rozne wersje",
+              items: {
+                type: "object",
+                properties: { answer: { type: "string" }, question: { type: "string" }, quote: { type: "string" } },
+                required: ["answer", "question", "quote"],
+                additionalProperties: false,
+              },
+            },
+          },
+          required: ["options"],
+          additionalProperties: false,
+        },
+      },
+    },
+    required: ["positions"],
     additionalProperties: false,
   },
   artists: {
@@ -482,34 +536,293 @@ function repairCrossword(entry) {
   return entry;
 }
 
+// ===================== RapCrossword v2 (silnik jak w RapGuesser) =====================
+// Kod wybiera haslo i kandydatow z ZATWIERDZONEJ puli (crossword-pool.json), Opus wybiera odpowiedzi
+// z listy i pisze pytania ze zrodel z cytatami, kod sprawdza cytaty i reguly, krytyk poprawia styl.
+const CROSS_MODEL = process.env.AI_MODEL_CROSSWORDS || (BACKEND === "api" ? MODEL : "opus");
+const CROSS_CANDIDATES = 14; // kandydatow na litere pokazywanych modelowi
+const WIKI_MAX = 7000; // tyle znakow Wikipedii na artyste (Deezer i Discogs zostaja w calosci)
+
+// Zrodla na dysku (30 dni), zeby krzyzowka nie pobierala kilkunastu artystow za kazdym razem.
+const CACHE_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "cache", "sources");
+async function cachedSources(name) {
+  const file = join(CACHE_DIR, normText(name).replace(/\s+/g, "-") + ".txt");
+  if (existsSync(file) && Date.now() - statSync(file).mtimeMs < 30 * 864e5) return readFileSync(file, "utf8");
+  const text = await artistSources(name);
+  if (text) {
+    mkdirSync(CACHE_DIR, { recursive: true });
+    writeFileSync(file, text, "utf8");
+  }
+  return text;
+}
+const trimSources = (text) => {
+  const m = text.match(/\n\n(DEEZER|DISCOGS)/);
+  const wiki = m ? text.slice(0, m.index) : text;
+  return (wiki.length > WIKI_MAX ? wiki.slice(0, WIKI_MAX) + " […]" : wiki) + (m ? text.slice(m.index) : "");
+};
+// Artysta zrodlowy slowa z puli („Zabson, Young Igi” -> „Zabson”).
+const sourceArtist = (p) => (p?.artist ? p.artist.split(",")[0].trim() : null);
+const dDiff = (a, b) => Math.abs(Math.round((Date.parse(a + "T00:00:00Z") - Date.parse(b + "T00:00:00Z")) / 864e5));
+const shuffle = (arr) => arr.map((x) => [Math.random(), x]).sort((a, b) => a[0] - b[0]).map((x) => x[1]);
+
+// Slowa zajete: uzyte w krzyzowce w ostatnich GAP_DAYS dniach w dowolnej roli (haslo albo odpowiedz).
+function crossBanned(others, date) {
+  const s = new Set();
+  others.forEach((it) => {
+    if (dDiff(it.date, date) < GAP_DAYS) [it.secretWord, ...(it.clues || []).map((c) => c.answer)].forEach((w) => s.add(up(w)));
+  });
+  return s;
+}
+// Kandydaci dla litery: zatwierdzone slowa z ta litera, bez zajetych i bez wykluczonych artystow; rozne typy.
+function letterCandidates(pool, letter, { banned, exclude, excludeArtists }) {
+  const ok = pool.filter((p) => p.status === "ok" && chars(p.word).includes(letter) && !banned.has(p.word)
+    && !exclude.has(p.word) && !(p.artist && excludeArtists.has(sourceArtist(p))));
+  const byType = new Map();
+  shuffle(ok).forEach((p) => { if (!byType.has(p.type)) byType.set(p.type, []); byType.get(p.type).push(p); });
+  const out = [];
+  while (out.length < CROSS_CANDIDATES && [...byType.values()].some((l) => l.length)) {
+    for (const l of byType.values()) if (l.length && out.length < CROSS_CANDIDATES) out.push(l.shift());
+  }
+  return out;
+}
+const candLine = (p) => `${p.word} [${p.type}${p.artist ? ", " + p.artist : ""}]`;
+
+function crossStyle(recentQuestions) {
+  return `- Kazde pytanie opieraj WYLACZNIE na ZRODLACH swojej odpowiedzi. W quote podaj doslowny fragment zrodla (kilka slow, skopiowany bez zmian), ktory potwierdza fakt z pytania. Pytanie bez potwierdzenia jest odrzucane automatycznie.
+- Wyjatek: odpowiedz typu slang - quote zostaw pusty, a pytanie MUSI nawiazywac do rapu (jak to slowo pada w rapie, na scenie, w zwrotkach), nie definicja ze slownika (zle: „Betonowy kolos z klatkami”). Bez wymyslania faktow o osobach.
+- W pytaniach nie przywoluj artystow z listy „NIE” Damiana (np. Sokol, Tede, Peja, Popek, Sarius, Kubanczyk) - ani jako odpowiedz, ani jako postac w pytaniu.
+- Pytanie NIE moze zawierac slowa-odpowiedzi ani jego odmiany.
+- Jedno krotkie zdanie twierdzace (bez znaku zapytania), jedna mysl, tytuly w polskich cudzyslowach „...”.
+- Zadne pytanie nie moze byc takie samo ani podobne do juz uzytych: ${recentQuestions.join(" | ")}${rulesFor("crosswords")}`;
+}
+async function sourcesBlock(artists) {
+  const names = [...new Set(artists.filter(Boolean))];
+  const raw = {};
+  const parts = [];
+  for (const a of names) {
+    const s = (await cachedSources(a)) || "";
+    raw[a] = s;
+    parts.push(`=== ZRODLA: ${a} ===\n${s ? trimSources(s) : "(brak zrodel - nie pisz faktow o tym artyscie)"}`);
+  }
+  return { text: parts.join("\n\n"), raw };
+}
+// Bledy jednego pytania: cytat w zrodle jego artysty, brak slowa-odpowiedzi w pytaniu.
+function clueErrors(i, p, clue, raw) {
+  const errs = [];
+  const q = normText(clue.question);
+  const w = normText(p.word);
+  if (!q) errs.push(`Pytanie ${i + 1}: puste`);
+  if (q && w.length >= 3 && q.split(" ").some((x) => x.startsWith(w.slice(0, Math.max(3, w.length - 1))))) {
+    errs.push(`Pytanie ${i + 1}: zdradza odpowiedz ${p.word} („${clue.question}”)`);
+  }
+  if (p.type !== "slang") {
+    const hay = normText(raw[sourceArtist(p)] || "");
+    const quote = normText(clue.quote);
+    if (quote.length < QUOTE_MIN) errs.push(`Pytanie ${i + 1}: brak cytatu ze zrodla („${clue.question}”)`);
+    else if (!hay.includes(quote)) errs.push(`Pytanie ${i + 1}: cytatu nie ma w zrodlach ${sourceArtist(p) || ""}, fakt niepotwierdzony („${clue.question}”)`);
+  }
+  return errs;
+}
+// Drugi czlon ksywy (BALAGANE z Kaz Balagane, MONTANA): bez zaznaczenia gracz wpisze glowna ksywe.
+function partNote(p) {
+  if (p.type !== "artysta" || p.main || !p.artist) return "";
+  const hint = p.artist.replace(new RegExp(p.word, "i"), "…");
+  return ` - UWAGA: to tylko CZESC ksywy „${p.artist}”; pytanie MUSI to zaznaczyc (dopelnienie, np. „${hint}”, albo „drugi czlon ksywy…”)`;
+}
+function buildCross(date, secret, picks, clues) {
+  const letters = chars(secret);
+  return {
+    date, secretWord: secret,
+    clues: picks.map((p, i) => ({ question: polishQuotes(String(clues[i]?.question || "").trim()), answer: p.word, highlightIndex: Math.max(0, chars(p.word).indexOf(letters[i])) })),
+  };
+}
+
+export async function generateCrosswordV2(date, theme, corpus) {
+  const pool = crosswordPool();
+  if (!pool.length) throw new Error("Brak puli slow (tools/puzzle/crossword-pool.json) - uruchom node tools/puzzle/build-pool.js.");
+  const others = corpus.filter((it) => it.date !== date);
+  const banned = crossBanned(others, date);
+  const call = (schema, prompt) => (BACKEND === "api" ? callApi(schema, prompt, CROSS_MODEL) : callClaudeCode(schema, prompt, CROSS_MODEL));
+
+  // 1. Haslo: artysta albo album z puli, 5-8 liter, niezajete; kazda litera musi miec kandydatow.
+  const themeN = theme ? normText(theme) : "";
+  let mains = pool.filter((p) => p.status === "ok" && (p.type === "album" || (p.type === "artysta" && p.main)) && chars(p.word).length >= 5 && chars(p.word).length <= 8 && !banned.has(p.word));
+  mains = themeN
+    ? [...mains.filter((p) => normText(p.word).includes(themeN) || normText(p.artist || "").includes(themeN)), ...shuffle(mains)]
+    : shuffle(mains);
+  let main;
+  let cands;
+  for (const m of mains) {
+    const opts = { banned, exclude: new Set([m.word]), excludeArtists: new Set([sourceArtist(m)]) };
+    const c = chars(m.word).map((L) => letterCandidates(pool, L, opts));
+    if (c.every((l) => l.length >= 3)) { main = m; cands = c; break; }
+  }
+  if (!main) throw new Error("W puli brakuje slow, zeby ulozyc krzyzowke (za duzo zajetych w 21 dniach) - dopisz slowa do puli.");
+  const letters = chars(main.word);
+  const steps = [`haslo ${main.word}`];
+
+  // 2. Opus wybiera po jednej odpowiedzi na litere (tylko z listy).
+  const pickPrompt = `Ukladasz krzyzowke do gry DailyRap. Haslo glowne: ${main.word} (${main.type}${main.artist ? ", " + main.artist : ""}).
+Dla kazdej litery hasla wybierz DOKLADNIE JEDNO slowo z jej listy kandydatow (tylko z listy, bez zmian pisowni).
+- Kazdy artysta najwyzej raz w calej krzyzowce (liczy sie artysta podany przy slowie; slowa bez artysty sa wolne).
+- Mieszaj typy (artysta, utwor, album, slang, fragment tytulu, producent) - najwyzej 2 slowa tego samego typu, a ALBUM najwyzej 1 (regula Damiana: max 1 pytanie o plyte).
+- Wybieraj slowa, do ktorych da sie napisac ciekawe, krotkie pytanie znane fanom mainstreamu.
+- Jesli na ktoras litere jest slang albo pojecie rapowe, wez 1 takie slowo (Damian lubi mieszanke, nie same fakty o artystach).
+${letters.map((L, i) => `Litera ${i + 1} (${L}): ${cands[i].map(candLine).join("; ")}`).join("\n")}${rulesFor("crosswords")}`;
+  const picked = (await call("crossPick", pickPrompt)).answers || [];
+  steps.push("wybor odpowiedzi");
+  // Kod pilnuje listy i artystow - gdy model sie pomyli, bierze pierwszego pasujacego kandydata.
+  const usedArtists = new Set([sourceArtist(main)]);
+  const usedWords = new Set([main.word]);
+  let albums = 0; // max 1 plyta na krzyzowke
+  const picks = letters.map((L, i) => {
+    const ok = (p) => p && !usedWords.has(p.word) && !(p.artist && usedArtists.has(sourceArtist(p))) && !(p.type === "album" && albums > 0);
+    let p = cands[i].find((c) => c.word === up(String(picked[i] || "").trim()));
+    if (!ok(p)) p = cands[i].find(ok);
+    if (!p) throw new Error(`Nie da sie dobrac odpowiedzi na litere ${L} bez powtorzenia artysty - dopisz slowa do puli.`);
+    usedWords.add(p.word);
+    if (p.artist) usedArtists.add(sourceArtist(p));
+    if (p.type === "album") albums++;
+    return p;
+  });
+
+  // 3. Pytania ze zrodel (Opus) + 4. krytyk + poprawka bledow.
+  const src = await sourcesBlock(picks.map(sourceArtist));
+  const recentQ = others.filter((it) => dDiff(it.date, date) < 60).flatMap((it) => (it.clues || []).map((c) => c.question));
+  const answersBlock = picks.map((p, i) => `${i + 1}. [litera ${letters[i]}] ${p.word} (${p.type}${p.artist ? ", " + p.artist : ""})${partNote(p)}`).join("\n");
+  const writePrompt = (extra) => `Napisz pytania do krzyzowki DailyRap. Haslo: ${main.word}. Odpowiedzi sa USTALONE - nie zmieniaj ich, zwroc pytania w tej samej kolejnosci.
+${crossStyle(recentQ)}
+${extra}
+ODPOWIEDZI:
+${answersBlock}
+
+ZRODLA:
+${src.text}`;
+  const draft = async (prompt) => {
+    const clues = ((await call("crossWrite", prompt)).clues || []).map((c) => ({ question: polishQuotes(String(c.question || "").trim()), quote: String(c.quote || "").trim() }));
+    const entry = buildCross(date, main.word, picks, clues);
+    const errors = [
+      ...picks.flatMap((p, i) => clueErrors(i, p, clues[i] || {}, src.raw)),
+      ...validateEntry("crosswords", entry).map((e) => `${e.where}: ${e.msg}`),
+      ...crossCheck("crosswords", entry, others).filter((e) => e.level === "error").map((e) => `${e.where}: ${e.msg}`),
+    ];
+    return { entry, clues, errors };
+  };
+  let best = await draft(writePrompt(""));
+  steps.push("pytania");
+  const critic = await draft(writePrompt(`TWOJ SZKIC DO OCENY:
+${best.clues.map((c, i) => `${i + 1}. ${picks[i].word}: ${c.question}  [cytat: ${c.quote}]`).join("\n")}
+Jestes teraz surowym recenzentem w stylu Damiana. Sprawdz KAZDE pytanie wedlug REGUL: krotkie, jedna mysl, prawdziwe (cytat), nie zdradza odpowiedzi, nie za latwe i nie za trudne, bez ocen typu „mroczny”, kazde pytanie zbudowane inaczej, brzmi naturalnie jak zdanie fana po polsku (nie jak tlumaczenie: zle „Malik Montana zaprosil do niego The Plug”, dobrze „Numer Malika Montany z The Plugiem”), czesc ksywy wyraznie zaznaczona. Dobre zostaw, slabe zastap lepszymi ze ZRODEL. Zwroc wszystkie pytania.`));
+  steps.push("krytyk");
+  if (critic.errors.length <= best.errors.length) best = critic;
+  if (best.errors.length) {
+    best = await draft(writePrompt(`POPRZEDNIA PROBA ZOSTALA ODRZUCONA. Popraw tylko wskazane problemy:\n${best.errors.join("\n")}`));
+    steps.push("poprawka bledow");
+  }
+  return { entry: best.entry, valid: best.errors.length === 0, errors: best.errors, quotes: best.clues.map((c) => c.quote || ""), steps };
+}
+
+// Poprawka krzyzowki v2: decision[i] = "keep" | "question" (odpowiedz zostaje) | "answer" (nowe slowo z puli).
+// Jedno wywolanie Opusa daje 3 wersje dla kazdej poprawianej pozycji; kod sklada z nich 3 warianty zestawu.
+export async function generateCrosswordFixV2(date, corpus, review) {
+  const pool = crosswordPool();
+  const others = corpus.filter((it) => it.date !== date);
+  const banned = crossBanned(others, date);
+  const secret = up(review.secretWord);
+  const letters = chars(secret);
+  const byWord = (w) => pool.find((p) => p.word === up(w)) || { word: up(w), type: "historia", artist: null };
+  const fix = review.decision.map((d, i) => (d === "keep" ? -1 : i)).filter((i) => i >= 0);
+  const keptIdx = review.decision.map((d, i) => (d === "keep" ? i : -1)).filter((i) => i >= 0);
+  const keptArtists = new Set([sourceArtist(byWord(secret)), ...keptIdx.map((i) => sourceArtist(byWord(review.clues[i].answer)))].filter(Boolean));
+  const shownWords = new Set((review.shown || []).map((s) => up(String(s).split(" — ")[0])));
+  const exclude = new Set([secret, ...review.clues.map((c) => up(c.answer)), ...shownWords]);
+
+  const tasks = fix.map((i) => {
+    const cur = byWord(review.clues[i].answer);
+    if (review.decision[i] === "question") return { i, mode: "question", cands: [cur] };
+    return { i, mode: "answer", cands: letterCandidates(pool, letters[i], { banned, exclude, excludeArtists: keptArtists }).slice(0, 8) };
+  });
+  const empty = tasks.find((t) => !t.cands.length);
+  if (empty) throw new Error(`Brak wolnych slow w puli na litere ${letters[empty.i]} - dopisz slowa do puli.`);
+
+  const src = await sourcesBlock(tasks.flatMap((t) => t.cands.map(sourceArtist)));
+  const recentQ = others.filter((it) => dDiff(it.date, date) < 60).flatMap((it) => (it.clues || []).map((c) => c.question));
+  const taskLines = tasks.map((t) => {
+    const old = review.clues[t.i];
+    const note = review.notes[t.i] || "slabe";
+    if (t.mode === "question") return `Pozycja ${t.i + 1} [litera ${letters[t.i]}]: odpowiedz ZOSTAJE ${up(old.answer)}. Napisz 3 ROZNE nowe pytania (inny fakt w kazdym). Stare pytanie: „${old.question}” - uwaga Damiana: ${note}`;
+    return `Pozycja ${t.i + 1} [litera ${letters[t.i]}]: NOWA odpowiedz. Wybierz 3 ROZNE slowa z listy: ${t.cands.map(candLine).join("; ")}. Do kazdego napisz pytanie. Stara: ${up(old.answer)} „${old.question}” - uwaga Damiana: ${note}`;
+  });
+  const prompt = `Poprawiasz krzyzowke DailyRap. Haslo ${secret} zostaje. Zatwierdzone pytania (nie powtarzaj ich faktow):
+${keptIdx.map((i) => `- ${up(review.clues[i].answer)}: ${review.clues[i].question}`).join("\n")}
+Odrzucone wczesniej pomysly (nie wracaj do nich): ${(review.shown || []).join(" | ") || "brak"}
+${crossStyle(recentQ)}
+ZADANIA (zwroc positions w tej kolejnosci, w kazdej dokladnie 3 opcje):
+${taskLines.join("\n")}
+
+ZRODLA:
+${src.text}`;
+  const got = (BACKEND === "api" ? await callApi("crossAlt", prompt, CROSS_MODEL) : await callClaudeCode("crossAlt", prompt, CROSS_MODEL)).positions || [];
+
+  // 3 warianty zestawu: wariant k bierze k-ta opcje na kazdej poprawianej pozycji.
+  const runs = [0, 1, 2].map((k) => {
+    const picks = review.clues.map((c) => byWord(c.answer));
+    const clues = review.clues.map((c) => ({ question: c.question, quote: "" }));
+    tasks.forEach((t, ti) => {
+      const o = (got[ti]?.options || [])[k] || {};
+      const p = t.mode === "question" ? t.cands[0] : (t.cands.find((c) => c.word === up(String(o.answer || "").trim())) || null);
+      if (p) picks[t.i] = p;
+      clues[t.i] = { question: p ? polishQuotes(String(o.question || "").trim()) : "", quote: String(o.quote || "").trim() };
+    });
+    const entry = buildCross(date, secret, picks, clues);
+    const errors = [
+      ...tasks.flatMap((t) => clueErrors(t.i, picks[t.i], clues[t.i], src.raw)),
+      ...validateEntry("crosswords", entry).map((e) => `${e.where}: ${e.msg}`),
+      ...crossCheck("crosswords", entry, others).filter((e) => e.level === "error").map((e) => `${e.where}: ${e.msg}`),
+    ];
+    return { entry, valid: !errors.length, errors, quotes: clues.map((c) => c.quote) };
+  });
+  return { runs };
+}
+
 // Zwraca { entry, valid, errors }. Nie zapisuje - to robi UI po akceptacji.
 export async function generate(kind, date, theme, review) {
   const status = aiStatus();
   if (!status.available) throw new Error(`${status.reason} - przycisk AI nieaktywny.`);
   const corpus = readItems(kind);
   if (kind === "artists") return generateArtist(date, theme, corpus, review);
+  if (kind === "crosswords" && review) return generateCrosswordFixV2(date, corpus, review);
+  if (kind === "crosswords") return generateCrosswordV2(date, theme, corpus);
   const used = usedTokens(kind, corpus, date);
-  const prompt = userPrompt(kind, theme, used);
-  const raw = BACKEND === "api" ? await callApi(kind, prompt) : await callClaudeCode(kind, prompt);
-  let entry;
-  if (kind === "words") {
-    const word = up(raw.word).trim();
-    entry = { date, word, hint: raw.hint, variant: chars(word).length };
-  } else if (kind === "puzzles") {
-    entry = {
-      date,
-      categories: (raw.categories || []).map((c) => ({
-        name: c.name,
-        words: c.words,
-        difficulty: c.difficulty,
-      })),
-    };
-  } else {
-    entry = repairCrossword({ date, secretWord: up(raw.secretWord), clues: raw.clues });
-  }
-  const errs = [
+  const basePrompt = userPrompt(kind, theme, used);
+  const toEntry = (raw) => {
+    if (kind === "words") {
+      const word = up(raw.word).trim();
+      return { date, word, hint: raw.hint, variant: chars(word).length };
+    }
+    if (kind === "puzzles") {
+      return { date, categories: (raw.categories || []).map((c) => ({ name: c.name, words: c.words, difficulty: c.difficulty })) };
+    }
+    return repairCrossword({ date, secretWord: up(raw.secretWord), clues: raw.clues });
+  };
+  const check = (entry) => [
     ...validateEntry(kind, entry),
     ...crossCheck(kind, entry, corpus).filter((e) => e.level === "error"),
   ].map((e) => `${e.where}: ${e.msg}`);
-  return { entry, valid: errs.length === 0, errors: errs };
+
+  // Model przy dlugiej liscie zakazow (np. 118 odpowiedzi) potrafi cos przeoczyc - wtedy kod
+  // odsyla mu jego propozycje z bledami walidatora i prosi o poprawke (kod pilnuje regul, nie model).
+  let prompt = basePrompt;
+  let entry, errs;
+  let attempts = 0;
+  for (; attempts < MAX_ATTEMPTS; attempts++) {
+    const raw = BACKEND === "api" ? await callApi(kind, prompt) : await callClaudeCode(kind, prompt);
+    entry = toEntry(raw);
+    errs = check(entry);
+    if (!errs.length) break;
+    prompt = `${basePrompt}\n\nPOPRAWKA (proba ${attempts + 2}/${MAX_ATTEMPTS}). Twoja poprzednia propozycja:\n${JSON.stringify(raw)}\nWalidator odrzucil ja z powodu:\n${errs.map((e) => "- " + e).join("\n")}\nZwroc caly zestaw jeszcze raz. Zmien TYLKO to, co lamie reguly (np. zastap zakazana odpowiedz inna, ktora ma te sama litere hasla), reszte zostaw bez zmian.`;
+  }
+  return { entry, valid: errs.length === 0, errors: errs, attempts: Math.min(attempts + 1, MAX_ATTEMPTS) };
 }
+// Ile razy generator probuje (1 szkic + poprawki), zanim pokaze zestaw z bledami.
+const MAX_ATTEMPTS = 3;

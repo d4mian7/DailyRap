@@ -9,6 +9,10 @@
 //
 // Plus reguly wspolne: poprawny format daty, daty unikalne w pliku, id unikalne.
 
+import { readFileSync, existsSync, statSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
+
 // Liczymy znaki po code-pointach (polskie znaki = 1).
 const chars = (s) => [...String(s ?? "")];
 const up = (s) => String(s ?? "").toUpperCase();
@@ -350,8 +354,74 @@ export function crossDayIssues(kind, items) {
     }
     gapIssues((it) => [NORM(it.secretWord)], "Haslo");
     gapIssues((it) => (it.clues || []).map((c) => NORM(c.answer)), "Odpowiedz");
+    // Od CROSS_ROLE_SINCE haslo i odpowiedzi to jedna pula: slowo nie wraca przez GAP_DAYS w ZADNEJ roli
+    // (decyzja Damiana 17.11, po DEEMZ odpowiedz 11.11 -> haslo 13.11). Starsze dni wg dawnej reguly.
+    const uses = new Map(); // slowo -> [{date, role}]
+    items.forEach((it) => crossTokens(it).forEach((tok) => {
+      if (!uses.has(tok)) uses.set(tok, []);
+      uses.get(tok).push({ date: it.date, role: roleOf(it, tok) });
+    }));
+    for (const [tok, list] of uses) {
+      for (let i = 0; i < list.length; i++) for (let j = 0; j < list.length; j++) {
+        const [a, b] = [list[i], list[j]];
+        if (a.role === b.role || !(a.date < b.date) || b.date < CROSS_ROLE_SINCE) continue;
+        const d = dayDiff(a.date, b.date);
+        if (d < GAP_DAYS) out.push({ level: "error", where: `${kind} (za blisko)`, msg: `Slowo "${tok}": ${a.role} ${a.date}, potem ${b.role} ${b.date} (odstep ${d} dni, wymagane >= ${GAP_DAYS} w kazdej roli)` });
+      }
+    }
   }
   return out;
+}
+// Od tego dnia haslo i odpowiedzi krzyzowki maja wspolna regule 21 dni (starsze krzyzowki zaakceptowane po staremu).
+export const CROSS_ROLE_SINCE = "2026-11-11";
+
+// --- RapCrossword: wspolne pomocnicze ---
+const crossTokens = (it) => [NORM(it.secretWord), ...(it.clues || []).map((c) => NORM(c.answer))].filter(Boolean);
+const roleOf = (it, tok) => (NORM(it.secretWord) === tok ? "haslo" : "odpowiedz");
+const plain = (s) => String(s ?? "").toLowerCase().normalize("NFD").replace(/\p{M}+/gu, "").replace(/ł/g, "l");
+// Slowa ogolne, ktore nic nie mowia o konkretnym fakcie.
+const FACT_STOP = new Set(["utwor", "utworu", "album", "albumu", "plyta", "plyty", "raper", "rapera", "numer", "numeru", "autor",
+  "autora", "tworca", "jest", "jako", "oraz", "ktory", "ktora", "ktore", "tego", "jego", "jej", "przez", "wraz", "razem",
+  "gosci", "goscinnie", "goscinnym", "udzialem", "nagral", "nagrala", "wydal", "wydala", "polsk", "polskiego", "roku", "ktorym"]);
+// „Odcisk” faktu: rdzenie (5 liter) slow pytania + odpowiedzi, bez slow ogolnych.
+function factStems(answer, question) {
+  const words = plain(`${answer} ${question}`).split(/[^a-z0-9]+/).filter((w) => w.length >= 3 && !FACT_STOP.has(w));
+  return new Set(words.map((w) => w.slice(0, 5)));
+}
+// Ten sam fakt w innej formie (Mlody/Manson odwrocone): >= 3 wspolne rdzenie i >= 80% mniejszego zbioru.
+export function sameFact(a, b) {
+  let inter = 0;
+  a.forEach((x) => { if (b.has(x)) inter++; });
+  return inter >= 3 && inter / Math.min(a.size, b.size) >= 0.8;
+}
+
+// Pula slow krzyzowki (tools/puzzle/crossword-pool.json) - artysta przypisany do slowa.
+// Wczytywana ponownie po kazdej zmianie pliku (Damian zatwierdza slowa bez restartu panelu).
+let POOL_CACHE = null;
+let POOL_MTIME = 0;
+export function crosswordPool() {
+  const file = join(dirname(fileURLToPath(import.meta.url)), "..", "crossword-pool.json");
+  if (!existsSync(file)) return [];
+  const mtime = statSync(file).mtimeMs;
+  if (!POOL_CACHE || mtime !== POOL_MTIME) {
+    POOL_CACHE = JSON.parse(readFileSync(file, "utf8")).words;
+    POOL_MTIME = mtime;
+  }
+  return POOL_CACHE;
+}
+// Artysci, o ktorych jest dane pytanie: artysta slowa-odpowiedzi z puli + artysci wspomniani w tresci pytania.
+export function artistsInClue(answer, question) {
+  const pool = crosswordPool();
+  const found = new Set();
+  const own = pool.find((p) => p.word === NORM(answer));
+  if (own?.artist) found.add(own.artist);
+  const q = plain(question).split(/[^a-z0-9]+/);
+  pool.filter((p) => p.type === "artysta" && p.artist && p.word.length >= 3).forEach((p) => {
+    const w = plain(p.word);
+    // „Okiego”, „Szpaku”, „Mata” - odmiana zaczyna sie od ksywy (dla 3-literowych tylko dokladne lub +ego/+emu).
+    if (q.some((x) => (w.length > 3 ? x.startsWith(w.slice(0, Math.max(4, w.length - 1))) : x === w || x === w + "ego" || x === w + "emu"))) found.add(p.artist);
+  });
+  return found;
 }
 
 // Sprawdza pojedynczy wpis wzgledem ISTNIEJACEGO korpusu (inne dni).
@@ -398,8 +468,34 @@ export function crossCheck(kind, entry, items) {
         }
       });
     };
-    gapAgainst(NORM(entry.secretWord), (it) => [NORM(it.secretWord)], "Haslo");
-    [...new Set((entry.clues || []).map((c) => NORM(c.answer)))].forEach((a) => gapAgainst(a, (it) => (it.clues || []).map((x) => NORM(x.answer)), "Odpowiedz"));
+    // Haslo i odpowiedzi to jedna pula - slowo nie wraca w ZADNEJ roli przez GAP_DAYS
+    // (dla dni przed CROSS_ROLE_SINCE: tylko w tej samej roli, jak dawniej).
+    const sameRoleOnly = entry.date < CROSS_ROLE_SINCE;
+    [...new Set(crossTokens(entry))].forEach((tok) => {
+      others.forEach((it) => {
+        if (!crossTokens(it).includes(tok)) return;
+        if ((sameRoleOnly || it.date < CROSS_ROLE_SINCE) && roleOf(it, tok) !== roleOf(entry, tok)) return;
+        const d = dayDiff(it.date, entry.date);
+        const need = gapFor(it.date, entry.date);
+        if (d < need) out.push({ level: "error", where: `${kind} (${entry.date})`, msg: `Slowo "${tok}" (tu: ${roleOf(entry, tok)}) uzyte juz ${d} dni od dnia ${it.date} jako ${roleOf(it, tok)} (wymagany odstep >= ${need} dni w kazdej roli)` });
+      });
+    });
+    // Ten sam fakt w innej formie (np. odpowiedz i slowo z pytania zamienione miejscami) w oknie GAP_DAYS.
+    const recent = others.filter((it) => dayDiff(it.date, entry.date) < GAP_DAYS);
+    (entry.clues || []).forEach((c, ci) => {
+      if (!c?.question) return;
+      const mine = factStems(c.answer, c.question);
+      for (const it of recent) {
+        const hit = (it.clues || []).find((o) => o?.question && sameFact(mine, factStems(o.answer, o.question)));
+        if (hit) { out.push({ level: "error", where: `${kind} (${entry.date}) pyt.${ci + 1}`, msg: `Ten sam fakt co ${it.date}: ${NORM(hit.answer)} — „${hit.question}” (tu: ${NORM(c.answer)} — „${c.question}”)` }); break; }
+      }
+    });
+    // Jeden artysta raz na krzyzowke (ostrzezenie - odmiany ksyw wykrywamy w przyblizeniu).
+    const seen = new Map();
+    (entry.clues || []).forEach((c, ci) => artistsInClue(c.answer, c.question || "").forEach((a) => {
+      if (seen.has(a)) out.push({ level: "warn", where: `${kind} (${entry.date})`, msg: `Artysta ${a} w pytaniach ${seen.get(a) + 1} i ${ci + 1} - jeden artysta raz na krzyzowke` });
+      else seen.set(a, ci);
+    }));
   }
   return out;
 }

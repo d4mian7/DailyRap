@@ -25,3 +25,6 @@ local.properties
 
 # AI tooling (lokalne)
 .claude/
+
+# Zrodla pobierane przez generator krzyzowek (Wikipedia/Deezer/Discogs) - odswiezane co 30 dni
+tools/puzzle/cache/

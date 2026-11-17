@@ -95,8 +95,9 @@
   <h1>Daily<span>Rap</span></h1>
   <div class="tabs">
     <div class="tab active" data-tab="calendar" onclick="switchTab('calendar')">Kalendarz</div>
-    <div class="tab" data-tab="creator" onclick="switchTab('creator')">Kreator</div>
+    <div class="tab" data-tab="creator" onclick="switchTab('creator');autoDate()">Kreator</div>
     <div class="tab" data-tab="validate" onclick="switchTab('validate')">Walidacja</div>
+    <div class="tab" data-tab="quality" onclick="switchTab('quality');renderQuality()">Jakość</div>
   </div>
   <div class="grow"></div>
   <div id="globalBanner" class="banner ok">...</div>
@@ -118,7 +119,7 @@
       <div class="grid" id="grid"></div>
       <div class="legend">
         <span><span class="pill" style="background:var(--blue)"></span><b>W</b> RapWord</span>
-        <span><span class="pill" style="background:var(--purple)"></span><b>C</b> RapConnect</span>
+        <span><span class="pill" style="background:#38bdf8"></span><b>K</b> RapGuesser</span>
         <span><span class="pill" style="background:var(--gold)"></span><b>X</b> RapCrossword</span>
         <span><span class="pill" style="background:var(--green)"></span>OK</span>
         <span><span class="pill" style="background:var(--red)"></span>blad</span>
@@ -136,14 +137,13 @@
       <label>Tryb</label>
       <select id="cMode" onchange="onModeChange()">
         <option value="word">RapWord (haslo)</option>
-        <option value="connect">RapConnect (4x4)</option>
+        <option value="artist">RapGuesser (artysta)</option>
         <option value="crossword">RapCrossword (krzyzowka)</option>
-        <option value="artist">Kim jestem? (artysta)</option>
       </select>
     </div>
     <div class="field" style="margin:0;">
       <label>Data</label>
-      <input type="date" id="cDate" onchange="renderLive()">
+      <input type="date" id="cDate" onchange="onDateChange()">
     </div>
     <div class="field" style="margin:0;flex:1;min-width:160px;">
       <label>Temat dla AI (opcjonalnie)</label>
@@ -170,8 +170,14 @@
   <div id="validateBody"></div>
 </div>
 
+<!-- ===== JAKOSC (miernik „bez poprawek”) ===== -->
+<div id="page-quality" class="page">
+  <div id="qualityBody"></div>
+</div>
+
 <script>
-const MODES={words:{tag:"W",name:"RapWord"},puzzles:{tag:"C",name:"RapConnect"},crosswords:{tag:"X",name:"RapCrossword"},artists:{tag:"K",name:"Kim jestem?"}};
+// RapConnect (puzzles) wycofany 16.11 - nie pokazujemy go w kalendarzu ani kreatorze. Kolejnosc jak w apce.
+const MODES={words:{tag:"W",name:"RapWord"},artists:{tag:"K",name:"RapGuesser"},crosswords:{tag:"X",name:"RapCrossword"}};
 const KIND={word:"words",connect:"puzzles",crossword:"crosswords",artist:"artists"};
 let DATA=null, CONFIG={available:false};
 let view=new Date(); view.setDate(1);
@@ -192,6 +198,11 @@ async function reload(){
   renderLive(); renderValidate();
 }
 function byDate(kind,date){return DATA.modes[kind].items.find(i=>i.date===date);}
+// Krotki opis zestawu (jak entryLabel w src/io.js).
+function labelOf(kind,it){
+  if(kind==="words")return it.word;if(kind==="crosswords")return it.secretWord;if(kind==="artists")return it.artist;
+  return (it.categories||[]).map(c=>c.name).join(" / ");
+}
 
 function renderBanner(){
   const el=document.getElementById("globalBanner");let errs=0;
@@ -284,11 +295,49 @@ function blank(mode){
 function curMode(){return document.getElementById("cMode").value;}
 function st(){const m=curMode();if(!CST[m])CST[m]=blank(m);return CST[m];}
 
-function onModeChange(){renderForm();renderLive();}
-function clearForm(){CST[curMode()]=blank(curMode());renderForm();renderLive();}
+// Nastepny dzien do ulozenia: pierwszy po OSTATNIM zestawie trybu (kontynuacja ciagu, takze wstecz od dzis).
+// Nie „pierwsza dziura”, bo krzyzowka ma stara przerwe 7.09-9.10 z poczatkow projektu.
+// Pusty tryb: od dzis.
+function firstFreeDate(kind){
+  const dates=((DATA&&DATA.modes[kind]&&DATA.modes[kind].items)||[]).map(i=>i.date).sort();
+  if(!dates.length)return new Date().toLocaleDateString("sv-SE");
+  const d=new Date(dates[dates.length-1]+"T00:00:00Z");d.setUTCDate(d.getUTCDate()+1);
+  return d.toISOString().slice(0,10);
+}
+// Ustawia date na wolny dzien, chyba ze edytujemy istniejacy zestaw tego trybu.
+function autoDate(){
+  const mode=curMode();if(EDITING&&EDITING.mode===mode)return;
+  const date=firstFreeDate(ALIAS_BACK[mode]);document.getElementById("cDate").value=date;
+  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent=`Data: najblizszy wolny dzien dla ${MODES[ALIAS_BACK[mode]].name} (${date}).`;
+  renderLive();
+}
+function onModeChange(){renderForm();autoDate();renderLive();}
+// Zmiana daty w kreatorze: zajety dzien od razu pokazuje istniejacy zestaw, zeby nie ukladac na slepo.
+function onDateChange(){
+  const mode=curMode();const kind=ALIAS_BACK[mode];const date=document.getElementById("cDate").value;
+  const msg=document.getElementById("saveMsg");const it=date&&byDate(kind,date);
+  if(it){
+    // Niezapisany zestaw z AI zostaje w formularzu - nie kasujemy go zmiana daty.
+    if(GEN&&GEN.mode===mode){
+      msg.style.color="var(--gold)";msg.textContent=`Uwaga: ${date} jest zajety (${labelOf(kind,it)}). Twoj niezapisany zestaw z AI zostaje w formularzu - przy zapisie panel zapyta o nadpisanie. Pierwszy wolny dzien: ${firstFreeDate(kind)}.`;
+      renderLive();return;
+    }
+    openInCreator(kind,date);
+    msg.style.color="var(--gold)";msg.textContent=`${date} jest zajety: ${labelOf(kind,it)}. Wczytalem istniejacy zestaw - mozesz go edytowac. Pierwszy wolny dzien: ${firstFreeDate(kind)}.`;
+    return;
+  }
+  // Wolny dzien po ogladaniu zajetego: czysty formularz zamiast starego zestawu.
+  if(EDITING&&EDITING.mode===mode){EDITING=null;CST[mode]=blank(mode);renderForm();}
+  if(date){msg.style.color="var(--muted)";msg.textContent=`${date} jest wolny.`;}
+  renderLive();
+}
+function clearForm(){EDITING=null;GEN=null;CST[curMode()]=blank(curMode());renderForm();autoDate();renderLive();}
 
+// Zestaw otwarty do edycji: zapis na ta sama date to zamierzone nadpisanie, wiec bez pytania.
+let EDITING=null;
 function openInCreator(kind,date){
   const it=byDate(kind,date);const mode=Object.keys(ALIAS_BACK).find(k=>ALIAS_BACK[k]===kind);
+  EDITING={mode,date};GEN=null;
   switchTab("creator");document.getElementById("cMode").value=mode;document.getElementById("cDate").value=date;
   if(mode==="word")CST.word={word:it.word,hint:it.hint};
   else if(mode==="connect")CST.connect={categories:it.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
@@ -297,7 +346,7 @@ function openInCreator(kind,date){
   renderForm();renderLive();
 }
 function newInCreator(kind,date){
-  const mode=Object.keys(ALIAS_BACK).find(k=>ALIAS_BACK[k]===kind);
+  const mode=Object.keys(ALIAS_BACK).find(k=>ALIAS_BACK[k]===kind);EDITING=null;GEN=null;
   switchTab("creator");document.getElementById("cMode").value=mode;document.getElementById("cDate").value=date;
   CST[mode]=blank(mode);renderForm();renderLive();
 }
@@ -353,10 +402,67 @@ function renderClues(){
       <select onchange="st().clues[${i}].highlightIndex=+this.value;renderClues();renderLive();">${opts}</select>
       <div class="letterbadge ${ans.length?(okLet?'ok':'bad'):''}">${need}${ans.length?(okLet?' ✓':' ✗'):''}</div>
     </div>
-    <div class="clrow2" style="margin:-2px 0 8px 30px;"><input style="width:calc(100% - 110px);" value="${esc(c.question)}" oninput="st().clues[${i}].question=this.value;renderLive();" placeholder="pytanie"> <button onclick="autoHi(${i})">auto litera</button></div>`;
-  }).join("");
+    <div class="clrow2" style="margin:-2px 0 8px 30px;"><input style="width:calc(100% - 110px);" value="${esc(c.question)}" oninput="st().clues[${i}].question=this.value;if(st().quotes)st().quotes[${i}]='';renderLive();" placeholder="pytanie"> <button onclick="autoHi(${i})">auto litera</button></div>
+    ${s.quotes&&s.quotes[i]?`<div class="quote" style="margin:-6px 0 8px 30px;">zrodlo: „${esc(s.quotes[i])}”</div>`:""}
+    ${xReviewRow(s,i)}`;
+  }).join("")+xFixButton(s);
 }
-function onAnswer(i,v){const s=st();s.clues[i].answer=up(v);renderClues();renderLive();}
+
+/* ===== RapCrossword: petla poprawek (jak w RapGuesser) ===== */
+// Stan oceny trzymamy obok pytan; po zmianie hasla (inna liczba pytan) zaczyna sie od nowa.
+function xRev(s){
+  const n=s.clues.length;
+  if(!s.rev||s.rev.decision.length!==n)s.rev={decision:Array(n).fill("keep"),notes:Array(n).fill(""),options:{},shown:{}};
+  return s.rev;
+}
+function xReviewRow(s,i){
+  const r=xRev(s);const d=r.decision[i];
+  const btn=(val,label)=>`<button class="${d===val?(val==="keep"?"on":"danger on"):""}" onclick="xSetDecision(${i},'${val}')">${label}</button>`;
+  const note=d!=="keep"?`<input style="flex:1;" placeholder="uwaga: dlaczego (trafi do regul krzyzowki)" value="${esc(r.notes[i])}" oninput="xRev(st()).notes[${i}]=this.value;">`:"";
+  const opts=(r.options[i]||[]).map((o,j)=>`<div class="opt" onclick="xPickOpt(${i},${j})"><b>${esc(o.answer)}</b> — ${esc(o.question)}${o.quote?`<div class="quote">zrodlo: „${esc(o.quote)}”</div>`:""}${o.errors.length?`<div class="errs">${esc(o.errors.join("\n"))}</div>`:""}</div>`).join("");
+  return `<div style="margin:-4px 0 12px 30px;"><div class="row">${btn("keep","Zostaw")}${btn("question","Nowe pytanie")}${btn("answer","Nowa odpowiedz")}${note}</div>${opts}</div>`;
+}
+function xFixButton(s){
+  const n=xRev(s).decision.filter(d=>d!=="keep").length;
+  return `<div class="row"><button class="ai" id="xFixBtn" onclick="fixCrossword()" ${n&&s.secretWord&&CONFIG.available?"":"disabled"}>Popraw zaznaczone (${n}) — 3 wersje</button></div>`;
+}
+function xSetDecision(i,d){xRev(st()).decision[i]=d;renderClues();}
+function xPickOpt(i,j){
+  const s=st();const r=xRev(s);const o=r.options[i][j];
+  s.clues[i]={question:o.question,answer:o.answer,highlightIndex:o.highlightIndex};
+  s.quotes=s.quotes||[];s.quotes[i]=o.quote||"";
+  r.decision[i]="keep";r.notes[i]="";delete r.options[i];
+  renderClues();renderLive();
+}
+async function fixCrossword(){
+  const s=st();const r=xRev(s);const date=document.getElementById("cDate").value;const msg=document.getElementById("saveMsg");
+  if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){msg.textContent="Najpierw ustaw date.";return;}
+  const fix=r.decision.map((d,i)=>d!=="keep"?i:-1).filter(i=>i>=0);
+  const notes={};fix.forEach(i=>{notes[i]=r.notes[i]||(r.decision[i]==="question"?"slabe pytanie":"slaba odpowiedz");});
+  // Wszystko, co juz padlo na tych pozycjach (takze w poprzednich rundach) - model ma dac inny pomysl.
+  const shown=fix.flatMap(i=>[`${up(s.clues[i].answer)} — ${s.clues[i].question}`,...(r.shown[i]||[])]);
+  const what=d=>d==="question"?"nowe pytanie":"nowa odpowiedz";
+  fetch("/api/feedback",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:"crosswords",lines:fix.map(i=>`${s.secretWord}, pytanie ${i+1} (${up(s.clues[i].answer)}): ${what(r.decision[i])} zamiast „${s.clues[i].question}” — ${r.notes[i]||"bez uwagi"}`)})});
+  const btn=document.getElementById("xFixBtn");btn.disabled=true;btn.textContent="Generuje 3 wersje...";
+  msg.style.color="var(--muted)";msg.textContent="Claude poprawia zaznaczone pytania na podstawie zrodel... (zwykle 1-3 minuty)";
+  try{
+    const body={kind:"crossword",date,review:{secretWord:s.secretWord,clues:s.clues,decision:r.decision,notes,shown}};
+    const res=await (await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})).json();
+    if(!res.ok){msg.style.color="var(--red)";msg.textContent=res.error;return;}
+    fix.forEach(i=>{
+      const seen=new Set();
+      r.options[i]=res.runs.map(run=>{const c=run.entry.clues[i];
+        // Bledy dotyczace tej pozycji: cytat/zdradzenie („Pytanie N:”), slowo albo poczatek pytania w komunikacie walidatora.
+        const errors=run.errors.filter(e=>e.startsWith(`Pytanie ${i+1}:`)||(c.answer&&e.includes(`"${c.answer}"`))||(c.question&&e.includes(c.question.slice(0,25))));
+        return {question:c.question,answer:c.answer,highlightIndex:c.highlightIndex,quote:(run.quotes||[])[i]||"",errors};})
+        .filter(o=>o.question&&!seen.has(o.answer+"|"+o.question)&&seen.add(o.answer+"|"+o.question));
+      r.shown[i]=[...(r.shown[i]||[]),...r.options[i].map(o=>`${o.answer} — ${o.question}`)];
+    });
+    msg.style.color="var(--green)";msg.textContent="Kliknij wybrana wersje przy kazdym poprawianym pytaniu (albo popraw recznie).";
+  }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
+  finally{renderClues();}
+}
+function onAnswer(i,v){const s=st();s.clues[i].answer=up(v);if(s.quotes)s.quotes[i]="";renderClues();renderLive();}
 function autoHi(i){
   const s=st();const need=chars(s.secretWord)[i];const ans=chars(up(s.clues[i].answer));
   const pos=ans.indexOf(need);if(pos>=0)s.clues[i].highlightIndex=pos;
@@ -471,7 +577,7 @@ function crossDupErrors(mode,entry){
     entry.clues.forEach((c,i)=>{const n=norm(c);if(n&&used.has(n))e.push(`Trop ${i+1}: juz uzyty w dniu ${used.get(n)}`);});
   }else{
     // Krzyzowka: pytanie te samo gdziekolwiek = blad; haslo/odpowiedz powtorzone w odstepie < GAP = blad.
-    const GAP=7;
+    const GAP=21; // jak GAP_DAYS w src/schema.js (regula od 22.10)
     const norm=q=>up(q).replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
     const dd=(a,b)=>Math.abs(Math.round((Date.parse(a+"T00:00:00Z")-Date.parse(b+"T00:00:00Z"))/86400000));
     const oq=[];others.forEach(it=>(it.clues||[]).forEach(c=>{if(c.question)oq.push({n:norm(c.question),date:it.date});}));
@@ -496,33 +602,104 @@ function renderLive(){
   else{box.innerHTML=errs.map(x=>`<div class="checkitem bad">${esc(x)}</div>`).join("");}
   document.getElementById("saveBtn").disabled=errs.length>0;
 }
-async function saveCreator(){
+async function saveCreator(force=false){
   const mode=curMode();const kind=ALIAS_BACK[mode];const entry=buildEntry(mode);
-  const r=await fetch("/api/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,entry})});
+  const overwrite=force||(EDITING&&EDITING.mode===mode&&EDITING.date===entry.date);
+  const r=await fetch("/api/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,entry,overwrite})});
   const res=await r.json();const msg=document.getElementById("saveMsg");
+  if(res.conflict){
+    if(confirm(`Na ${entry.date} jest juz zestaw: ${res.existing}.\n\nOK = nadpisz (stary zestaw zniknie)\nAnuluj = nie zapisuj, ustaw pierwszy wolny dzien (${res.free})`))return saveCreator(true);
+    document.getElementById("cDate").value=res.free;
+    msg.style.color="var(--gold)";msg.textContent=`Nie zapisano. Data ustawiona na pierwszy wolny dzien: ${res.free}. Kliknij „Zapisz zestaw” jeszcze raz.`;
+    return;
+  }
   if(!res.ok){msg.style.color="var(--red)";msg.textContent=(res.errors||[res.error]).join("\n");return;}
-  DATA=res.data;msg.style.color="var(--green)";msg.textContent=`Zapisano na ${entry.date}.`;
+  EDITING={mode,date:entry.date};
+  let note="";
+  // Miernik: liczymy tylko zestawy z generatora i tylko raz (kolejny zapis tego samego to juz edycja).
+  if(GEN&&GEN.mode===mode){
+    const d=diffCount(mode,GEN.entry,entry);GEN=null;
+    note=` Bez poprawek: ${d.total-d.changed}/${d.total}.`;
+    // Serwer w starej wersji (bez restartu) nie zna /api/metrics - mowimy to glosno, zamiast gubic wynik.
+    fetch("/api/metrics",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind,date:entry.date,...d})})
+      .then(r=>r.json()).then(j=>{if(!j.ok){msg.style.color="var(--gold)";msg.textContent+=` UWAGA: miernik nie zapisal wyniku (${j.error}) - zrestartuj panel (Ctrl+C, .\\puzzle.ps1 plan).`;}})
+      .catch(err=>{msg.style.color="var(--gold)";msg.textContent+=` UWAGA: miernik nie zapisal wyniku (${err.message}).`;});
+  }
+  DATA=res.data;msg.style.color="var(--green)";msg.textContent=`Zapisano na ${entry.date}.${note}`;
   renderBanner();renderCalendar();renderValidate();
 }
 async function aiGenerate(){
   const mode=curMode();const date=document.getElementById("cDate").value;const theme=document.getElementById("cTheme").value.trim();
   if(!/^\d{4}-\d{2}-\d{2}$/.test(date)){document.getElementById("saveMsg").textContent="Najpierw ustaw date.";return;}
+  const taken=byDate(ALIAS_BACK[mode],date);
+  if(taken&&!confirm(`${date} jest zajety (${labelOf(ALIAS_BACK[mode],taken)}).\n\nWygenerowac mimo to nowy zestaw na ten dzien? Zapis i tak zapyta o nadpisanie.\n(Pierwszy wolny dzien: ${firstFreeDate(ALIAS_BACK[mode])})`))return;
   const btn=document.getElementById("aiBtn");const old=btn.textContent;btn.disabled=true;btn.textContent="Generuje...";
-  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent="Claude uklada zestaw... (zwykle 1-2 minuty)";
+  const msg=document.getElementById("saveMsg");msg.style.color="var(--muted)";msg.textContent="Claude uklada zestaw... (zwykle 1-2 minuty; jesli walidator cos odrzuci, generator sam poprawia - wtedy do ok. 5 minut)";
   try{
     const r=await fetch("/api/generate",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({kind:mode,date,theme})});
     const res=await r.json();
     if(!res.ok){msg.style.color="var(--red)";msg.textContent=res.error;return;}
     const e=res.entry;
+    GEN={mode,entry:e};
+    EDITING=null; // nowy zestaw z generatora to nie edycja - zapis na zajety dzien ma pytac
     if(mode==="word")CST.word={word:e.word,hint:e.hint};
     else if(mode==="connect")CST.connect={categories:e.categories.map(c=>({name:c.name,words:[...c.words],difficulty:c.difficulty}))};
     else if(mode==="artist")CST.artist=artistState(e.artist,e.clues,res.quotes||[]);
-    else CST.crossword={secretWord:e.secretWord,clues:e.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex}))};
+    else CST.crossword={secretWord:e.secretWord,clues:e.clues.map(c=>({question:c.question,answer:c.answer,highlightIndex:c.highlightIndex})),quotes:res.quotes||[]};
     renderForm();renderLive();
     msg.style.color=res.valid?"var(--green)":"var(--gold)";
-    msg.textContent=res.valid?"AI wygenerowalo zgodny zestaw — sprawdz i zapisz.":"AI wygenerowalo zestaw z uwagami — popraw recznie:\n"+(res.errors||[]).join("\n");
+    const tries=res.attempts>1?` (po ${res.attempts} probach - generator sam poprawial bledy walidatora)`:"";
+    msg.textContent=res.valid?`AI wygenerowalo zgodny zestaw${tries} — sprawdz i zapisz.`:`AI wygenerowalo zestaw z uwagami${tries} — popraw recznie:\n`+(res.errors||[]).join("\n");
   }catch(err){msg.style.color="var(--red)";msg.textContent="Blad: "+err.message;}
   finally{btn.disabled=!CONFIG.available;btn.textContent=old;}
+}
+
+/* ===== MIERNIK „bez poprawek” ===== */
+// Ostatni wynik generatora; przy zapisie porownujemy go z tym, co faktycznie zapisuje Damian.
+let GEN=null;
+// Ile elementow zestawu Damian zmienil wzgledem generatora.
+// RapWord: haslo + podpowiedz; RapGuesser: 5 tropow; krzyzowka: pytania (pytanie lub odpowiedz).
+// Zmiana artysty albo hasla krzyzowki = caly zestaw zmieniony.
+function diffCount(mode,gen,saved){
+  const n=s=>String(s??"").trim();
+  if(mode==="word"){
+    const changed=(n(gen.word).toUpperCase()!==n(saved.word).toUpperCase()?1:0)+(n(gen.hint)!==n(saved.hint)?1:0);
+    return {total:2,changed};
+  }
+  if(mode==="artist"){
+    const total=saved.clues.length;
+    if(n(gen.artist)!==n(saved.artist))return {total,changed:total};
+    return {total,changed:saved.clues.filter((c,i)=>n(c)!==n((gen.clues||[])[i])).length};
+  }
+  const total=saved.clues.length;
+  if(n(gen.secretWord).toUpperCase()!==n(saved.secretWord).toUpperCase())return {total,changed:total};
+  const changed=saved.clues.filter((c,i)=>{const g=(gen.clues||[])[i]||{};return n(c.question)!==n(g.question)||n(c.answer).toUpperCase()!==n(g.answer).toUpperCase();}).length;
+  return {total,changed};
+}
+async function renderQuality(){
+  const body=document.getElementById("qualityBody");body.textContent="Wczytuje...";
+  let list=[];
+  try{
+    const j=await (await fetch("/api/metrics")).json();
+    if(!j.ok){body.innerHTML=`<div class="verr">Serwer panelu nie zna miernika (${esc(j.error)}). Zrestartuj panel: Ctrl+C, potem .\\puzzle.ps1 plan i Ctrl+F5.</div>`;return;}
+    list=j.metrics||[];
+  }catch(e){body.textContent="Blad: "+e.message;return;}
+  const pct=(a,b)=>b?Math.round(100*a/b)+"%":"—";
+  const stats=rs=>{
+    const clean=rs.filter(r=>r.changed===0).length;
+    const tot=rs.reduce((s,r)=>s+r.total,0),kept=rs.reduce((s,r)=>s+r.total-r.changed,0);
+    return `<b>${pct(clean,rs.length)}</b> zestawow bez zadnej poprawki (${clean}/${rs.length}) · <b>${pct(kept,tot)}</b> elementow przyjetych bez zmian`;
+  };
+  let html=`<p class="muted">Liczone tylko zestawy z przycisku „Wygeneruj przez AI”, w chwili zapisu. Decyzje, czy generator jest juz dobry, podejmujesz Ty — to tylko liczby.</p>`;
+  for(const k in MODES){
+    const rs=list.filter(r=>r.kind===k).sort((a,b)=>a.at.localeCompare(b.at));
+    html+=`<div class="vfile"><h3>${MODES[k].name} <span class="muted">(${rs.length} zestawow z generatora)</span></h3>`;
+    if(!rs.length){html+=`<div class="muted">Brak danych — zapisz pierwszy zestaw z generatora.</div></div>`;continue;}
+    const last=rs.slice(-10);
+    html+=`<div>Wszystkie: ${stats(rs)}</div><div>Ostatnie ${last.length}: ${stats(last)}</div>`;
+    html+=`<div style="margin-top:6px;">`+last.slice().reverse().map(r=>`<div class="${r.changed===0?"vok":"verr"}">${r.date}: przyjete ${r.total-r.changed}/${r.total} <span class="muted">(ocena ${r.at.slice(0,10)})</span></div>`).join("")+`</div></div>`;
+  }
+  body.innerHTML=html;
 }
 
 /* ===== WALIDACJA (przeglad) ===== */

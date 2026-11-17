@@ -5,7 +5,7 @@ import { createServer } from "node:http";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { readItems, upsert, removeByDate, FILES } from "./src/io.js";
+import { readItems, upsert, removeByDate, FILES, entryLabel, nextFreeDate } from "./src/io.js";
 import { validateEntry, VALIDATORS, crossCheck, artistEntryErrors } from "./src/schema.js";
 import { read } from "./src/io.js";
 import { generate, aiStatus } from "./src/generate.js";
@@ -28,11 +28,17 @@ const ANGLES = [
   "gra slow na tytule albo cecha stylu artysty",
 ];
 const SKILL_PATH = join(__dirname, "..", "..", ".claude", "skills", "uloz-zestaw", "SKILL.md");
-const FEEDBACK_HEADING = "### Uwagi Damiana z panelu (Kim jestem?)";
+// Gdzie trafiaja uwagi z panelu: naglowek sekcji i miejsce, przed ktorym ja wstawic, jesli jej jeszcze nie ma.
+// Sekcje musza lezec tam, gdzie generator czyta reguly danego trybu (RULE_SECTIONS w src/generate.js).
+const FEEDBACK = {
+  artists: { heading: "### Uwagi Damiana z panelu (Kim jestem?)", before: "## Procedura" },
+  crosswords: { heading: "### RapCrossword — uwagi Damiana z panelu", before: "## Tryb „Kim jestem?" },
+};
 
 // Uwagi z panelu trafiaja do regul w SKILL.md, ktore generator czyta przy kazdym zestawie.
-function appendFeedback(lines) {
-  if (!existsSync(SKILL_PATH)) return;
+function appendFeedback(lines, kind = "artists") {
+  const target = FEEDBACK[kind];
+  if (!target || !existsSync(SKILL_PATH)) return;
   const raw = readFileSync(SKILL_PATH, "utf8");
   // Kolejne rundy poprawek wysylaja te sama uwage - zapisujemy ja raz.
   lines = lines.filter((l) => !raw.includes(`: ${l}`));
@@ -40,13 +46,24 @@ function appendFeedback(lines) {
   const nl = raw.includes("\r\n") ? "\r\n" : "\n";
   const entry = lines.map((l) => `- ${new Date().toISOString().slice(0, 10)}: ${l}`).join(nl);
   let out;
-  if (raw.includes(FEEDBACK_HEADING)) {
-    out = raw.replace(FEEDBACK_HEADING + nl, FEEDBACK_HEADING + nl + entry + nl);
+  if (raw.includes(target.heading)) {
+    out = raw.replace(target.heading + nl, target.heading + nl + entry + nl);
   } else {
-    // Sekcja wewnatrz „## Tryb Kim jestem?”, zeby generator ja wczytal; tuz przed „## Procedura”.
-    out = raw.replace(nl + "## Procedura", nl + FEEDBACK_HEADING + nl + entry + nl + nl + "## Procedura");
+    out = raw.replace(nl + target.before, nl + target.heading + nl + entry + nl + nl + target.before);
   }
   writeFileSync(SKILL_PATH, out, "utf8");
+}
+
+// Miernik „bez poprawek”: jeden wiersz JSON na kazdy zapisany zestaw z generatora.
+// Tylko daty i liczby (ile elementow przyjetych bez zmian), bez tresci zestawow.
+const METRICS_PATH = join(__dirname, "metrics.jsonl");
+function readMetrics() {
+  if (!existsSync(METRICS_PATH)) return [];
+  return readFileSync(METRICS_PATH, "utf8").split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
+}
+function appendMetric(m) {
+  const rec = { at: new Date().toISOString(), kind: m.kind, date: m.date, total: m.total, changed: m.changed };
+  writeFileSync(METRICS_PATH, JSON.stringify(rec) + "\n", { encoding: "utf8", flag: "a" });
 }
 
 const PORT = process.env.PORT || 5173;
@@ -111,22 +128,47 @@ const server = createServer(async (req, res) => {
           }
           return send(res, 200, { ok: true, runs });
         }
+        // Poprawka krzyzowki: jedno wywolanie daje 3 wersje kazdej poprawianej pozycji (slowa z puli, pytania ze zrodel).
+        if (kind === "crosswords" && review) {
+          const { runs } = await generate(kind, date, theme, review);
+          return send(res, 200, { ok: true, runs });
+        }
         const result = await generate(kind, date, theme);
         return send(res, 200, { ok: true, ...result });
       } catch (e) {
         return send(res, 502, { ok: false, error: e.message });
       }
     }
+    if (req.method === "GET" && path === "/api/metrics") {
+      return send(res, 200, { ok: true, metrics: readMetrics() });
+    }
+    if (req.method === "POST" && path === "/api/metrics") {
+      const m = await readBody(req);
+      if (!FILES[m.kind] || !Number.isInteger(m.total) || !Number.isInteger(m.changed)) {
+        return send(res, 400, { ok: false, error: "Zly wpis miernika" });
+      }
+      appendMetric(m);
+      return send(res, 200, { ok: true });
+    }
     if (req.method === "POST" && path === "/api/feedback") {
-      const { lines } = await readBody(req);
-      appendFeedback(lines || []);
+      const { lines, kind } = await readBody(req);
+      appendFeedback(lines || [], KIND_ALIAS[kind] || kind || "artists");
       return send(res, 200, { ok: true });
     }
     if (req.method === "POST" && path === "/api/save") {
-      const { kind, entry } = await readBody(req);
+      const { kind, entry, overwrite } = await readBody(req);
       if (!FILES[kind]) return send(res, 400, { ok: false, error: "Nieznany tryb" });
-      const errs = entryErrors(kind, entry, readItems(kind));
+      const items = readItems(kind);
+      const errs = entryErrors(kind, entry, items);
       if (errs.length) return send(res, 422, { ok: false, errors: errs });
+      // Zajeta data: nie nadpisujemy po cichu (tak zniknal Sentino). Panel pyta i dopiero wtedy wysyla overwrite.
+      const existing = items.find((it) => it.date === entry.date);
+      if (existing && !overwrite) {
+        return send(res, 409, {
+          ok: false, conflict: true, existing: entryLabel(kind, existing), free: nextFreeDate(items, entry.date),
+          error: `Data ${entry.date} jest zajeta (${entryLabel(kind, existing)}).`,
+        });
+      }
       upsert(kind, entry);
       return send(res, 200, { ok: true, data: buildData() });
     }
@@ -141,6 +183,10 @@ const server = createServer(async (req, res) => {
       if (!FILES[kind]) return send(res, 400, { ok: false, error: "Nieznany tryb" });
       const item = readItems(kind).find((it) => it.date === fromDate);
       if (!item) return send(res, 404, { ok: false, error: "Nie znaleziono wpisu" });
+      const target = readItems(kind).find((it) => it.date === toDate);
+      if (target && toDate !== fromDate) {
+        return send(res, 409, { ok: false, error: `Data ${toDate} jest zajeta (${entryLabel(kind, target)}). Najpierw usun albo przenies tamten zestaw. Pierwszy wolny dzien: ${nextFreeDate(readItems(kind), toDate)}.` });
+      }
       const moved = { ...item, date: toDate };
       const errs = entryErrors(kind, moved, readItems(kind).filter((it) => it.date !== fromDate));
       if (errs.length) return send(res, 422, { ok: false, errors: errs });
