@@ -1305,6 +1305,70 @@
           "highlightIndex": 2
         }
       ]
+    },
+    {
+      "id": 57,
+      "date": "2026-11-11",
+      "secretWord": "MAGIK",
+      "clues": [
+        {
+          "question": "Producent współtworzący dla Szpaku utwór „Hinata”.",
+          "answer": "DEEMZ",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Autorka solowego minialbumu zatytułowanego „B”.",
+          "answer": "BAMBI",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Zaśpiewał gościnnie w „Futuramie 3” Quebonafide.",
+          "answer": "GEDZ",
+          "highlightIndex": 0
+        },
+        {
+          "question": "Twórca albumu „Pleśń”.",
+          "answer": "GUZIOR",
+          "highlightIndex": 3
+        },
+        {
+          "question": "Wykonawca utworu „Miniówa”.",
+          "answer": "KUKON",
+          "highlightIndex": 0
+        }
+      ]
+    },
+    {
+      "id": 58,
+      "date": "2026-11-12",
+      "secretWord": "KUKON",
+      "clues": [
+        {
+          "question": "Producent, który razem z Matą stworzył utwór „Kamikaze”.",
+          "answer": "SKOLIM",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Raper, który wraz z Favstem nagrał utwór „kyoto”.",
+          "answer": "KUBAN",
+          "highlightIndex": 1
+        },
+        {
+          "question": "Tragicznie zmarły członek Paktofoniki.",
+          "answer": "MAGIK",
+          "highlightIndex": 4
+        },
+        {
+          "question": "W 2018 roku Otsochodzi wydał „Nowy …”.",
+          "answer": "KOLOR",
+          "highlightIndex": 1
+        },
+        {
+          "question": "„Młody …” - Young Multiego i Szpaka.",
+          "answer": "MANSON",
+          "highlightIndex": 2
+        }
+      ]
     }
   ]
 }
